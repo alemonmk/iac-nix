@@ -49,7 +49,7 @@ in {
         unattendedInstaller = {
           enable = true;
           target = installTarget;
-          flake = "git+https://code.rmntn.net/iac/nix#barebone";
+          flake = "git+https://code.rmntn.net/iac/nix?ref=main#barebone";
           showProgress = true;
           waitForNetwork = true;
           postDisko = ''
