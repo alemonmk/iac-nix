@@ -53,13 +53,18 @@ in {
           showProgress = true;
           waitForNetwork = true;
           postDisko = ''
+            /run/wrappers/bin/umount -Rv /mnt
+            /run/wrappers/bin/mount -o subvol=/ /dev/disk/by-partlabel/ROOT /mnt
             /run/current-system/sw/bin/btrfs subvolume snapshot -r /mnt/rootfs /mnt/rootfs-0
-            echo "Created empty rootfs snapshot."
+            /run/wrappers/bin/umount -v /mnt
+            /run/wrappers/bin/mount -o noatime,subvol=/rootfs /dev/disk/by-partlabel/ROOT /mnt
+            /run/wrappers/bin/mount -o umask=0077 -t vfat /dev/disk/by-partlabel/EFI /mnt/boot
+            /run/wrappers/bin/mount -t ext4 /dev/disk/by-partlabel/NIX /mnt/nix
           '';
           preInstall = ''
             mkdir -p /mnt/nix/persist/{etc/{nixos,ssh},var/{lib/nixos,lib/sss,log}}
-            mount -o bind /mnt/nix/persist/etc/nixos /mnt/etc/nixos
-            mount -o bind /mnt/nix/persist/var/log /mnt/var/log
+            /run/wrappers/bin/mount -o bind -m /mnt/nix/persist/etc/nixos /mnt/etc/nixos
+            /run/wrappers/bin/mount -o bind -m /mnt/nix/persist/var/log /mnt/var/log
           '';
         };
         nix.settings = {
