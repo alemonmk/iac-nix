@@ -45,6 +45,7 @@ in {
         networking.networkmanager.enable = false;
         fonts.fontconfig.enable = false;
         hardware.enableAllFirmware = false;
+        environment.systemPackages = [pkgs.btrfs-progs];
         unattendedInstaller = {
           enable = true;
           target = installTarget;
@@ -52,7 +53,7 @@ in {
           showProgress = true;
           waitForNetwork = true;
           postDisko = ''
-            btrfs subvolume snapshot -r /mnt/rootfs /mnt/rootfs-0
+            /run/current-system/sw/bin/btrfs subvolume snapshot -r /mnt/rootfs /mnt/rootfs-0
             echo "Created empty rootfs snapshot."
           '';
           preInstall = ''

@@ -9,6 +9,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.supportedFilesystems = ["btrfs"];
   boot.initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod"];
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
@@ -19,7 +20,7 @@
   networking.hostName = "nixos-installed";
   networking.useDHCP = true;
 
-  environment.systemPackages = [pkgs.git];
+  environment.systemPackages = [pkgs.dnsutils];
 
   services = {
     openssh = {
