@@ -43,7 +43,6 @@ in {
         networking.hostName = "nixos-installer";
         networking.useDHCP = true;
         networking.networkmanager.enable = false;
-        environment.noXlibs = true;
         fonts.fontconfig.enable = false;
         hardware.enableAllFirmware = false;
         unattendedInstaller = {
