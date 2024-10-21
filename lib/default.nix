@@ -45,7 +45,7 @@ in {
         networking.networkmanager.enable = false;
         fonts.fontconfig.enable = false;
         hardware.enableAllFirmware = false;
-        environment.systemPackages = [pkgs.btrfs-progs];
+        environment.systemPackages = [pkgs.git pkgs.btrfs-progs];
         unattendedInstaller = {
           enable = true;
           target = installTarget;
