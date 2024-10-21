@@ -38,7 +38,7 @@ in {
         system.stateVersion = "24.05";
         boot.kernelPackages = pkgs.linuxPackages_6_6;
         boot.kernelParams = ["quiet" "systemd.show_status=no"];
-        boot.initrd.availableKernelModules = lib.mkForce ["ata_piix" "vmw_pvscsi" "sd_mod" "vmxnet3" "vmw_vmci" "vmwgfx" "vmw_vsock_vmci_transport"];
+        boot.initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod" "vmxnet3" "vmw_vmci" "vmwgfx" "vmw_vsock_vmci_transport"];
         virtualisation.vmware.guest.enable = true;
         networking.hostName = "nixos-installer";
         networking.useDHCP = true;
