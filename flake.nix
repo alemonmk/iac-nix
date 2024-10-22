@@ -46,6 +46,8 @@
     nixosConfigurations = with self.lib; {
       netbootImage = stage1Installer;
       barebone = stage1System;
+      rmnmvnfdns01 = finalSystem [./nodes/nfdns01.nix];
+      rmnmvnfdns02 = finalSystem [./nodes/nfdns02.nix];
     };
   };
 }
