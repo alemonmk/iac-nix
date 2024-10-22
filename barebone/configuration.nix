@@ -16,7 +16,7 @@
   boot.initrd.supportedFilesystems = ["btrfs"];
   boot.initrd.postResumeCommands = ''
     mkdir -p /mnt/btrfs_root
-    mount -o subvol=/ /dev/disk/by-label/ROOT /mnt/btrfs_root
+    mount -o subvol=/ /dev/disk/by-partlabel/ROOT /mnt/btrfs_root
     echo "Deleting rootfs subvolume..."
     btrfs subvolume delete /mnt/btrfs_root/rootfs
     echo "Restoring blank rootfs subvolume..."
