@@ -17,6 +17,7 @@
       "original": {
         "owner": "nix-community",
         "repo": "disko",
+        "rev": "4be2aadf13b67ffbb993deb73adff77c46b728fc",
         "type": "github"
       }
     },
@@ -37,6 +38,7 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "rev": "5ec753a1fc4454df9285d8b3ec0809234defb975",
         "type": "github"
       }
     },
@@ -52,6 +54,7 @@
       "original": {
         "owner": "nix-community",
         "repo": "impermanence",
+        "rev": "e337457502571b23e449bf42153d7faa10c0a562",
         "type": "github"
       }
     },
@@ -72,6 +75,7 @@
       "original": {
         "owner": "LnL7",
         "repo": "nix-darwin",
+        "rev": "64d9d1ae25215c274c37e3e4016977a6779cf0d3",
         "type": "github"
       }
     },
@@ -86,8 +90,8 @@
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-24.05",
         "repo": "nixpkgs",
+        "rev": "89172919243df199fe237ba0f776c3e3e3d72367",
         "type": "github"
       }
     },
@@ -102,8 +106,8 @@
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "rev": "1997e4aa514312c1af7e2bda7fad1644e778ff26",
         "type": "github"
       }
     },
@@ -138,6 +142,7 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "rev": "26642e8f193f547e72d38cd4c0c4e45b49236d27",
         "type": "github"
       }
     }
