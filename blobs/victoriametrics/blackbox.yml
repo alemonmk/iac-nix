@@ -1,0 +1,41 @@
+modules:
+  icmp:
+    prober: icmp
+    timeout: 3s
+    icmp:
+      preferred_ip_protocol: "ip4"
+      source_ip_address: "10.85.10.5"
+  generic_http:
+    prober: http
+    timeout: 3s
+    http:
+      valid_status_codes:
+      - 200
+      - 303
+      - 401
+      - 403
+      preferred_ip_protocol: "ip4"
+  dns_ad:
+    prober: dns
+    timeout: 1s
+    dns:
+      query_name: _ldap._tcp.MO._sites.DomainDnsZones.snct.rmntn.net
+      query_type: SRV
+      valid_rcodes:
+        - NOERROR
+      preferred_ip_protocol: "ip4"
+  dns_blocking:
+    prober: dns
+    timeout: 1s
+    dns:
+      query_name: ssl.google-analytics.com
+      query_type: A
+      validate_answer_rrs:
+        fail_if_not_matches_regexp:
+          - "0.0.0.0"
+      preferred_ip_protocol: "ip4"
+  generic_tcp:
+    prober: tcp
+    timeout: 1s
+    tcp:
+      preferred_ip_protocol: "ip4"
