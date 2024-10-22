@@ -82,4 +82,22 @@ in {
       ../barebone/configuration.nix
     ];
   };
+  finalSystem = sysDef:
+    nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {
+        inherit impermanence sops-nix;
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [(import ../overlays)];
+        };
+        nixpkgs-unstable = import nixpkgs-unstable {inherit system;};
+      };
+      modules =
+        [
+          self.nixosModules
+          impermanence.nixosModules.impermanence
+          sops-nix.nixosModules.sops
+        ]
+        ++ sysDef;
 }
