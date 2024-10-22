@@ -22,6 +22,10 @@
 
   environment.systemPackages = with pkgs; [];
 
+  networking.hosts = {
+    "10.85.29.2" = ["vdi.snct.rmntn.net"];
+  };
+
   services = {
     victoriametrics = {
       enable = true;
@@ -40,10 +44,6 @@
       enable = true;
       listenAddress = "127.0.0.1";
       configFile = ../blobs/victoriametrics/blackbox.yml;
-    };
-
-    networking.hosts = {
-      "10.85.29.2" = ["vdi.snct.rmntn.net"];
     };
 
     grafana = {
