@@ -50,6 +50,7 @@ in {
           enable = true;
           target = installTarget;
           flake = "git+https://code.rmntn.net/iac/nix?ref=main#barebone";
+          nixosInstallFlags = "--no-channel-copy --no-root-password";
           showProgress = true;
           waitForNetwork = true;
           postDisko = ''
