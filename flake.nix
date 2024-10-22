@@ -51,5 +51,18 @@
       rmnmvnfdns02 = finalSystem [./nodes/nfdns02.nix];
       rmnmvytarc = finalSystem [./nodes/ytarc.nix];
     };
+    darwinConfigurations = {
+      chisa = nix-darwin.lib.darwinSystem {
+        modules = [
+          ./nodes/chisa.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = false;
+            home-manager.users.alemonmk = import ./home/chisa;
+          }
+        ];
+      };
+    };
   };
 }
