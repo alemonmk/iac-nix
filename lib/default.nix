@@ -24,7 +24,7 @@ in {
     inherit system;
     specialArgs = { inherit inputs; installTarget = skeleton; };
     modules = [
-      unattended-installer.nixosModules.diskoInstaller
+      self.nixosModules
       ({
         modulesPath,
         lib,
@@ -50,22 +50,19 @@ in {
           enable = true;
           target = installTarget;
           flake = "git+https://code.rmntn.net/iac/nix?ref=main#barebone";
-          nixosInstallFlags = "--no-channel-copy --no-root-password";
-          showProgress = true;
-          waitForNetwork = true;
           postDisko = ''
-            /run/wrappers/bin/umount -Rv /mnt
-            /run/wrappers/bin/mount -o subvol=/ /dev/disk/by-partlabel/ROOT /mnt
-            /run/current-system/sw/bin/btrfs subvolume snapshot -r /mnt/rootfs /mnt/rootfs-0
-            /run/wrappers/bin/umount -v /mnt
-            /run/wrappers/bin/mount -o noatime,subvol=/rootfs /dev/disk/by-partlabel/ROOT /mnt
-            /run/wrappers/bin/mount -o umask=0077 -t vfat /dev/disk/by-partlabel/EFI /mnt/boot
-            /run/wrappers/bin/mount -t ext4 /dev/disk/by-partlabel/NIX /mnt/nix
+            umount -Rv /mnt
+            mount -o subvol=/ /dev/disk/by-partlabel/ROOT /mnt
+            btrfs subvolume snapshot -r /mnt/rootfs /mnt/rootfs-0
+            umount -v /mnt
+            mount -o noatime,subvol=/rootfs /dev/disk/by-partlabel/ROOT /mnt
+            mount -o umask=0077 -t vfat /dev/disk/by-partlabel/EFI /mnt/boot
+            mount -t ext4 /dev/disk/by-partlabel/NIX /mnt/nix
           '';
           preInstall = ''
             mkdir -p /mnt/nix/persist/{etc/{nixos,ssh},var/{lib/nixos,lib/sss,log}}
-            /run/wrappers/bin/mount -o bind -m /mnt/nix/persist/etc/nixos /mnt/etc/nixos
-            /run/wrappers/bin/mount -o bind -m /mnt/nix/persist/var/log /mnt/var/log
+            mount -o bind -m /mnt/nix/persist/etc/nixos /mnt/etc/nixos
+            mount -o bind -m /mnt/nix/persist/var/log /mnt/var/log
           '';
         };
         nix.settings = {
