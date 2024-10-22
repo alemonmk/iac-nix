@@ -25,7 +25,6 @@
     ];
     sudo = {
       enable = true;
-      domain = "snct.rmntn.net";
       extraConfig = "Defaults lecture = never";
       extraRules = [
         {
