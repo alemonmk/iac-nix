@@ -27,7 +27,7 @@ in {
       installTarget = skeleton;
     };
     modules = [
-      self.nixosModules
+      self.stage1InstallerModules
       ({
         modulesPath,
         lib,

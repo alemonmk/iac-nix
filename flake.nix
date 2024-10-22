@@ -43,6 +43,7 @@
       system = "x86_64-darwin";
     };
     nixosModules = import ./modules/nixos;
+    stage1InstallerModules = import ./modules/installer;
     nixosConfigurations = with self.lib; {
       netbootImage = stage1Installer;
       barebone = stage1System;
