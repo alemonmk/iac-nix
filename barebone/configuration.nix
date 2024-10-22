@@ -40,4 +40,14 @@
       '';
     };
   };
+
+  users.mutableUsers = false;
+  users.users.emergency = {
+    isNormalUser = true;
+    description = "Emergency local account";
+    extraGroups = ["wheel"];
+    home = "/home/emergency";
+    createHome = true;
+    hashedPassword = "$y$j9T$xFls5U8.oYFxKFI8JUMgW0$FgKAm0BA/xc/JZaXrAJQwhYUK.TMboBo/S0iPaOb0BB";
+  };
 }
