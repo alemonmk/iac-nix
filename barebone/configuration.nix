@@ -9,9 +9,20 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.supportedFilesystems = ["btrfs"];
   boot.initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod"];
   boot.kernelPackages = pkgs.linuxPackages_zen;
+
+  fileSystems."/nix".neededForBoot = true;
+  boot.initrd.supportedFilesystems = ["btrfs"];
+  boot.initrd.postResumeCommands = ''
+    mkdir -p /mnt/btrfs_root
+    mount -o subvol=/ /dev/disk/by-label/ROOT /mnt/btrfs_root
+    echo "Deleting rootfs subvolume..."
+    btrfs subvolume delete /mnt/btrfs_root/rootfs
+    echo "Restoring blank rootfs subvolume..."
+    btrfs subvolume snapshot /mnt/btrfs_root/rootfs-0 /mnt/btrfs_root/rootfs
+    umount /mnt/btrfs_root
+  '';
 
   virtualisation.vmware.guest.enable = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
