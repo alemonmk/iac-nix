@@ -8,21 +8,24 @@
   disko,
   unattended-installer,
   ...
-} @ inputs:
-let
+} @ inputs: let
   skeleton = nixpkgs.lib.nixosSystem {
     modules = [
       disko.nixosModules.disko
       ../barebone/diskolayout.nix
-      ({...}:{
+      ({...}: {
         nixpkgs.hostPlatform = "x86_64-linux";
-        system.stateVersion = "24.05";})
+        system.stateVersion = "24.05";
+      })
     ];
   };
 in {
   stage1Installer = nixpkgs.lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit inputs; installTarget = skeleton; };
+    specialArgs = {
+      inherit inputs;
+      installTarget = skeleton;
+    };
     modules = [
       self.nixosModules
       ({
