@@ -31,7 +31,7 @@
   networking.hostName = "nixos-installed";
   networking.useDHCP = true;
 
-  environment.systemPackages = [pkgs.dnsutils];
+  environment.systemPackages = [pkgs.git pkgs.dnsutils];
 
   services = {
     openssh = {
