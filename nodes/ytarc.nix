@@ -1,0 +1,90 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [
+    ../base/configuration.nix
+  ];
+
+  networking = {
+    hostName = "rmnmvytarc";
+    interfaces.ens192.ipv4.addresses = [
+      {
+        address = "10.85.20.8";
+        prefixLength = 26;
+      }
+    ];
+    defaultGateway = {address = "10.85.20.62";};
+    interfaces.ens192.ipv6.addresses = [
+      {
+        address = "2400:8902:e002:59e3::a34:910e";
+        prefixLength = 64;
+      }
+    ];
+    defaultGateway6 = {address = "2400:8902:e002:59e3::ccef";};
+  };
+
+  environment.systemPackages = with pkgs; [];
+
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+    };
+  };
+
+  fileSystems."/mnt/pfs3/ytarchive" = {
+    device = "rmnmpfss03.snct.rmntn.net:/volume1/YoutubeArchive";
+    fsType = "nfs";
+    options = ["nfsvers=4.1"];
+  };
+
+  virtualisation.oci-containers.containers = {
+    "metube" = {
+      image = "ghcr.io/alexta69/metube:latest";
+      user = "2500:2500";
+      extraOptions = ["--network=host"];
+      environment = {
+        UID = "2500";
+        GID = "2500";
+        URL_PREFIX = "/archiver/";
+        OUTPUT_TEMPLATE = "%(uploader)s/%(upload_date>%Y)s/[%(upload_date>%y%m%d)s][%(id)s].%(ext)s";
+        YTDL_OPTIONS = "{\"source_address\":\"0.0.0.0\",\"writeinfojson\":true,\"writesubtitles\":true,\"subtitleslangs\":[\"en\",\"zh-tw\",\"-live_chat\"],\"postprocessors\":[{\"key\":\"FFmpegEmbedSubtitle\",\"already_have_subtitle\":false},{\"key\":\"FFmpegMetadata\",\"add_chapters\":true}]}";
+      };
+      volumes = [
+        "/mnt/pfs3/ytarchive:/downloads"
+      ];
+    };
+  };
+
+  services = {
+    jellyfin = {
+      enable = true;
+    };
+    caddy = {
+      enable = true;
+      virtualHosts = {
+        "ytarc.noc.snct.rmntn.net" = {
+          extraConfig = ''
+            reverse_proxy /archiver/* localhost:8081 {
+                    header_up X-Real-IP {remote_host}
+            }
+
+            reverse_proxy /playback/* localhost:8096 {
+                    header_up X-Real-IP {remote_host}
+            }
+          '';
+        };
+      };
+    };
+  };
+
+  environment.persistence."/nix/persist" = {
+    directories = [
+      "/var/cache/jellyfin"
+      "/var/lib/jellyfin"
+    ];
+  };
+}
