@@ -100,4 +100,5 @@ in {
           sops-nix.nixosModules.sops
         ]
         ++ sysDef;
+    };
 }
