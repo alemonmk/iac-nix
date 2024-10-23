@@ -53,6 +53,7 @@
       rmnmvnfdns02 = finalSystem [./nodes/nfdns02.nix];
       rmnmvytarc = finalSystem [./nodes/ytarc.nix];
       rmnmvnocmt01 = finalSystem [./nodes/nocmt01.nix];
+      rmnmvmgnix = finalSystem [./nodes/mgnix.nix];
     };
     darwinConfigurations = {
       chisa = nix-darwin.lib.darwinSystem {
