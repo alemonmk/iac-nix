@@ -42,7 +42,7 @@
     extraGroups = ["wheel"];
     home = "/home/emergency";
     createHome = true;
-    hashedPassword = "$y$j9T$/iWQElAJVCu5iP5EKxy1//$q974CYZc.GdUslKW0B7kvgp79al6UQ6APMF02evPtO.";
+    hashedPassword = "$y$j9T$Ddybx4Z6a2Wr9n.DLTvnZ1$OANx4.k6sMJlH.44A7i3jy6q2KBbdYYUfGQttdyaUs9";
   };
   users.ms-ad = {
     enable = true;
