@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  nixpkgs-unstable,
+  nixpkgs-next,
   ...
 }: {
   imports = [
@@ -28,7 +28,7 @@
   };
 
   environment.systemPackages = [
-    nixpkgs-unstable.technitium-dns-server
+    nixpkgs-next.technitium-dns-server
   ];
 
   services = {

@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  nixpkgs-unstable,
+  nixpkgs-next,
   ...
 }: {
   imports = [
@@ -38,9 +38,9 @@
     code-server = {
       enable = true;
       proxyDomain = "nix-mgr.snct.rmntn.net";
-      package = nixpkgs-unstable.vscode-with-extensions.override {
-        vscode = nixpkgs-unstable.code-server;
-        vscodeExtensions = with nixpkgs-unstable.vscode-extensions; [
+      package = nixpkgs-next.vscode-with-extensions.override {
+        vscode = nixpkgs-next.code-server;
+        vscodeExtensions = with nixpkgs-next.vscode-extensions; [
           bbenoist.nix
           jeff-hykin.better-nix-syntax
           davidanson.vscode-markdownlint

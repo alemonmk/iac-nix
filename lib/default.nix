@@ -2,7 +2,7 @@
   system ? "x86_64-linux",
   self,
   nixpkgs,
-  nixpkgs-unstable,
+  nixpkgs-next,
   impermanence,
   sops-nix,
   disko,
@@ -91,7 +91,7 @@ in {
           inherit system;
           overlays = [(import ../overlays)];
         };
-        nixpkgs-unstable = import nixpkgs-unstable {inherit system;};
+        nixpkgs-next = import nixpkgs-next {inherit system;};
       };
       modules =
         [
