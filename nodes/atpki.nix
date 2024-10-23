@@ -40,7 +40,7 @@
     step-ca = {
       enable = true;
       settings = builtins.fromJSON (builtins.readFile ../blobs/step-ca/ca.json);
-#      intermediatePasswordFile = config.sops.secrets.ca.w1.private-key.path;
+      # intermediatePasswordFile = config.sops.secrets.ca.w1.private-key.path;
       address = "127.0.0.1";
       port = 8443;
     };
