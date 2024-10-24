@@ -27,7 +27,7 @@
     defaultGateway6 = {address = "2400:8902:e002:59e3::ccef";};
   };
 
-  environment.systemPackages = with pkgs; [code-server];
+  environment.systemPackages = with pkgs; [];
 
   users.users.code-server = {
     home = "/home/code-server";
@@ -49,7 +49,7 @@
         ];
       };
       userDataDir = "/home/code-server/workspaces";
-      extensionsDir = "/home/code-server/code-ext";
+      extensionsDir = "/home/code-server/code-extensions";
       disableWorkspaceTrust = true;
       disableUpdateCheck = true;
       disableTelemetry = true;
@@ -73,7 +73,7 @@
 
   environment.persistence."/nix/persist" = {
     users.code-server = {
-      directories = ["workspaces/nix" "code-ext"];
+      directories = ["workspaces" "code-extensions"];
     };
   };
 }
