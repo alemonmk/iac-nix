@@ -49,7 +49,6 @@
         ];
       };
       userDataDir = "/home/code-server/workspaces";
-      extensionsDir = "/home/code-server/code-extensions";
       disableWorkspaceTrust = true;
       disableUpdateCheck = true;
       disableTelemetry = true;
@@ -73,7 +72,7 @@
 
   environment.persistence."/nix/persist" = {
     users.code-server = {
-      directories = ["workspaces" "code-extensions"];
+      directories = ["workspaces"];
     };
   };
 }
