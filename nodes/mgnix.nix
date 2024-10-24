@@ -54,7 +54,7 @@
       disableUpdateCheck = true;
       disableTelemetry = true;
       disableGettingStartedOverride = true;
-      hashedPassword = "$argon2id$v=19$m=4096,t=3,p=1$dXQwcTJ2MzVuOTgyZg$/Vp0CjZ4wiFe2F7l5bQRb07XFHyobAtCuOrHDQqxkY0";
+      hashedPassword = "$argon2i$v=19$m=4096,t=3,p=1$NHJ2MGczNzR1MXE4OTB5dXJ3d2Vpb3I$9SJioCgKkNW4yaSpe8vtipgdyFHpnASrqKsdcpQ8ygM";
     };
 
     caddy = {
