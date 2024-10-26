@@ -49,7 +49,7 @@
 
   environment.persistence."/nix/persist" = {
     directories = [
-      "/var/lib/technitium-dns-server"
+      "/var/lib/private/technitium-dns-server"
     ];
   };
 }
