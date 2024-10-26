@@ -27,12 +27,13 @@
     defaultGateway6 = {address = "2400:8902:e002:59e0::ccef";};
   };
 
-  environment.systemPackages = [
-    nixpkgs-next.technitium-dns-server
-  ];
+  environment.systemPackages = [ ];
 
   services = {
-    technitium-dns-server.enable = true;
+    technitium-dns-server = {
+      enable = true;
+      package = nixpkgs-next.technitium-dns-server;
+    };
     caddy = {
       enable = true;
       virtualHosts = {
