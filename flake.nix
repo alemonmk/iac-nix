@@ -2,20 +2,20 @@
   description = "";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/89172919243df199fe237ba0f776c3e3e3d72367";
-    nixpkgs-next.url = "github:nixos/nixpkgs/1997e4aa514312c1af7e2bda7fad1644e778ff26";
+    nixpkgs.url = "github:nixos/nixpkgs/32e940c7c420600ef0d1ef396dc63b04ee9cad37";
+    nixpkgs-next.url = "github:nixos/nixpkgs/41dea55321e5a999b17033296ac05fe8a8b5a257";
     impermanence.url = "github:nix-community/impermanence/e337457502571b23e449bf42153d7faa10c0a562";
-    sops-nix.url = "github:Mic92/sops-nix/26642e8f193f547e72d38cd4c0c4e45b49236d27";
+    sops-nix.url = "github:Mic92/sops-nix/78a0e634fc8981d6b564f08b6715c69a755c4c7d";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs-next";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
-    disko.url = "github:nix-community/disko/4be2aadf13b67ffbb993deb73adff77c46b728fc";
+    disko.url = "github:nix-community/disko/09a776702b004fdf9c41a024e1299d575ee18a7d";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     # unattended-installer.url = "github:chrillefkr/nixos-unattended-installer";
     # unattended-installer.inputs.disko.follows = "disko";
     # unattended-installer.inputs.nixpkgs.follows = "nixpkgs";
-    nix-darwin.url = "github:LnL7/nix-darwin/64d9d1ae25215c274c37e3e4016977a6779cf0d3";
+    nix-darwin.url = "github:LnL7/nix-darwin/7840909b00fbd5a183008a6eb251ea307fe4a76e";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-next";
-    home-manager.url = "github:nix-community/home-manager/5ec753a1fc4454df9285d8b3ec0809234defb975";
+    home-manager.url = "github:nix-community/home-manager/93435d27d250fa986bfec6b2ff263161ff8288cb";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-next";
   };
 
