@@ -56,8 +56,9 @@
     };
     prometheus.exporters.chrony = {
       enable = true;
+      address = "0.0.0.0";
       extraFlags = [
-        "--chrony.address=\"127.0.0.1:323\""
+        "--chrony.address=127.0.0.1:323"
         "--no-collector.dns-lookups"
         "--collector.sources"
       ];
