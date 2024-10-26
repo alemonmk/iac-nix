@@ -49,7 +49,7 @@ in {
         after = ["network.target"];
         serviceConfig = {
           ExecStart = ''
-            ${cfg.package}/bin/chrony-exporter \
+            ${cfg.package}/bin/chrony_exporter \
                 --web.listen-address ${escapeShellArg "${cfg.address}:${toString cfg.port}"} \
                 ${escapeShellArgs cfg.extraFlags}
           '';
