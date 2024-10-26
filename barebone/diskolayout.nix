@@ -9,7 +9,7 @@
     content = {
       type = "gpt";
       partitions = {
-        efi = {
+        a-efi = {
           type = "EF00";
           start = "1M";
           size = "512M";
@@ -21,7 +21,7 @@
             mountOptions = ["umask=0077"];
           };
         };
-        root = {
+        b-root = {
           size = "4G";
           label = "ROOT";
           content = {
@@ -34,7 +34,7 @@
             };
           };
         };
-        nix-store = {
+        c-nix-store = {
           end = "-4G";
           label = "NIX";
           content = {
@@ -44,7 +44,7 @@
             mountOptions = ["noatime"];
           };
         };
-        swap = {
+        d-swap = {
           size = "100%";
           label = "SWAP";
           content = {
