@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/32e940c7c420600ef0d1ef396dc63b04ee9cad37";
     nixpkgs-next.url = "github:nixos/nixpkgs/41dea55321e5a999b17033296ac05fe8a8b5a257";
     impermanence.url = "github:nix-community/impermanence/e337457502571b23e449bf42153d7faa10c0a562";
-    sops-nix.url = "github:Mic92/sops-nix/78a0e634fc8981d6b564f08b6715c69a755c4c7d";
+    sops-nix.url = "github:Mic92/sops-nix/b2211d1a537136cc1d0d5c0af391e8712016b34e";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs-next";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
     disko.url = "github:nix-community/disko/09a776702b004fdf9c41a024e1299d575ee18a7d";
