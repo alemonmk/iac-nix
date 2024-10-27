@@ -74,6 +74,7 @@
   environment.persistence."/nix/persist" = {
     users.code-server = {
       directories = ["workspaces"];
+      files = [".config/sops/age/keys.txt"];
     };
   };
 }
