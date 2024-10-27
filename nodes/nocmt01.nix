@@ -6,6 +6,7 @@
 }: {
   imports = [
     ../base/configuration.nix
+    ./nocmt01-telegraf.nix
   ];
 
   sops = {
@@ -131,4 +132,9 @@
       };
     };
   };
+
+  environment.persistence."/nix/persist".directories = [
+    "/var/lib/oxidized/store"
+    "/var/lib/victoriametrics"
+  ];
 }
