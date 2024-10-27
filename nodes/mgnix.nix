@@ -27,7 +27,7 @@
     defaultGateway6 = {address = "2400:8902:e002:59e3::ccef";};
   };
 
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [alejandra];
 
   users.users.code-server = {
     home = "/home/code-server";
@@ -43,6 +43,7 @@
         vscodeExtensions = with nixpkgs-next.vscode-extensions; [
           bbenoist.nix
           jeff-hykin.better-nix-syntax
+          kamadorueda.alejandra
           davidanson.vscode-markdownlint
           shd101wyy.markdown-preview-enhanced
           uloco.theme-bluloco-light
