@@ -28,18 +28,18 @@
 
   environment.systemPackages = with pkgs; [];
 
-  environment.etc."smallstep/x509template.tpl".text = builtins.readFile ../blobs/step-ca/x509template.tpl;
-  environment.etc."smallstep/root_ca.crt".text = builtins.readFile ../blobs/root_ca.crt;
-  environment.etc."smallstep/intermediate_ca.crt".text = builtins.readFile ../blobs/step-ca/intermediate_ca.crt;
+  environment.etc."smallstep/x509template.tpl".text = builtins.readFile ../blobs/pki/step-ca/x509template.tpl;
+  environment.etc."smallstep/root_ca.crt".text = builtins.readFile ../blobs/pki/root_ca.crt;
+  environment.etc."smallstep/intermediate_ca.crt".text = builtins.readFile ../blobs/pki/step-ca/intermediate_ca.crt;
   environment.etc."smallstep/intermediate_ca_key" = {
-    text = builtins.readFile ../blobs/step-ca/intermediate_ca_key;
+    text = builtins.readFile ../blobs/pki/step-ca/intermediate_ca_key;
     mode = "0600";
   };
 
   services = {
     step-ca = {
       enable = true;
-      settings = builtins.fromJSON (builtins.readFile ../blobs/step-ca/ca.json);
+      settings = builtins.fromJSON (builtins.readFile ../blobs/pki/step-ca/ca.json);
       # intermediatePasswordFile = config.sops.secrets.ca.w1.private-key.path;
       address = "127.0.0.1";
       port = 8443;

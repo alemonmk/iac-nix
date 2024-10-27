@@ -24,7 +24,7 @@ modules:
       valid_rcodes:
         - NOERROR
       preferred_ip_protocol: "ip4"
-  dns_blocking:
+  dns_adblock:
     prober: dns
     timeout: 1s
     dns:
