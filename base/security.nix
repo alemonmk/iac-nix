@@ -3,7 +3,7 @@
   systemd.coredump.enable = false;
 
   security = {
-    pki.certificateFiles = [../blobs/root_ca.crt];
+    pki.certificateFiles = [../blobs/pki/root_ca.crt];
     pki.caCertificateBlacklist = [
       "BJCA Global Root CA1"
       "BJCA Global Root CA2"

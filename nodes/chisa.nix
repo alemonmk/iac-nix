@@ -53,7 +53,7 @@
   time.timeZone = "Asia/Taipei";
 
   security.pki = {
-    certificateFiles = [../blobs/root_ca.crt];
+    certificateFiles = [../blobs/pki/root_ca.crt];
     caCertificateBlacklist = [
       "BJCA Global Root CA1"
       "BJCA Global Root CA2"

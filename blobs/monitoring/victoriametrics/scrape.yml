@@ -1,0 +1,243 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: public-cloud-live-probe
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [icmp]
+    static_configs:
+    - targets:
+      - kotone.rmntn.net
+      - sumire.rmntn.net
+      - uzuki.rmntn.net
+      - sajuna.rmntn.net
+      - kumiko.rmntn.net
+      - sena.rmntn.net
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: localhost:9115
+    metric_relabel_configs:
+    - action: keep_metrics
+      regex:
+      - "probe_success"
+      - "probe_icmp_duration_seconds"
+    - action: drop
+      source_labels: [phase]
+      regex:
+      - resolve
+      - setup
+
+  - job_name: public-cloud-dc1-nodes
+    static_configs:
+    - targets:
+      - 10.91.145.17:9100
+      - 10.85.183.1:9100
+      - 10.85.183.2:9100
+      - 10.85.183.3:9100
+      - 10.85.183.4:9100
+      - 10.85.183.5:9100
+    metric_relabel_configs:
+    - action: drop_metrics
+      regex:
+      - "go_.+"
+      - "node_systemd.+"
+      - "node_filesystem.+"
+      - "apt_.+"
+      - "process_.+"
+      - "promhttp_.+"
+
+  - job_name: public-cloud-dc1-bird
+    static_configs:
+    - targets:
+      - 10.91.145.17:9324
+      - 10.85.183.1:9324
+      - 10.85.183.2:9324
+      - 10.85.183.3:9324
+      - 10.85.183.4:9324
+      - 10.85.183.5:9324
+    metric_relabel_configs:
+    - action: keep
+      source_labels: [proto]
+      regex:
+      - BGP
+    - action: keep_metrics
+      regex:
+      - "bird_protocol_uptime"
+      - "bird_protocol_prefix_export_count"
+
+  - job_name: public-cloud-dc1-consul
+    metrics_path: /v1/agent/metrics
+    params:
+      format: ["prometheus"]
+    dns_sd_configs:
+    - names:
+      - consul.service.consul
+      type: A
+      port: 8500
+    metric_relabel_configs:
+    - action: drop_metrics
+      regex:
+      - "go_.+"
+      - "consul_acl_.+"
+      - "process_.+"
+
+  - job_name: public-cloud-dc1-nomad
+    metrics_path: /v1/metrics
+    params:
+      format: ["prometheus"]
+    dns_sd_configs:
+    - names:
+      - nomad.service.consul
+      type: A
+      port: 4646
+    metric_relabel_configs:
+    - action: drop_metrics
+      regex:
+      - "go_.+"
+      - "process_.+"
+
+  - job_name: chrony
+    static_configs:
+    - targets:
+      - rmnmvntpsrv01.snct.rmntn.net:9123
+    metric_relabel_configs:
+    - action: drop_metrics
+      regex:
+      - "go_.+"
+      - "process_.+"
+      - "promhttp_.+"
+
+  - job_name: appmon-dns-ad
+    metrics_path: /probe
+    scrape_interval: 1m
+    params:
+      module: [dns_ad]
+    static_configs:
+    - targets:
+      - 10.85.11.1
+      - 10.85.11.2
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: localhost:9115
+    metric_relabel_configs:
+    - action: keep_metrics
+      regex:
+      - "probe_success"
+
+  - job_name: appmon-dns-adblock
+    metrics_path: /probe
+    scrape_interval: 1m
+    params:
+      module: [dns_adblock]
+    static_configs:
+    - targets:
+      - 10.85.10.1
+      - 10.85.10.2
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: localhost:9115
+    metric_relabel_configs:
+    - action: keep_metrics
+      regex:
+      - "probe_success"
+
+  - job_name: appmon-http-generic
+    metrics_path: /probe
+    scrape_interval: 5m
+    params:
+      module: [generic_http]
+    static_configs:
+    - targets:
+      - https://rmnmvdnldsv02.snct.rmntn.net/usenet/
+      - https://rmnmvdnldsv02.snct.rmntn.net/general/login
+      - https://rmnmvdnldsv02.snct.rmntn.net/syncthing/
+      - https://megumi.snct.rmntn.net
+      - https://ayanami.snct.rmntn.net
+      - https://mo-apcont-n1.noc.snct.rmntn.net
+      - https://mo-sfw01-mgmt.noc.snct.rmntn.net
+      - https://mo-sfw02-mgmt.noc.snct.rmntn.net
+      - https://rmnmvvmvcs.snct.rmntn.net/ui/
+      - https://vdi-hcs1.snct.rmntn.net
+      - https://vdi.snct.rmntn.net
+      - https://atpki.snct.rmntn.net/acme/w1/directory
+      - http://rmnmvswuds.snct.rmntn.net:8530
+      - https://rmnmvswuds.snct.rmntn.net:8531
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: localhost:9115
+    metric_relabel_configs:
+    - action: keep_metrics
+      regex:
+      - "probe_success"
+      - "probe_ssl_last_chain_expiry_timestamp_seconds"
+
+  - job_name: appmon-tcp-generic
+    metrics_path: /probe
+    scrape_interval: 1m
+    params:
+      module: [generic_tcp]
+    static_configs:
+    - targets:
+      - rmnmpfss01:445
+      - rmnmvfss02:445
+      - rmnmpfss03:445
+      - rmnmvadb01:49987
+      - rmnmvadb01:50011
+      - rmnmvadb01:53742
+      - rmnmvadpki:16384
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: localhost:9115
+    metric_relabel_configs:
+    - action: keep_metrics
+      regex:
+      - "probe_success"
+
+  - job_name: appmon-icmp-dhcpsrv
+    metrics_path: /probe
+    scrape_interval: 1m
+    params:
+      module: [icmp]
+    static_configs:
+    - targets:
+      - rmnmvdhc01
+      - rmnmvdhc02
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: localhost:9115
+    metric_relabel_configs:
+    - action: keep_metrics
+      regex:
+      - "probe_success"
+      - "probe_icmp_duration_seconds"
+    - action: drop
+      source_labels: [phase]
+      regex:
+      - resolve
+      - setup

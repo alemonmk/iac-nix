@@ -30,20 +30,17 @@
     victoriametrics = {
       enable = true;
       retentionPeriod = 24;
-      extraOptions = ["-selfScrapeInterval=15s"];
-    };
-
-    vmagent = {
-      enable = true;
-      remoteWrite.url = "http://localhost:8428/api/v1/write";
-      prometheusConfig = builtins.fromJSON (builtins.readFile ../blobs/victoriametrics/scrape.json);
-      extraArgs = ["-remoteWrite.tmpDataPath=/tmp/vmscrape"];
+      extraOptions = [
+        "-selfScrapeInterval=15s"
+        "-promscrape.config.strictParse=false"
+        "-promscrape.config=${../blobs/monitoring/victoriametrics/scrape.yml}"
+      ];
     };
 
     prometheus.exporters.blackbox = {
       enable = true;
       listenAddress = "127.0.0.1";
-      configFile = ../blobs/victoriametrics/blackbox.yml;
+      configFile = ../blobs/monitoring/victoriametrics/blackbox.yml;
     };
 
     grafana = {
@@ -76,7 +73,7 @@
     oxidized = {
       enable = true;
       # configFile = config.sops.secrets.oxidized.cfg.path;
-      routerDB = ../blobs/oxidized/routers.db;
+      routerDB = ../blobs/monitoring/oxidized/routers.db;
     };
 
     caddy = {
