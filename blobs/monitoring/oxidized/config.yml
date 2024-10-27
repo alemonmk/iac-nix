@@ -1,0 +1,44 @@
+    ---
+    username: ncm
+    password: ${config.sops.placeholder.ncm-password}
+    interval: 3600
+    use_syslog: true
+    debug: false
+    threads: 30
+    timeout: 20
+    retries: 3
+    prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+    rest: 127.0.0.1:8888/ncm
+    next_adds_job: false
+    vars:
+      auth_methods:
+        - password
+        - keyboard-interactive
+    stats:
+      history_size: 10
+    input:
+      default: ssh
+      debug: false
+      ssh:
+        secure: false
+      utf8_encoded: true
+    output:
+      default: git
+      git:
+        user: Network Configuration Manager
+        email: apps@snct.rmntn.net
+        repo: '/var/lib/oxidized/store'
+    source:
+      default: csv
+      debug: false
+      csv:
+        file: '/var/lib/oxidized/router.db'
+        delimiter: !ruby/regexp /:/
+        map:
+          name: 0
+          ip: 1
+          model: 2
+          username: 3
+          password: 4
+        vars_map:
+          enable: 5
