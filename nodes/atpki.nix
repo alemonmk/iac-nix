@@ -8,6 +8,16 @@
     ../base/configuration.nix
   ];
 
+  sops = {
+    age.sshKeyPaths = ["/etc/sh/ssh_host_ed25519_key"];
+    secrets.w1-pkey-password = {
+      mode = "0440";
+      owner = config.users.users.step-ca.name;
+      group = config.users.users.step-ca.group;
+      sopsFile = ../secrets/atpki/ca-w1.yaml;
+    };
+  };
+
   networking = {
     hostName = "rmnmvatpki";
     interfaces.ens192.ipv4.addresses = [
@@ -40,7 +50,7 @@
     step-ca = {
       enable = true;
       settings = builtins.fromJSON (builtins.readFile ../blobs/pki/step-ca/ca.json);
-      # intermediatePasswordFile = config.sops.secrets.ca.w1.private-key.path;
+      intermediatePasswordFile = config.sops.secrets.w1-pkey-password.path;
       address = "127.0.0.1";
       port = 8443;
     };
