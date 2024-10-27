@@ -27,7 +27,7 @@
     defaultGateway6 = {address = "2400:8902:e002:59e0::ccef";};
   };
 
-  environment.systemPackages = [ ];
+  environment.systemPackages = [];
 
   services = {
     technitium-dns-server = {
@@ -48,9 +48,5 @@
     };
   };
 
-  environment.persistence."/nix/persist" = {
-    directories = [
-      "/var/lib/private/technitium-dns-server"
-    ];
-  };
+  environment.persistence."/nix/persist".directories = ["/var/lib/private/technitium-dns-server"];
 }

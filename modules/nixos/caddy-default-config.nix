@@ -19,8 +19,6 @@ in {
         };
       };
 
-    environment.persistence."/nix/persist" = {
-      directories = ["/var/lib/caddy/.local"];
+      environment.persistence."/nix/persist".directories = ["/var/lib/caddy/.local"];
     };
-  };
 }
