@@ -134,6 +134,7 @@
   };
 
   environment.persistence."/nix/persist".directories = [
+    "/var/lib/grafana"
     "/var/lib/oxidized/store"
     "/var/lib/victoriametrics"
   ];
