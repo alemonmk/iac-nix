@@ -101,6 +101,9 @@
       cleanup = "zap";
       upgrade = true;
     };
+    brews = [
+      "unar"
+    ];
     casks = [
       # everyday workhorse
       "alacritty"
