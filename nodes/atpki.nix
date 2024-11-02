@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  nixpkgs-next,
   ...
 }: {
   imports = [
@@ -53,6 +54,7 @@
     };
     caddy = {
       enable = true;
+      package = nixpkgs-next.caddy;
       acmeCA = lib.mkForce "http://127.0.0.1:8443/acme/w1/directory";
       virtualHosts = {
         "atpki.snct.rmntn.net" = {
@@ -60,9 +62,8 @@
             reverse_proxy https://localhost:8443 {
                 header_up X-Real-IP {remote_host}
                     transport http {
-                        tls_trust_pool file {
-                            pem_file /etc/smallstep/root_ca.crt
-                        }
+                        tls_trust_pool file /etc/smallstep/root_ca.crt
+                        tls_server_name atpki.snct.rmntn.net
                     }
                 }
             }
