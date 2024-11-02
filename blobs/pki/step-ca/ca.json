@@ -39,7 +39,7 @@
                 },
                 "options": {
                     "x509": {
-                        "templateFile": "/etc/smallstep/x509defaults.tpl"
+                        "templateFile": "/etc/smallstep/x509template.tpl"
                     },
                     "ssh": {}
                 }
