@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   boot.tmp.cleanOnBoot = true;
   systemd.coredump.enable = false;
 
@@ -45,7 +49,7 @@
     hashedPassword = "$y$j9T$4aptXoA1kNKy28totn4Vb0$wDbr9oHaSmcMl.OiSXhilWNOIT0GazwRmt9dfVAhueD";
   };
   users.ms-ad = {
-    enable = true;
+    enable = lib.mkDefault true;
     domain = "snct.rmntn.net";
   };
 
