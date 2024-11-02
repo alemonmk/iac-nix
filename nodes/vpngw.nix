@@ -31,6 +31,8 @@
     "net.ipv6.conf.all.forwarding" = "1";
   };
 
+  users.ms-ad.enable = false;
+
   services = {
     zerotierone = {
       enable = true;
