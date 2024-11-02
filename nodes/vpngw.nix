@@ -84,7 +84,7 @@
             hold time 60;
             graceful restart on;
             long lived graceful restart on;
-            ipv4 {
+            ipv6 {
                 import all;
                 export where net ~ 2400:8902:e002:59af::/64;
             };
