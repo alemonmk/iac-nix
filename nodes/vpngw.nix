@@ -92,4 +92,6 @@
       '';
     };
   };
+
+  environment.persistence."/nix/persist".directories = ["/var/lib/zerotier-one"];
 }
