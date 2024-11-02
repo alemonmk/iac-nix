@@ -35,6 +35,9 @@
       }
     ];
     defaultGateway6 = {address = "2400:8902:e002:59ee::ccef";};
+    hosts = {
+      "127.0.0.1" = ["atpki.snct.rmntn.net"];
+    };
   };
 
   environment.systemPackages = with pkgs; [];
@@ -55,7 +58,7 @@
     caddy = {
       enable = true;
       package = nixpkgs-next.caddy;
-      acmeCA = lib.mkForce "http://127.0.0.1:8443/acme/w1/directory";
+      acmeCA = lib.mkForce "https://atpki.snct.rmntn.net:8443/acme/w1/directory";
       virtualHosts = {
         "atpki.snct.rmntn.net" = {
           extraConfig = ''
