@@ -74,7 +74,7 @@
 
   environment.persistence."/nix/persist" = {
     directories = [
-      "/var/lib/step-ca"
+      "/var/lib/private/step-ca"
     ];
   };
 }
