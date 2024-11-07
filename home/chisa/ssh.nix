@@ -11,6 +11,10 @@
           PreferredAuthentications = "publickey";
         };
       };
+      "private.rmntn.net" = {
+        host = "*.snct.rmntn.net";
+        user = "dsvcadmin@snct.rmntn.net";
+      };
       "ignore-hostkey" = {
         host = "10.1.1.* 192.168.1.*";
         extraOptions = {
