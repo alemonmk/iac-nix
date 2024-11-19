@@ -10,7 +10,7 @@
   ];
 
   sops = {
-    age.sshKeyPaths = ["/etc/sh/ssh_host_ed25519_key"];
+    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
     age.generateKey = true;
     secrets.entra-client-id = {
       mode = "0440";
@@ -25,6 +25,9 @@
       sopsFile = ../secrets/nocmt01/entraid.yaml;
     };
     secrets.ncm-password = {
+      mode = "0440";
+      owner = config.users.users.oxidized.name;
+      group = config.users.users.oxidized.group;
       sopsFile = ../secrets/nocmt01/oxidized.yaml;
     };
     secrets.monitoring-creds = {
