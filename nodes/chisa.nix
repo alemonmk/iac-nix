@@ -91,6 +91,7 @@
     terraform
     consul
     nomad
+    alejandra
   ];
   homebrew = {
     enable = true;
