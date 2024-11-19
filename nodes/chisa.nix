@@ -3,10 +3,8 @@
 
   nixpkgs.hostPlatform = "x86_64-darwin";
   services.nix-daemon.enable = true;
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-    auto-optimise-store = true;
-  };
+  nix.settings.experimental-features = "nix-command flakes";
+  nix.optimise.automatic = true;
   nix.gc.automatic = true;
   nixpkgs.config.allowUnfree = true;
 
