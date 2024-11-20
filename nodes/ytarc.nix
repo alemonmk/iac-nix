@@ -8,6 +8,17 @@
     ../base/configuration.nix
   ];
 
+  sops = {
+    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    age.generateKey = true;
+    secrets.youtube-cookies = {
+      mode = "0440";
+      uid = 2500;
+      gid = 2500;
+      sopsFile = ../secrets/ytarc/youtube-cookies.yaml;
+    };
+  };
+
   networking = {
     hostName = "rmnmvytarc";
     interfaces.ens192.ipv4.addresses = [
@@ -51,10 +62,11 @@
         GID = "2500";
         URL_PREFIX = "/archiver/";
         OUTPUT_TEMPLATE = "%(uploader)s/%(upload_date>%Y)s/[%(upload_date>%y%m%d)s][%(id)s].%(ext)s";
-        YTDL_OPTIONS = "{\"source_address\":\"0.0.0.0\",\"writeinfojson\":true,\"writesubtitles\":true,\"subtitleslangs\":[\"en\",\"zh-tw\",\"-live_chat\"],\"postprocessors\":[{\"key\":\"FFmpegEmbedSubtitle\",\"already_have_subtitle\":false},{\"key\":\"FFmpegMetadata\",\"add_chapters\":true}]}";
+        YTDL_OPTIONS = "{\"cookiefile\":\"/app/cookies.txt\",\"source_address\":\"0.0.0.0\",\"writeinfojson\":true,\"writesubtitles\":true,\"subtitleslangs\":[\"en\",\"zh-tw\",\"-live_chat\"],\"postprocessors\":[{\"key\":\"FFmpegEmbedSubtitle\",\"already_have_subtitle\":false},{\"key\":\"FFmpegMetadata\",\"add_chapters\":true}]}";
       };
       volumes = [
         "/mnt/pfs3/ytarchive:/downloads"
+        "${config.sops.secrets.youtube-cookies.path}:/app/cookies.txt"
       ];
     };
   };
