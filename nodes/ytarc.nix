@@ -78,7 +78,7 @@
     caddy = {
       enable = true;
       virtualHosts = {
-        "ytarc.noc.snct.rmntn.net" = {
+        "ytarc.snct.rmntn.net" = {
           extraConfig = ''
             reverse_proxy /archiver/* localhost:8081 {
                     header_up X-Real-IP {remote_host}
