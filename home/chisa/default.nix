@@ -12,6 +12,8 @@
     CONSUL_HTTP_ADDR = "http://10.85.183.1:8500";
   };
 
+  programs.zsh.enable = true;
+
   imports = [
     ./ssh.nix
     ./git.nix
