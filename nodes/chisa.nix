@@ -92,6 +92,8 @@
     consul
     nomad
     alejandra
+    sops
+    age
   ];
   homebrew = {
     enable = true;
@@ -110,34 +112,34 @@
         greedy = true;
       })
       [
-      # everyday workhorse
-      "alacritty"
-      "adobe-acrobat-reader"
-      "araxis-merge"
-      "drawio"
-      "firefox"
-      "visual-studio-code"
-      # system utilities
-      "coconutbattery"
-      "keyboardcleantool"
-      "linearmouse"
-      "openinterminal-lite"
-      "wireshark"
-      "vmware-fusion"
-      "zerotier-one"
-      "yubico-yubikey-manager"
-      # system management
-      "vmware-horizon-client"
-      "windows-app"
-      # remote support and communication
-      "anydesk"
-      "wechat"
-      "whatsapp"
-      "microsoft-teams"
-      "voov-meeting"
-      "webex"
-      "zoom"
-    ];
+        # everyday workhorse
+        "alacritty"
+        "adobe-acrobat-reader"
+        "araxis-merge"
+        "drawio"
+        "firefox"
+        "visual-studio-code"
+        # system utilities
+        "coconutbattery"
+        "keyboardcleantool"
+        "linearmouse"
+        "openinterminal-lite"
+        "wireshark"
+        "vmware-fusion"
+        "zerotier-one"
+        "yubico-yubikey-manager"
+        # system management
+        "vmware-horizon-client"
+        "windows-app"
+        # remote support and communication
+        "anydesk"
+        "wechat"
+        "whatsapp"
+        "microsoft-teams"
+        "voov-meeting"
+        "webex"
+        "zoom"
+      ];
     masApps = {
       "Brother P-touch Editor" = 1453365242;
       "Bitwarden" = 1352778147;
