@@ -1,5 +1,6 @@
 keys:
   - &nix-mgr age1fddrzze4llgrm87eudneguhpjm3al0h5urkwpvh8xf9wgtghmyfqftr7ue
+  - &chisa age1n3u2cl6w3m693auxqwvayf0pzjg9m3kmraqtepcsf9ysyh4f348sjveq3t
   - &rmnmvatpki age17ypjg8tgv6j5h533xw0hv4v2zpywwt52cr44f0d7wms7lr62xsxqpfen8y
   - &rmnmvytarc age103gpy9lpcwtxc3zklhz9xd2xxjxqvw8qmpdefce4c9p4c92kcfhs9469p4
 creation_rules:
@@ -7,17 +8,21 @@ creation_rules:
     key_groups:
       - age:
         - *nix-mgr
+        - *chisa
   - path_regex: secrets/atpki/[^/]+\.(yaml|json|env|ini)$
     key_groups:
       - age:
         - *nix-mgr
+        - *chisa
         - *rmnmvatpki
   - path_regex: secrets/nocmt01/[^/]+\.(yaml|json|env|ini)$
     key_groups:
       - age:
         - *nix-mgr
+        - *chisa
   - path_regex: secrets/ytarc/[^/]+\.(yaml|json|env|ini)$
     key_groups:
       - age:
         - *nix-mgr
+        - *chisa
         - *rmnmvytarc
