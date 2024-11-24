@@ -15,7 +15,6 @@
   imports = [
     ./ssh.nix
     ./git.nix
-    ./fileutils.nix
     ./alacritty.nix
   ];
 }

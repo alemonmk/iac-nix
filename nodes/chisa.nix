@@ -162,7 +162,8 @@
 
   environment = {
     shellAliases = {
-      ls = "eza -al --group-directories-first --git-repos --total-size";
+      ls = "eza -aalh -s type --git --git-repos";
+      lt = "eza -lhT -s type --git --git-repos --git-ignore";
       find = "fd -HIu";
     };
     variables = {
