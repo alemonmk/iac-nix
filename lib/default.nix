@@ -92,7 +92,10 @@ in {
           overlays = [(import ../overlays)];
           config.allowUnfree = true;
         };
-        nixpkgs-next = import nixpkgs-next {inherit system;};
+        nixpkgs-next = import nixpkgs-next {
+          inherit system;
+          config.allowUnfree = true;
+        };
       };
       modules =
         [
