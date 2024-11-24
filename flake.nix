@@ -12,8 +12,9 @@
     # unattended-installer.url = "github:chrillefkr/nixos-unattended-installer";
     # unattended-installer.inputs.disko.follows = "disko";
     # unattended-installer.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs?ref=nixpkgs-24.05-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-next";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     home-manager.url = "github:nix-community/home-manager?ref=release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-next";
   };
@@ -26,19 +27,20 @@
     sops-nix,
     disko,
     # unattended-installer,
+    nixpkgs-darwin,
     nix-darwin,
     home-manager,
     ...
   } @ inputs: {
     lib = import ./lib inputs;
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-    formatter.x86_64-darwin = nixpkgs-next.legacyPackages.x86_64-darwin.alejandra;
+    formatter.x86_64-darwin = nixpkgs-darwin.legacyPackages.x86_64-darwin.alejandra;
     devShells.x86_64-linux.default = import ./devshell.nix {
       inherit nixpkgs;
       system = "x86_64-linux";
     };
     devShells.x86_64-darwin.default = import ./devshell.nix {
-      inherit nixpkgs;
+      nixpkgs = nixpkgs-darwin;
       system = "x86_64-darwin";
     };
     nixosModules = import ./modules/nixos;
