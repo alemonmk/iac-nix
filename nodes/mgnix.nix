@@ -27,7 +27,10 @@
     defaultGateway6 = {address = "2400:8902:e002:59e3::ccef";};
   };
 
-  environment.systemPackages = with pkgs; [alejandra];
+  environment.systemPackages = with pkgs; [
+    alejandra
+    sops
+  ];
 
   users.users.code-server = {
     home = "/home/code-server";
@@ -46,6 +49,7 @@
           kamadorueda.alejandra
           davidanson.vscode-markdownlint
           shd101wyy.markdown-preview-enhanced
+          signageos.signageos-vscode-sops
           uloco.theme-bluloco-light
         ];
       };
