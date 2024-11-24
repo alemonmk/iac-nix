@@ -103,7 +103,13 @@
     brews = [
       "unar"
     ];
-    casks = [
+    casks =
+      map
+      (x: {
+        name = x;
+        greedy = true;
+      })
+      [
       # everyday workhorse
       "alacritty"
       "adobe-acrobat-reader"
