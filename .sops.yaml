@@ -2,8 +2,7 @@ keys:
   - &nix-mgr age1fddrzze4llgrm87eudneguhpjm3al0h5urkwpvh8xf9wgtghmyfqftr7ue
   - &chisa age1n3u2cl6w3m693auxqwvayf0pzjg9m3kmraqtepcsf9ysyh4f348sjveq3t
   - &kyouka age18mxj9jae06at5tv9q6dk2t93v0n7c2lmcuml0qdskea2tncjlafshanl25
-  - &rmnmvatpki age17ypjg8tgv6j5h533xw0hv4v2zpywwt52cr44f0d7wms7lr62xsxqpfen8y
-  - &rmnmvytarc age103gpy9lpcwtxc3zklhz9xd2xxjxqvw8qmpdefce4c9p4c92kcfhs9469p4
+  - &rmnmvatpki age17ypjg8tgv6j5h533xw0hv4v2zpywwt52cr44f0d7wms7lr62xsxqpfen8y=
 creation_rules:
   - path_regex: secrets(\\|/)[^/]+\.(yaml|json|env|ini)$
     key_groups:
@@ -24,10 +23,3 @@ creation_rules:
         - *nix-mgr
         - *chisa
         - *kyouka
-  - path_regex: secrets(\\|/)ytarc(\\|/)[^/]+\.(yaml|json|env|ini)$
-    key_groups:
-      - age:
-        - *nix-mgr
-        - *chisa
-        - *kyouka
-        - *rmnmvytarc
