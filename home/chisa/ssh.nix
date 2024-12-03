@@ -16,7 +16,7 @@
         user = "dsvcadmin@snct.rmntn.net";
       };
       "ignore-hostkey" = {
-        host = "10.1.1.* 192.168.1.*";
+        host = "10.* 172.16.* 192.168.*";
         extraOptions = {
           StrictHostKeyChecking = "no";
           userKnownHostsFile = "/dev/null";
