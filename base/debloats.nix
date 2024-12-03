@@ -11,6 +11,10 @@
   environment.stub-ld.enable = false;
   boot.enableContainers = false;
   system.disableInstallerTools = true;
+  system.tools = {
+    nixos-rebuild.enable = true;
+    nixos-version.enable = true;
+  };
   documentation.enable = false;
   services.lvm.enable = false;
   programs.command-not-found.enable = false;
