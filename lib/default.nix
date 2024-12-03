@@ -38,7 +38,7 @@ in {
         imports = [
           "${modulesPath}/installer/netboot/netboot-minimal.nix"
         ];
-        system.stateVersion = "24.05";
+        system.stateVersion = "24.11";
         boot.kernelPackages = pkgs.linuxPackages_6_6;
         boot.kernelParams = ["quiet" "systemd.show_status=no"];
         boot.initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod" "vmxnet3" "vmw_vmci" "vmwgfx" "vmw_vsock_vmci_transport"];
