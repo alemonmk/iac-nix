@@ -42,9 +42,10 @@
   networking.hostName = "nixos-installed";
   networking.useDHCP = true;
 
-  environment.systemPackages = [pkgs.git pkgs.dnsutils];
+  environment.systemPackages = [pkgs.git];
 
   services = {
+    lvm.enable = false;
     openssh = {
       enable = true;
       hostKeys = [

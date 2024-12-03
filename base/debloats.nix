@@ -9,4 +9,9 @@
   fonts.fontconfig.enable = false;
   environment.ldso32 = null;
   environment.stub-ld.enable = false;
+  boot.enableContainers = false;
+  system.disableInstallerTools = true;
+  documentation.enable = false;
+  services.lvm.enable = false;
+  programs.command-not-found.enable = false;
 }

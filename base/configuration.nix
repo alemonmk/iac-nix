@@ -22,6 +22,5 @@
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  programs.mtr.enable = true;
-  environment.systemPackages = [pkgs.dnsutils pkgs.git];
+  environment.systemPackages = [pkgs.git];
 }
