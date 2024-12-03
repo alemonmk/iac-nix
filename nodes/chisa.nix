@@ -47,7 +47,10 @@
       TrackpadRightClick = true;
     };
   };
-  system.keyboard.remapCapsLockToControl = true;
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToControl = true;
+  };
   time.timeZone = "Asia/Taipei";
 
   security.pki = {
