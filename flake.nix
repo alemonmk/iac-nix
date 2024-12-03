@@ -2,7 +2,7 @@
   description = "";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     nixpkgs-next.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     impermanence.url = "github:nix-community/impermanence";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -12,10 +12,10 @@
     # unattended-installer.url = "github:chrillefkr/nixos-unattended-installer";
     # unattended-installer.inputs.disko.follows = "disko";
     # unattended-installer.inputs.nixpkgs.follows = "nixpkgs";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs?ref=nixpkgs-24.05-darwin";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs?ref=nixpkgs-24.11-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
-    home-manager.url = "github:nix-community/home-manager?ref=release-24.05";
+    home-manager.url = "github:nix-community/home-manager?ref=release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-next";
   };
 

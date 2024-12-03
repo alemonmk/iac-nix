@@ -5,7 +5,7 @@
   modulesPath,
   ...
 }: {
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
