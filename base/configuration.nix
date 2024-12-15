@@ -18,8 +18,6 @@
   time.timeZone = "Asia/Taipei";
   i18n.defaultLocale = "en_US.UTF8";
 
-  services.fstrim.enable = true;
-
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   environment.systemPackages = [pkgs.git];
