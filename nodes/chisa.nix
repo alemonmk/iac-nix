@@ -27,7 +27,7 @@
         "/Applications/Bitwarden.app"
         "/Applications/Firefox.app"
         "/Applications/Visual Studio Code.app"
-        "/Applications/VMware Horizon Client.app"
+        "/Applications/Omnissa Horizon Client.app"
         "/Applications/Windows App.app"
         "/Applications/VMware Fusion.app"
       ];
@@ -132,7 +132,7 @@
         "zerotier-one"
         "yubico-yubikey-manager"
         # system management
-        "vmware-horizon-client"
+        "omnissa-horizon-client"
         "windows-app"
         # remote support and communication
         "anydesk"
