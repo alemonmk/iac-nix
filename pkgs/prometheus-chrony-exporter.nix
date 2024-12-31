@@ -5,16 +5,16 @@
 }:
 buildGoModule rec {
   pname = "chrony-exporter";
-  version = "0.10.1";
+  version = "0.11.0";
 
   src = fetchFromGitHub {
     owner = "SuperQ";
     repo = "chrony_exporter";
-    rev = "cdc0e9642fc3a55c53b7b52eb66ee0bf37f1061b";
-    sha256 = "sha256-EDYvC3tucGzLb+OxCA8yiVsPU8ai3bXTzzp39qIsAr8=";
+    rev = "5079704a720fdc8d592b6c4e97de0ced2b980b2b";
+    sha256 = "sha256-xHI0BYli82cCGFtv58jJ+PpjR/q1ReWjUqRDtp89w+Y=";
   };
 
-  vendorHash = "sha256-HLSa0CvUgEaK8Htmgm5QWNRWAFZGALNPNLr2zeJwU3c=";
+  vendorHash = "sha256-czAkqEeGRSdMJmSZNwzAMAk045p4aog4XOQUU48jeOo=";
 
   meta = with lib; {
     description = "Prometheus Exporter for Chrony NTP.";
