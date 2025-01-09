@@ -17,6 +17,7 @@
       "com.apple.trackpad.enableSecondaryClick" = true;
     };
     alf.globalstate = 0;
+    controlcenter.BatteryShowPercentage = true;
     dock = {
       magnification = true;
       persistent-apps = [
@@ -34,8 +35,11 @@
     };
     finder = {
       ShowPathbar = true;
+      AppleShowAllExtensions = true;
       FXPreferredViewStyle = "Nlsv";
       FXEnableExtensionChangeWarning = false;
+      ShowMountedServersOnDesktop = true;
+      _FXSortFoldersFirst = true;
     };
     loginwindow = {
       DisableConsoleAccess = true;
