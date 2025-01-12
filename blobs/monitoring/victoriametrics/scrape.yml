@@ -199,6 +199,7 @@ scrape_configs:
       - rmnmpfss01:445
       - rmnmvfss02:445
       - rmnmpfss03:445
+      - rmnmvfss04:445
       - rmnmvadb01:49987
       - rmnmvadb01:50011
       - rmnmvadb01:53742
