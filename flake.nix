@@ -56,6 +56,7 @@
       rmnmvnocmt01 = finalSystem [./nodes/nocmt01.nix];
       rmnmvmgnix = finalSystem [./nodes/mgnix.nix];
       rmnmvvpngw = finalSystem [./nodes/vpngw.nix];
+      rmnmvwebgw = finalSystem [./nodes/webgw.nix];
     };
     darwinConfigurations = {
       chisa = nix-darwin.lib.darwinSystem {

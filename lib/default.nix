@@ -89,11 +89,12 @@ in {
         inherit impermanence sops-nix;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [(import ../overlays)];
+          overlays = [(import ../overlays/stable.nix)];
           config.allowUnfree = true;
         };
         nixpkgs-next = import nixpkgs-next {
           inherit system;
+          overlays = [(import ../overlays/next.nix)];
           config.allowUnfree = true;
         };
       };
