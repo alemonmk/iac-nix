@@ -96,6 +96,7 @@ in {
           inherit system;
           overlays = [(import ../overlays/next.nix)];
           config.allowUnfree = true;
+          config.permittedInsecurePackages = ["squid-6.12"];
         };
       };
       modules =
