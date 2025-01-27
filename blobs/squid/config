@@ -48,7 +48,7 @@ http_access allow safe-methods fss04 ixsystems
 http_access allow safe-methods fss04 github
 
 acl kms src 10.85.20.2
-acl slitaz dstdomain mirror.slitaz.org
+acl slitaz dstdomain mirror.slitaz.org mirror1.slitaz.org
 http_access allow safe-methods kms slitaz
 
 acl mgmt-workstation src 10.85.20.1
