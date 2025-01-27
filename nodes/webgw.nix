@@ -25,7 +25,10 @@
       }
     ];
     defaultGateway6 = {address = "2400:8902:e002:59e3::ccef";};
-    proxy = lib.mkForce {};
+    proxy = lib.mkForce {
+      httpProxy = null;
+      httpsProxy = null;
+    };
   };
 
   environment.etc."squid/acl/entra-id".text = builtins.readFile ../blobs/squid/acl/entra-id;
