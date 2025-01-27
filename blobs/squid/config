@@ -39,7 +39,6 @@ http_access allow safe-methods dns blocking-lists
 
 acl wsus src 10.85.11.4
 acl ms-update dstdomain "/etc/squid/acl/wsus"
-cache deny ms-update
 http_access allow safe-methods wsus ms-update
 
 acl fss04 src 10.81.70.18
@@ -79,6 +78,7 @@ http_access allow safe-methods entra-connect entra-id
 http_access allow safe-methods entra-connect powershell-gallery
 http_access allow safe-methods veeam exchange-online
 
+cache deny all
 http_access deny all
 
 httpd_suppress_version_string on
@@ -90,7 +90,6 @@ reply_header_access X-Cache deny all
 reply_header_access X-Cache-Lookup deny all
 
 http_port 10.85.20.10:3128 connection-auth=off
-cache deny all
 
 buffered_logs on
 strip_query_terms on
