@@ -80,6 +80,16 @@
       ];
     };
 
+    victorialogs = {
+      enable = true;
+      extraOptions = [
+        "-retentionPeriod=26w"
+        "-defaultMsgValue=none"
+        "-syslog.listenAddr.tcp=:3514"
+        "-syslog.listenAddr.udp=:3514"
+      ];
+    };
+
     prometheus.exporters.blackbox = {
       enable = true;
       listenAddress = "127.0.0.1";
@@ -140,5 +150,6 @@
     "/var/lib/grafana"
     "/var/lib/oxidized/store"
     "/var/lib/victoriametrics"
+    "/var/lib/victorialogs"
   ];
 }
