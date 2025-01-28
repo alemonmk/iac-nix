@@ -32,7 +32,7 @@ http_access allow safe-methods nixos-src golang
 http_access allow safe-methods nixos-src rust-crates
 
 acl dns src 10.85.10.1 10.85.10.2
-acl technitium dstdomain download.technitium.com packages.microsoft.com
+acl technitium dstdomain go.technitium.com download.technitium.com packages.microsoft.com
 acl blocking-lists dstdomain s3.amazonaws.com raw.githubusercontent.com v.firebog.net adaway.org gitlab.com hostfiles.frogeye.fr osint.digitalside.it bitbucket.org phishing.army urlhaus.abuse.ch zerodot1.gitlab.io
 http_access allow safe-methods dns technitium
 http_access allow safe-methods dns blocking-lists
