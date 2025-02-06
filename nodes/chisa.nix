@@ -111,6 +111,7 @@
     };
     brews = [
       "unar"
+      "uv"
     ];
     casks =
       map
