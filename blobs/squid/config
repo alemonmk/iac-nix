@@ -22,7 +22,7 @@ acl nixos-src src 10.85.20.8 # RMNMVYTARC
 acl nixos-src src 10.85.20.11 # RMNMVMGNIX
 acl nixos-src src 10.85.101.17 # RMNMVATPKI
 acl nixos dstdomain cache.nixos.org tarballs.nixos.org channels.nixos.org code.rmntn.net
-acl github dstdomain github.com api.github.com codeload.github.com raw.githubusercontent.com github-production-release-asset-2e65be.s3.amazonsaws.com
+acl github dstdomain github.com api.github.com codeload.github.com raw.githubusercontent.com github-production-release-asset-2e65be.s3.amazonsaws.com objects.githubusercontent.com
 acl golang dstdomain proxy.golang.org storage.googleapis.com
 acl rust-crates dstdomain crates.io static.crates.io
 acl debian dstdomain deb.debian.org security.debian.org extrepo-team.pages.debian.net dl.cloudsmith.io
