@@ -6,5 +6,5 @@
 in
   pkgs.mkShell {
     name = "Shell for working with sops";
-    buildInputs = with pkgs; [ssh-to-age age sops];
+    packages = with pkgs; [ssh-to-age age sops];
   }
