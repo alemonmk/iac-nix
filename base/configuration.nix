@@ -20,5 +20,5 @@
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  environment.systemPackages = [pkgs.git];
+  environment.systemPackages = [pkgs.git pkgs.nvd];
 }
