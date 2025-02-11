@@ -1,3 +1,4 @@
+# Adapted from github:chrillefkr/nixos-unattended-installer
 {
   config,
   lib,
