@@ -7,23 +7,21 @@
   sops-nix,
   disko,
   ...
-} @ inputs: let
-  skeleton = nixpkgs.lib.nixosSystem {
-    modules = [
-      disko.nixosModules.disko
-      ../barebone/diskolayout.nix
-      ({...}: {
-        nixpkgs.hostPlatform = "x86_64-linux";
-        system.stateVersion = "24.05";
-      })
-    ];
-  };
-in {
+} @ inputs: {
   stage1Installer = nixpkgs.lib.nixosSystem {
     inherit system;
     specialArgs = {
       inherit inputs;
-      installTarget = skeleton;
+      installTarget = nixpkgs.lib.nixosSystem {
+        modules = [
+          disko.nixosModules.disko
+          ../barebone/diskolayout.nix
+          ({...}: {
+            nixpkgs.hostPlatform = "x86_64-linux";
+            system.stateVersion = "24.05";
+          })
+        ];
+      };
     };
     modules = [
       self.stage1InstallerModules
