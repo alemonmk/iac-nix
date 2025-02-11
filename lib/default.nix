@@ -6,7 +6,6 @@
   impermanence,
   sops-nix,
   disko,
-  # unattended-installer,
   ...
 } @ inputs: let
   skeleton = nixpkgs.lib.nixosSystem {
