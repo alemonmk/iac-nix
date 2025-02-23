@@ -10,6 +10,6 @@
     dates = "weekly";
   };
   environment.shellAliases = {
-    switch-diff = "nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)";
+    upgrade-diff = "nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)";
   };
 }
