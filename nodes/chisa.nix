@@ -26,7 +26,7 @@
         "/System/Applications/System Settings.app"
         "/Applications/Alacritty.app"
         "/Applications/Bitwarden.app"
-        "/Applications/Firefox.app"
+        "/Applications/Librewolf.app"
         "/Applications/Visual Studio Code.app"
         "/Applications/Omnissa Horizon Client.app"
         "/Applications/Windows App.app"
@@ -125,7 +125,7 @@
         "adobe-acrobat-reader"
         "araxis-merge"
         "drawio"
-        "firefox"
+        "librewolf"
         "visual-studio-code"
         # system utilities
         "coconutbattery"
