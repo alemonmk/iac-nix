@@ -1,0 +1,16 @@
+acl powershell-gallery dstdomain .nuget.org devopsgallerystorage.blob.core.windows.net go.microsoft.com
+acl powershell-gallery dstdomain onegetcdn.azureedge.net psg-prod-eastus.azureedge.net www.powershellgallery.com
+acl vscode dstdomain marketplace.visualstudio.com update.code.visualstudio.com az764295.vo.msecnd.net
+acl vscode dstdomain ms-vscode-remote.gallery.vsassets.io ms-vscode-remote.gallerycdn.vsassets.io
+acl debian dstdomain deb.debian.org security.debian.org
+
+acl mgmt-workstation src 10.85.20.1
+
+http_access allow safe-methods mgmt-workstation powershell-gallery
+http_access allow safe-methods mgmt-workstation github
+http_access allow safe-methods mgmt-workstation vscode
+http_access allow safe-methods mgmt-workstation debian
+
+acl nix-mgmt-workstation src 10.85.20.11
+
+http_access allow safe-methods nix-mgmt-workstation vscode

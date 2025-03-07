@@ -1,0 +1,5 @@
+acl slitaz dstdomain mirror.slitaz.org mirror1.slitaz.org
+
+acl kms src 10.85.20.2
+
+http_access allow safe-methods kms slitaz

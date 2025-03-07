@@ -1,0 +1,5 @@
+acl crlocsp-r url_regex ocsp.* crl.*
+acl crlocsp-d dstdomain .pki.goog .lencr.org
+
+http_access allow safe-methods crlocsp-r
+http_access allow safe-methods crlocsp-d

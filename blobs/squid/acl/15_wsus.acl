@@ -1,0 +1,6 @@
+acl ms-update dstdomain au.download.windowsupdate.com ctldl.windowsupdate.com download.windowsupdate.com adl.windows.com
+acl ms-update dstdomain .windowsupdate.microsoft.com .prod.do.dsp.mp.microsoft.com .trafficshaping.dsp.mp.microsoft.com .delivery.mp.microsoft.com .update.microsoft.com
+
+acl wsus src 10.85.11.4
+
+http_access allow safe-methods wsus ms-update

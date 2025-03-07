@@ -31,9 +31,7 @@
     };
   };
 
-  environment.etc."squid/acl/entra-id".text = builtins.readFile ../blobs/squid/acl/entra-id;
-  environment.etc."squid/acl/exchange-online".text = builtins.readFile ../blobs/squid/acl/exchange-online;
-  environment.etc."squid/acl/wsus".text = builtins.readFile ../blobs/squid/acl/wsus;
+  environment.etc."squid/acl".source = ../blobs/squid/acl;
 
   services = {
     squid = {

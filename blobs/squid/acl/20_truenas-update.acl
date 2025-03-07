@@ -1,0 +1,6 @@
+acl ixsystems dstdomain update-master.ixsystems.com update.ixsystems.com update.freenas.org pkg.freebsd.org
+
+acl fss04 src 10.81.70.18
+
+http_access allow safe-methods fss04 ixsystems
+http_access allow safe-methods fss04 github
