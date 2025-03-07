@@ -5,6 +5,7 @@ final: prev: {
 
   technitium-dns-server-library = prev.technitium-dns-server-library.overrideAttrs (old: rec {
     version = "dns-server-v13.4.2";
+    versionForDotnet = "13.4.2";
     src = prev.fetchFromGitHub {
       owner = "TechnitiumSoftware";
       repo = "TechnitiumLibrary";
@@ -16,6 +17,7 @@ final: prev: {
 
   technitium-dns-server = prev.technitium-dns-server.overrideAttrs (old: rec {
     version = "13.4.3";
+    versionForDotnet = "13.4.3";
     src = prev.fetchFromGitHub {
       owner = "TechnitiumSoftware";
       repo = "DnsServer";
