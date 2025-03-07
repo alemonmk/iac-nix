@@ -1,0 +1,11 @@
+acl tls-ports port 443
+acl http-ports port 80 443
+acl CONNECT method CONNECT
+acl safe-methods method GET POST OPTIONS HEAD CONNECT
+
+http_access deny !http-ports
+http_access deny CONNECT !tls-ports
+http_access allow localhost manager
+http_access deny manager
+http_access deny to_localhost
+http_access deny to_linklocal

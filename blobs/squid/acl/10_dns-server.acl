@@ -1,0 +1,8 @@
+acl technitium dstdomain go.technitium.com download.technitium.com packages.microsoft.com
+acl blocking-lists-src dstdomain s3.amazonaws.com raw.githubusercontent.com v.firebog.net adaway.org gitlab.com hostfiles.frogeye.fr
+acl blocking-lists-src dstdomain osint.digitalside.it bitbucket.org phishing.army urlhaus.abuse.ch zerodot1.gitlab.io
+
+acl dns-server src 10.85.10.1 10.85.10.2
+
+http_access allow safe-methods dns-server technitium
+http_access allow safe-methods dns-server blocking-lists-src
