@@ -1,4 +1,8 @@
-{config, lib, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   networking = {
     domain = "snct.rmntn.net";
     useDHCP = false;
