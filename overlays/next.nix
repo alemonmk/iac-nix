@@ -1,14 +1,7 @@
 final: prev: {
-  squid =
-    (prev.squid.overrideAttrs (old: {
-      src = prev.fetchurl {
-        url = "https://github.com/squid-cache/squid/releases/download/SQUID_6_13/squid-6.13.tar.xz";
-        hash = "sha256-Iy4FZ5RszAEVZTw8GPAeg/LZzEnEPZ3q2LMZrws1rVI=";
-      };
-    }))
-    .override {
-      ipv6 = false;
-    };
+  squid = prev.squid.override {
+    ipv6 = false;
+  };
 
   technitium-dns-server-library = prev.technitium-dns-server-library.overrideAttrs (old: rec {
     version = "dns-server-v13.4";
