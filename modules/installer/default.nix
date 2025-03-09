@@ -16,10 +16,9 @@ in {
       example = "self.nixosConfigurations.<machine>";
     };
     flake = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
+      type = lib.types.str;
       description = "Flake uri to install, which avoids full target toplevel from being included in store on installer. Needs to be in the format `/path/to/flake#machine-name`.";
       example = "github:some/where#machine";
-      default = null;
     };
     preDisko = lib.mkOption {
       type = lib.types.str;
@@ -78,18 +77,11 @@ in {
 
           ${cfg.preInstall}
           echo Building and installing NixOS
-          ${
-            if (builtins.isNull cfg.flake)
-            then ''
-              # Regular install from store
-              ${pkgs.nixos-install-tools}/bin/nixos-install --no-channel-copy --no-root-password --system ${cfg.target.config.system.build.toplevel}
-            ''
-            else ''
-              # Flake install
-              ${pkgs.nix}/bin/nix build --extra-experimental-features 'nix-command flakes' -v --show-trace --no-link --log-format internal-json ${flake-uri-for-nix-build}
-              ${pkgs.nixos-install-tools}/bin/nixos-install --no-channel-copy --no-root-password --flake ${cfg.flake}
-            ''
-          }
+          ${''
+            # Flake install
+            ${pkgs.nix}/bin/nix build --extra-experimental-features 'nix-command flakes' -v --show-trace --no-link --log-format internal-json ${flake-uri-for-nix-build}
+            ${pkgs.nixos-install-tools}/bin/nixos-install --no-channel-copy --no-root-password --flake ${cfg.flake}
+          ''}
           ${cfg.postInstall}
           trap - EXIT
           echo Installation seems successful. Precautionary unmount
