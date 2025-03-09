@@ -13,7 +13,7 @@
     nix-darwin.url = "github:LnL7/nix-darwin?ref=nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     home-manager.url = "github:nix-community/home-manager?ref=release-24.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-next";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
   outputs = {
