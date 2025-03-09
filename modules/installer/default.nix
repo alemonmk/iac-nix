@@ -80,7 +80,7 @@ in {
           ${''
             # Flake install
             ${pkgs.nix}/bin/nix build --extra-experimental-features 'nix-command flakes' -v --show-trace --no-link --log-format internal-json ${flake-uri-for-nix-build}
-            ${pkgs.nixos-install-tools}/bin/nixos-install --no-channel-copy --no-root-password --flake ${cfg.flake}
+            ${pkgs.nixos-install}/bin/nixos-install --no-channel-copy --no-root-password --flake ${cfg.flake}
           ''}
           ${cfg.postInstall}
           trap - EXIT
