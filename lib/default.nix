@@ -10,45 +10,34 @@
 } @ inputs: {
   stage1Installer = nixpkgs.lib.nixosSystem {
     inherit system;
-    specialArgs = {
-      inherit inputs;
-      installTarget = nixpkgs.lib.nixosSystem {
-        modules = [
-          disko.nixosModules.disko
-          ../barebone/diskolayout.nix
-          ({...}: {
-            nixpkgs.hostPlatform = "x86_64-linux";
-            system.stateVersion = "24.05";
-          })
-        ];
-      };
-    };
+    specialArgs = {inherit inputs;};
     modules = [
       self.stage1InstallerModules
       ({
         modulesPath,
         lib,
         pkgs,
-        installTarget,
         ...
       }: {
         imports = [
           "${modulesPath}/installer/netboot/netboot-minimal.nix"
+          "${modulesPath}/profiles/perlless.nix"
+          ./stage1installer/system.nix
+          ./stage1installer/minimalize.nix
         ];
-        system.stateVersion = "24.11";
-        boot.kernelPackages = pkgs.linuxPackages_6_6;
-        boot.kernelParams = ["quiet" "systemd.show_status=no"];
-        boot.initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod" "vmxnet3" "vmw_vmci" "vmwgfx" "vmw_vsock_vmci_transport"];
-        virtualisation.vmware.guest.enable = true;
-        networking.hostName = "nixos-installer";
-        networking.useDHCP = true;
-        networking.networkmanager.enable = false;
-        fonts.fontconfig.enable = false;
-        hardware.enableAllFirmware = false;
-        environment.systemPackages = [pkgs.git pkgs.btrfs-progs];
+        disabledModules = ["profiles/base.nix"];
         unattendedInstaller = {
           enable = true;
-          target = installTarget;
+          target = nixpkgs.lib.nixosSystem {
+            modules = [
+              disko.nixosModules.disko
+              ../barebone/diskolayout.nix
+              ({...}: {
+                nixpkgs.hostPlatform = "x86_64-linux";
+                system.stateVersion = "24.11";
+              })
+            ];
+          };
           flake = "git+https://code.rmntn.net/iac/nix?ref=main#barebone";
           postDisko = ''
             umount -Rv /mnt
@@ -64,10 +53,6 @@
             mount -o bind -m /mnt/nix/persist/etc/nixos /mnt/etc/nixos
             mount -o bind -m /mnt/nix/persist/var/log /mnt/var/log
           '';
-        };
-        nix.settings = {
-          extra-experimental-features = ["nix-command" "flakes"];
-          accept-flake-config = true;
         };
       })
     ];
