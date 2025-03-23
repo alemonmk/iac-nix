@@ -51,6 +51,7 @@
         GID = "2500";
         URL_PREFIX = "/archiver/";
         OUTPUT_TEMPLATE = "%(uploader)s/%(upload_date>%Y)s/[%(upload_date>%y%m%d)s][%(id)s].%(ext)s";
+        DOWNLOAD_MODE = "sequential";
         YTDL_OPTIONS = "{\"verbose\":true,\"cookiefile\":\"/app/cookies.txt\",\"proxy\":\"http://rmnmvwebgw.snct.rmntn.net:3128\",\"source_address\":\"0.0.0.0\",\"writeinfojson\":true,\"writesubtitles\":true,\"subtitleslangs\":[\"en\",\"zh-tw\",\"-live_chat\"],\"postprocessors\":[{\"key\":\"FFmpegEmbedSubtitle\",\"already_have_subtitle\":false},{\"key\":\"FFmpegMetadata\",\"add_chapters\":true}]}";
       };
       volumes = [
