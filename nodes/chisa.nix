@@ -101,6 +101,7 @@
     alejandra
     sops
     age
+    ruff
   ];
   homebrew = {
     enable = true;
