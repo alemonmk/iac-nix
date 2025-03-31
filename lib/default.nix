@@ -90,7 +90,7 @@
           inherit system;
           overlays = [(import ../overlays/next.nix)];
           config.allowUnfree = true;
-          config.permittedInsecurePackages = ["squid-6.13"];
+          config.permittedInsecurePackages = ["squid-7.0.1"];
         };
       };
       modules =
