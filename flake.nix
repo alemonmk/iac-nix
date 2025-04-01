@@ -12,8 +12,10 @@
     nixpkgs-darwin.url = "github:nixos/nixpkgs?ref=nixpkgs-24.11-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin?ref=nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
-    home-manager.url = "github:nix-community/home-manager?ref=release-24.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-darwin";
+    home-manager-darwin.url = "github:nix-community/home-manager?ref=release-24.11";
+    home-manager-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-linux.url = "github:nix-community/home-manager?ref=release-24.11";
+    home-manager-linux.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
   outputs = {
@@ -25,7 +27,8 @@
     disko,
     nixpkgs-darwin,
     nix-darwin,
-    home-manager,
+    home-manager-darwin,
+    home-manager-linux,
     ...
   } @ inputs: {
     lib = import ./lib inputs;
@@ -58,7 +61,7 @@
       chisa = nix-darwin.lib.darwinSystem {
         modules = [
           ./nodes/chisa.nix
-          home-manager.darwinModules.home-manager
+          home-manager-darwin.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = false;
