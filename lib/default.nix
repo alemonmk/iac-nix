@@ -6,6 +6,7 @@
   impermanence,
   sops-nix,
   disko,
+  home-manager-linux,
   ...
 } @ inputs: {
   stage1Installer = let
@@ -98,6 +99,7 @@
           self.nixosModules
           impermanence.nixosModules.impermanence
           sops-nix.nixosModules.sops
+          home-manager-linux.nixosModules.home-manager
         ]
         ++ sysDef;
     };
