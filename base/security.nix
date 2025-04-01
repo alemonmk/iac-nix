@@ -40,6 +40,9 @@
   };
 
   users.mutableUsers = false;
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICPf29QH5R+ydLAllJNX7FM5SAguXnbJXmImmShFksMk"
+  ];
   users.users.emergency = {
     isNormalUser = true;
     description = "Emergency local account";
