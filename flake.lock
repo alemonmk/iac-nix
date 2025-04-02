@@ -44,7 +44,7 @@
     "home-manager-linux": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-darwin"
+          "nixpkgs"
         ]
       },
       "locked": {
