@@ -26,8 +26,6 @@
     defaultGateway6 = {address = "2400:8902:e002:59e3::ccef";};
   };
 
-  environment.systemPackages = with pkgs; [];
-
   services = {
     timesyncd.enable = false;
     chrony = {

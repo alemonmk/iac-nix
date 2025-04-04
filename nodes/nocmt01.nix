@@ -62,8 +62,6 @@
     enableIPv6 = false;
   };
 
-  environment.systemPackages = with pkgs; [];
-
   networking.hosts = {
     "10.85.29.2" = ["vdi.snct.rmntn.net"];
   };
