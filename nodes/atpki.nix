@@ -40,8 +40,6 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [];
-
   environment.etc."smallstep/x509template.tpl".text = builtins.readFile ../blobs/pki/step-ca/x509template.tpl;
   environment.etc."smallstep/root_ca.crt".text = builtins.readFile ../blobs/pki/root_ca.crt;
   environment.etc."smallstep/intermediate_ca.crt".text = builtins.readFile ../blobs/pki/step-ca/intermediate_ca.crt;
