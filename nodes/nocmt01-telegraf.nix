@@ -462,7 +462,7 @@
       outputs = {
         influxdb = [
           {
-            urls = ["http://127.0.0.1:8429"];
+            urls = ["http://127.0.0.1:8428"];
             exclude_database_tag = true;
             skip_database_creation = true;
           }
