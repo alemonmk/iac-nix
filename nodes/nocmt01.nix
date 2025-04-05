@@ -69,7 +69,7 @@
   services = {
     victoriametrics = {
       enable = true;
-      retentionPeriod = 24;
+      retentionPeriod = "2y";
       listenAddress = "localhost:8428";
       extraOptions = [
         "-selfScrapeInterval=15s"
