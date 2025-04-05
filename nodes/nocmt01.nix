@@ -70,6 +70,7 @@
     victoriametrics = {
       enable = true;
       retentionPeriod = 24;
+      listenAddress = "localhost:8428";
       extraOptions = [
         "-selfScrapeInterval=15s"
         "-downsampling.period=90d:5m,365d:1h"
@@ -80,6 +81,7 @@
 
     victorialogs = {
       enable = true;
+      listenAddress = "localhost:9428";
       extraOptions = [
         "-retentionPeriod=26w"
         "-defaultMsgValue=none"
