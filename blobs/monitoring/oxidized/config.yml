@@ -8,7 +8,6 @@ threads: 30
 timeout: 20
 retries: 3
 prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
-rest: 127.0.0.1:8888/ncm
 next_adds_job: false
 vars:
   auth_methods:
@@ -42,3 +41,7 @@ source:
       password: 4
     vars_map:
       enable: 5
+extensions:
+  oxidized-web:
+    load: true
+    url_prefix: ncm
