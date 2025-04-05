@@ -52,10 +52,9 @@
       enable = true;
       bashrcExtra = ''
         upgrade-system-remote () {
-          NIX_SSHOPTS="-i /run/secrets/nix-remote-sshkey"
           pushd ~/workspaces/nix > /dev/null
           if [ $1 ]; then
-            nixos-rebuild switch --target-host root@$1 --flake .#$1
+            NIX_SSHOPTS="-i /run/secrets/nix-remote-sshkey" nixos-rebuild switch --target-host root@$1 --flake .#$1
           fi
           popd > /dev/null
         }
