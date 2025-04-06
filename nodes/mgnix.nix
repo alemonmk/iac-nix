@@ -48,20 +48,45 @@
   };
   home-manager.users.code-server = {
     home.stateVersion = "24.11";
+    programs.ssh = {
+      enable = true;
+      matchBlocks = {
+        "nix-staging" = {
+          host = "10.85.20.61";
+          user = "root";
+          identityFile = "/run/secrets/nix-remote-sshkey";
+          extraOptions = {
+            StrictHostKeyChecking = "no";
+            UserKnownHostsFile = "/dev/null";
+          };
+        };
+        "private.rmntn.net" = {
+          host = "*";
+          user = "root";
+          identityFile = "/run/secrets/nix-remote-sshkey";
+        };
+      };
+    };
     programs.bash = {
       enable = true;
       bashrcExtra = ''
         upgrade-system-remote () {
           pushd ~/workspaces/nix > /dev/null
           if [ $1 ]; then
-            NIX_SSHOPTS="-i /run/secrets/nix-remote-sshkey" nixos-rebuild switch --target-host root@$1 --flake .#$1
+            NIX_SSHOPTS="-F $HOME/.ssh/config" nixos-rebuild switch --target-host root@$1 --flake .#$1
           fi
+          popd > /dev/null
+        }
+        install-system-remote () {
+          pushd ~/workspaces/nix > /dev/null
+          NIX_SSHOPTS="-F $HOME/.ssh/config" nixos-rebuild boot --target-host root@10.85.20.61 --flake .#$1
+          ssh root@10.85.20.61 systemctl reboot
           popd > /dev/null
         }
       '';
     };
   };
-  
+
   services = {
     code-server = {
       enable = true;
