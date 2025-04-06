@@ -66,6 +66,12 @@
     "10.85.29.2" = ["vdi.snct.rmntn.net"];
   };
 
+  security.pki.certificateFiles = [
+    ../blobs/pki/root_ca.crt
+    ../blobs/pki/g1.crt
+    ../blobs/pki/vmvcs.crt
+  ];
+
   services = {
     victoriametrics = {
       enable = true;
