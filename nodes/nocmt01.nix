@@ -25,9 +25,6 @@
       sopsFile = ../secrets/nocmt01/entraid.yaml;
     };
     secrets.ncm-password = {
-      mode = "0440";
-      owner = config.users.users.oxidized.name;
-      group = config.users.users.oxidized.group;
       sopsFile = ../secrets/nocmt01/oxidized.yaml;
     };
     secrets.monitoring-creds = {
@@ -37,7 +34,10 @@
       sopsFile = ../secrets/nocmt01/monitoring.yaml;
     };
     templates."oxidized-cfg" = {
-      file = ../blobs/monitoring/oxidized/config.yml;
+      file = pkgs.substituteAll {
+        src = ../blobs/monitoring/oxidized/config.yml;
+        ncmPassword = config.sops.placeholder.ncm-password;
+      };
       mode = "0440";
       owner = config.users.users.oxidized.name;
       group = config.users.users.oxidized.group;
