@@ -101,6 +101,7 @@
       settings = {
         server = {
           domain = "monitoring.noc.snct.rmntn.net";
+          root_url = "https://%(domain)s";
           enforce_domain = true;
         };
         analytics.reporting_enabled = false;
