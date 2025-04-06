@@ -152,7 +152,7 @@
 
   environment.persistence."/nix/persist".directories = [
     "/var/lib/grafana"
-    "/var/lib/oxidized/store.git"
+    "/var/lib/oxidized/store"
     "/var/lib/private/victoriametrics"
     "/var/lib/private/victorialogs"
   ];
