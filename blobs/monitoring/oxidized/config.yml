@@ -1,6 +1,6 @@
 ---
 username: ncm
-password: ${config.sops.placeholder.ncm-password}
+password: @ncmPassword@
 interval: 3600
 use_syslog: true
 debug: false
