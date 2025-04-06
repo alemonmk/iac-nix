@@ -73,7 +73,6 @@
       listenAddress = "localhost:8428";
       extraOptions = [
         "-selfScrapeInterval=15s"
-        "-downsampling.period=90d:5m,365d:1h"
         "-promscrape.config.strictParse=false"
         "-promscrape.config=${../blobs/monitoring/victoriametrics/scrape.yml}"
       ];
