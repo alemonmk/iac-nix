@@ -31,7 +31,7 @@ source:
   default: csv
   debug: false
   csv:
-    file: '/var/lib/oxidized/router.db'
+    file: '/var/lib/oxidized/.config/oxidized/router.db'
     delimiter: !ruby/regexp /:/
     map:
       name: 0
