@@ -3,6 +3,9 @@
     enable = true;
     environmentFiles = [config.sops.secrets.monitoring-creds.path];
     extraConfig = {
+      agent = {
+        snmp_translator = "gosmi";
+      };
       inputs = {
         snmp = [
           # ups
@@ -16,6 +19,7 @@
             auth_password = "\${SNMP_AUTH}";
             priv_password = "\${SNMP_PRIV}";
             agent_host_tag = "source";
+            path = [../blobs/monitoring/snmp/mibs];
             tagexclude = ["host"];
             field = [
               {
@@ -124,6 +128,7 @@
             auth_password = "\${SNMP_AUTH}";
             priv_password = "\${SNMP_PRIV}";
             agent_host_tag = "source";
+            path = [../blobs/monitoring/snmp/mibs];
             tagexclude = ["host"];
             field = [
               {
@@ -181,6 +186,7 @@
             auth_password = "\${SNMP_AUTH}";
             priv_password = "\${SNMP_PRIV}";
             agent_host_tag = "source";
+            path = [../blobs/monitoring/snmp/mibs];
             tagexclude = ["host"];
             field = [
               {
@@ -237,11 +243,12 @@
             version = 3;
             sec_name = "nop";
             sec_level = "authPriv";
-            auth_protocol = "SHA";
+            auth_protocol = "SHA256";
             priv_protocol = "AES";
             auth_password = "\${SNMP_AUTH}";
             priv_password = "\${SNMP_PRIV}";
             agent_host_tag = "source";
+            path = [../blobs/monitoring/snmp/mibs];
             tagexclude = ["host"];
             field = [
               {
@@ -266,19 +273,23 @@
                 name = "cpuTemperature";
               }
               {
-                oid = "PAN-COMMON-MIB::panSessionActive.0";
+                # oid = "PAN-COMMON-MIB::panSessionActive.0";
+                oid = "1.3.6.1.4.1.25461.2.1.2.3.3.0";
                 name = "sessionsActive";
               }
               {
-                oid = "PAN-COMMON-MIB::panSessionActiveTcp.0";
+                # oid = "PAN-COMMON-MIB::panSessionActiveTcp.0";
+                oid = "1.3.6.1.4.1.25461.2.1.2.3.4.0";
                 name = "sessionsActiveTcp";
               }
               {
-                oid = "PAN-COMMON-MIB::panSessionActiveUdp.0";
+                # oid = "PAN-COMMON-MIB::panSessionActiveUdp.0";
+                oid = "1.3.6.1.4.1.25461.2.1.2.3.5.0";
                 name = "sessionsActiveUdp";
               }
               {
-                oid = "PAN-COMMON-MIB::panSessionActiveICMP.0";
+                # oid = "PAN-COMMON-MIB::panSessionActiveICMP.0";
+                oid = "1.3.6.1.4.1.25461.2.1.2.3.6.0";
                 name = "sessionsActiveICMP";
               }
             ];
@@ -318,6 +329,7 @@
             auth_password = "\${SNMP_AUTH}";
             priv_password = "\${SNMP_PRIV}";
             agent_host_tag = "source";
+            path = [../blobs/monitoring/snmp/mibs];
             tagexclude = ["host"];
             field = [
               {
