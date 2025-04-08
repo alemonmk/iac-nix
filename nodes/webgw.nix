@@ -39,5 +39,28 @@
       package = nixpkgs-next.squid;
       configText = builtins.readFile ../blobs/squid/config;
     };
+    syslog-ng = {
+      enable = true;
+      configHeader = ''
+        @version: 4.8
+        @include "scl.conf"
+      '';
+      extraConfig = ''
+        source systemd {
+          system();
+        };
+        filter local2 {
+          facility("local2");
+        };
+        destination nocmt01 {
+          syslog("rmnmvnocmt01.snct.rmntn.net" transport("tcp") port(3514));
+        };
+        log {
+          source(systemd);
+          filter(local2);
+          destination(nocmt01);
+        };
+      '';
+    };
   };
 }
