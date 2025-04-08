@@ -18,6 +18,6 @@ strip_query_terms on
 logformat rfc5424 %master_xaction [request@99999 act="%Ss" ct="%mt" rc="%>Hs" rs="%<st" rt="%tr" ua="%{User-Agent}>h"] %>a:%>p %rm %ru
 pid_filename /run/squid.pid
 cache_effective_user squid squid
-cache_log stdio:/var/log/squid/cache.log
+cache_log /dev/null
 access_log stdio:/var/log/squid/access.log logformat=rfc5424
 access_log syslog:local2.info logformat=rfc5424
