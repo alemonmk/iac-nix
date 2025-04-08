@@ -9,13 +9,13 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs-next";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-linux.url = "github:nix-community/home-manager?ref=release-24.11";
+    home-manager-linux.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-darwin.url = "github:nixos/nixpkgs?ref=nixpkgs-24.11-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin?ref=nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     home-manager-darwin.url = "github:nix-community/home-manager?ref=release-24.11";
     home-manager-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
-    home-manager-linux.url = "github:nix-community/home-manager?ref=release-24.11";
-    home-manager-linux.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -25,10 +25,10 @@
     impermanence,
     sops-nix,
     disko,
+    home-manager-linux,
     nixpkgs-darwin,
     nix-darwin,
     home-manager-darwin,
-    home-manager-linux,
     ...
   } @ inputs: {
     lib = import ./lib inputs;
