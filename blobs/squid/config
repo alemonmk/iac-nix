@@ -16,7 +16,7 @@ http_port 10.85.20.10:3128 connection-auth=off
 buffered_logs on
 strip_query_terms on
 logformat custom_log %{%Y-%m-%d %H:%M:%S}tl %>a:%>p %Ss/%03>Hs:%Sh "%rm %ru HTTP/%rv" %mt %>Hs %<st %tr "%{User-Agent}>h" "%{Referer}>h"
-logformat syslog_msg %>a:%>p %rm %ru [act="%Ss" rc="%>Hs" rs="%<st" rt="%tr" ua="%{User-Agent}>h"]
+logformat syslog_msg client=%>a:%>p,request=%rm %ru,action=%Ss,res_code=%>Hs,res_size=%<st,res_time=%tr,ua="%{User-Agent}>h"
 pid_filename /run/squid.pid
 cache_effective_user squid squid
 cache_log /dev/null
