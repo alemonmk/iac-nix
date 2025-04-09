@@ -90,9 +90,17 @@
       extraOptions = [
         "-retentionPeriod=26w"
         "-defaultMsgValue=none"
-        "-syslog.listenAddr.tcp=:3514"
-        "-syslog.listenAddr.udp=:3514"
+        "-syslog.listenAddr.tcp=localhost:3514"
       ];
+    };
+
+    syslog-ng = {
+      enable = true;
+      configHeader = ''
+        @version: 4.8
+        @include "scl.conf"
+      '';
+      extraConfig = builtins.readFile ../blobs/monitoring/log-forwarder.cfg;
     };
 
     prometheus.exporters.blackbox = {
