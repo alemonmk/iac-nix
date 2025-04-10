@@ -13,7 +13,7 @@ in {
         type = bool;
         description = ''
           Join the specified Active Directory domain.
-          Run the following command after nisos-rebuild switch to actually join the domain:
+          Run the following command after nixos-rebuild switch to actually join the domain:
           ```
           sudo adcli join \
             -D <domain> \
