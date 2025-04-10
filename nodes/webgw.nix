@@ -46,19 +46,10 @@
         @include "scl.conf"
       '';
       extraConfig = ''
-        source systemd {
-          system();
-        };
-        filter local2 {
-          facility("local2");
-        };
-        destination nocmt01 {
-          syslog("rmnmvnocmt01.snct.rmntn.net" transport("tcp") port(3514));
-        };
         log {
-          source(systemd);
-          filter(local2);
-          destination(nocmt01);
+          source { system(); };
+          filter { facility("local2"); };
+          destination { syslog("rmnmvnocmt01.snct.rmntn.net" transport("tcp") port(3514)); };
         };
       '';
     };
