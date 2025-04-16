@@ -23,7 +23,7 @@
         prefixLength = 64;
       }
     ];
-    defaultGateway6 = {address = "2400:8902:e002:59e9::ccef";};
+    defaultGateway6 = {address = "2400:8902:e002:59e9::1";};
     proxy = lib.mkForce {
       httpProxy = null;
       httpsProxy = null;
