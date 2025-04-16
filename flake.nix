@@ -34,14 +34,6 @@
     lib = import ./lib inputs;
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     formatter.x86_64-darwin = nixpkgs-darwin.legacyPackages.x86_64-darwin.alejandra;
-    devShells.x86_64-linux.default = import ./devshell.nix {
-      inherit nixpkgs;
-      system = "x86_64-linux";
-    };
-    devShells.x86_64-darwin.default = import ./devshell.nix {
-      nixpkgs = nixpkgs-darwin;
-      system = "x86_64-darwin";
-    };
     nixosModules = import ./modules/nixos;
     stage1InstallerModules = import ./modules/installer;
     nixosConfigurations = with self.lib; {
