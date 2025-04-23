@@ -4,6 +4,7 @@ acl vscode dstdomain marketplace.visualstudio.com update.code.visualstudio.com a
 acl vscode dstdomain ms-vscode-remote.gallery.vsassets.io ms-vscode-remote.gallerycdn.vsassets.io
 acl debian dstdomain deb.debian.org security.debian.org
 acl rubygems dstdomain rubygems.org index.rubygems.org
+acl dbeaver dstdomain dbeaver.io mvnrepository.com repo1.maven.org
 
 acl mgmt-workstation src 10.85.20.1
 
@@ -11,6 +12,7 @@ http_access allow safe-methods mgmt-workstation powershell-gallery
 http_access allow safe-methods mgmt-workstation github
 http_access allow safe-methods mgmt-workstation vscode
 http_access allow safe-methods mgmt-workstation debian
+http_access allow safe-methods mgmt-workstation dbeaver
 
 acl nix-mgmt-workstation src 10.85.20.11
 
