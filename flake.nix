@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
-    nixpkgs-next.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs-next.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     impermanence.url = "github:nix-community/impermanence";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs-next";
