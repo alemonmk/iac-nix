@@ -6,27 +6,27 @@ keys:
   - &rmnmvmgnix age1rmy535v6qmm552pzsvgjna4k4wmu2pjya796lm8k253pmfne3s0scn8zmz
   - &rmnmvnocmt01 age15kvyh0pjnv7ng09svtf2xtpqs89d6hxjxq7p07l2tnwcfe6p3y7qrhzkuv
 creation_rules:
-  - path_regex: secrets(\\|/)[^/]+\.(yaml|json|env|ini)$
+  - path_regex: secrets(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
         - *nix-mgr
         - *chisa
         - *kyouka
-  - path_regex: secrets(\\|/)atpki(\\|/)[^/]+\.(yaml|json|env|ini)$
+  - path_regex: secrets(\\|/)atpki(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
         - *nix-mgr
         - *chisa
         - *kyouka
         - *rmnmvatpki
-  - path_regex: secrets(\\|/)nocmt01(\\|/)[^/]+\.(yaml|json|env|ini)$
+  - path_regex: secrets(\\|/)nocmt01(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
         - *nix-mgr
         - *chisa
         - *kyouka
         - *rmnmvnocmt01
-  - path_regex: secrets(\\|/)mgnix(\\|/)[^/]+\.(yaml|json|env|ini)$
+  - path_regex: secrets(\\|/)mgnix(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
         - *nix-mgr
