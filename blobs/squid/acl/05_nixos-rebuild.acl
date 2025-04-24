@@ -11,6 +11,7 @@ acl nixos-servers src 10.85.20.7
 acl nixos-servers src 10.85.20.8
 acl nixos-servers src 10.85.20.11
 acl nixos-servers src 10.85.101.17
+acl nixos-servers src 10.85.20.66
 
 http_access allow safe-methods nixos-servers nixos
 http_access allow safe-methods nixos-servers github

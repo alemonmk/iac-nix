@@ -5,6 +5,7 @@ keys:
   - &rmnmvatpki age14g9f8nptt7z554qeuavjy2uczd0m6wlxddcgzmyvku34zp2grd8qd7nrl3
   - &rmnmvmgnix age1rmy535v6qmm552pzsvgjna4k4wmu2pjya796lm8k253pmfne3s0scn8zmz
   - &rmnmvnocmt01 age15kvyh0pjnv7ng09svtf2xtpqs89d6hxjxq7p07l2tnwcfe6p3y7qrhzkuv
+  - &rmnmvadb02 age1ay20thc0y39hucs8mge0u448wgcn06gupf8332e0423uj330wdssfnpskj
 creation_rules:
   - path_regex: secrets(\\|/)[^/]+\.yaml$
     key_groups:
@@ -33,3 +34,11 @@ creation_rules:
         - *chisa
         - *kyouka
         - *rmnmvmgnix
+  - path_regex: secrets(\\|/)adb02(\\|/)[^/]+\.yaml$
+    key_groups:
+    - age:
+      - *nix-mgr
+      - *chisa
+      - *kyouka
+      - *rmnmvadb02
+    encrypted_suffix: password
