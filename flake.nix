@@ -49,18 +49,8 @@
       rmnmvvpngw = finalSystem [./nodes/vpngw.nix];
       rmnmvwebgw = finalSystem [./nodes/webgw.nix];
     };
-    darwinConfigurations = {
-      chisa = nix-darwin.lib.darwinSystem {
-        modules = [
-          ./nodes/chisa.nix
-          home-manager-darwin.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = false;
-            home-manager.users.alemonmk = import ./home/chisa;
-          }
-        ];
-      };
+    darwinConfigurations = with self.lib; {
+      chisa = finalDarwinSystem [./nodes/chisa.nix];
     };
   };
 }
