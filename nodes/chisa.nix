@@ -168,6 +168,9 @@
   users.users.alemonmk = {
     home = "/Users/alemonmk";
   };
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = false;
+  home-manager.users.alemonmk = import ../home/chisa;
 
   environment = {
     shellAliases = {

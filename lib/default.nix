@@ -1,21 +1,25 @@
 {
-  system ? "x86_64-linux",
   self,
   nixpkgs,
   nixpkgs-next,
+  nix-darwin,
   impermanence,
   sops-nix,
   disko,
   home-manager-linux,
+  home-manager-darwin,
   ...
-} @ inputs: {
+} @ inputs: let
+  linuxSystem = "x86_64-linux";
+  darwinSystem = "x86_64-darwin";
+in {
   stage1Installer = let
     dummyTarget = nixpkgs.lib.nixosSystem {
       modules = [
         disko.nixosModules.disko
         ../barebone/diskolayout.nix
         ({...}: {
-          nixpkgs.hostPlatform = "x86_64-linux";
+          nixpkgs.hostPlatform = linuxSystem;
           system.stateVersion = "24.11";
         })
       ];
@@ -33,7 +37,7 @@
       mount -o bind -m /mnt/nix/persist/var/log /mnt/var/log
     '';
     image = nixpkgs.lib.nixosSystem {
-      inherit system;
+      system = linuxSystem;
       specialArgs = {inherit inputs;};
       modules = [
         self.stage1InstallerModules
@@ -79,16 +83,16 @@
   };
   finalSystem = sysDef:
     nixpkgs.lib.nixosSystem {
-      inherit system;
+      system = linuxSystem;
       specialArgs = {
         inherit impermanence sops-nix;
         pkgs = import nixpkgs {
-          inherit system;
+          system = linuxSystem;
           overlays = [(import ../overlays/stable.nix)];
           config.allowUnfree = true;
         };
         nixpkgs-next = import nixpkgs-next {
-          inherit system;
+          system = linuxSystem;
           overlays = [(import ../overlays/next.nix)];
           config.allowUnfree = true;
           config.permittedInsecurePackages = ["squid-7.0.1"];
@@ -102,5 +106,15 @@
           home-manager-linux.nixosModules.home-manager
         ]
         ++ sysDef;
+    };
+  finalDarwinSystem = sysDef:
+    nix-darwin.lib.darwinSystem {
+      specialArgs = {
+        nixpkgs-next = import nixpkgs-next {
+          system = darwinSystem;
+          config.allowUnfree = true;
+        };
+      };
+      modules = [home-manager-darwin.darwinModules.home-manager] ++ sysDef;
     };
 }
