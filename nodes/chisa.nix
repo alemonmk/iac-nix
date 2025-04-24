@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nixpkgs-next,
+  ...
+}: {
   system.stateVersion = 5;
 
   nixpkgs.hostPlatform = "x86_64-darwin";
@@ -85,23 +89,23 @@
     hostName = "chisa";
   };
 
-  environment.systemPackages = with pkgs; [
-    coreutils
-    screen
-    darwin.iproute2mac
-    curl
-    jq
-    git
-    eza
-    fd
-    python312
-    terraform
-    consul
-    nomad
-    alejandra
-    sops
-    age
-    ruff
+  environment.systemPackages = [
+    pkgs.coreutils
+    pkgs.screen
+    pkgs.darwin.iproute2mac
+    pkgs.curl
+    pkgs.jq
+    pkgs.git
+    pkgs.eza
+    pkgs.fd
+    pkgs.python313
+    nixpkgs-next.terraform
+    pkgs.consul
+    nixpkgs-next.nomad
+    pkgs.alejandra
+    pkgs.sops
+    pkgs.age
+    pkgs.ruff
   ];
   homebrew = {
     enable = true;
