@@ -1,0 +1,3 @@
+acl rmnmvadb02 src 10.85.20.66
+
+http_access allow safe-methods rmnmvadb02 docker

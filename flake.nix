@@ -48,6 +48,7 @@
       rmnmvmgnix = finalSystem [./nodes/mgnix.nix];
       rmnmvvpngw = finalSystem [./nodes/vpngw.nix];
       rmnmvwebgw = finalSystem [./nodes/webgw.nix];
+      rmnmvadb02 = finalSystem [./nodes/adb02.nix];
     };
     darwinConfigurations = with self.lib; {
       chisa = finalDarwinSystem [./nodes/chisa.nix];
