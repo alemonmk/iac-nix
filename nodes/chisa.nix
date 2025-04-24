@@ -125,14 +125,12 @@
         greedy = true;
       })
       [
-        # everyday workhorse
         "alacritty"
         "adobe-acrobat-reader"
         "araxis-merge"
         "drawio"
         "librewolf"
         "visual-studio-code"
-        # system utilities
         "coconutbattery"
         "keyboardcleantool"
         "linearmouse"
@@ -141,10 +139,8 @@
         "vmware-fusion"
         "zerotier-one"
         "yubico-yubikey-manager"
-        # system management
         "omnissa-horizon-client"
         "windows-app"
-        # remote support and communication
         "anydesk"
         "wechat"
         "whatsapp"
