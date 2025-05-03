@@ -1,18 +1,23 @@
 acl mso-common dstdomain www.office.com login.microsoftonline.com login.live.com aadcdn.msauth.net graph.windows.net graph.microsoft.com enterpriseregistration.windows.net
 
-acl entra-id dstdomain autologon.microsoftazuread-sso.com management.azure.com
+acl entra-id dstdomain autologon.microsoftazuread-sso.com management.azure.com management.core.windows.net
 acl entra-id dstdomain adminwebservice.microsoftonline.com provisioningapi.microsoftonline.com
 acl entra-id dstdomain passwordreset.microsoftonline.com ssprdedicatedsbprodsea-1.servicebus.windows.net ssprdedicatedsbprodneu.servicebus.windows.net
 acl entra-id dstdomain .registration.msappproxy.net autoupdate.msappproxy.net
-acl entra-id dstdomain s1.adhybridhealth.azure.com adhsprodwusehsyncia.servicebus.windows.net
+acl entra-id dstdomain s1.adhybridhealth.azure.com adhsprodwusehsyncia.servicebus.windows.net adhsprodwusehaddsia.servicebus.windows.net
+acl entra-id dstdomain account.activedirectory.windowsazure.com
 
 acl exchange-online dstdomain autodiscover-s.outlook.com outlook.office365.com
 
+acl addc src 10.85.11.1
+acl addc src 10.85.11.2
 acl entra-connect src 10.85.11.3
 
 http_access allow safe-methods entra-connect mso-common
 http_access allow safe-methods entra-connect entra-id
 http_access allow safe-methods entra-connect powershell-gallery
+http_access allow safe-methods addc mso-common
+http_access allow safe-methods addc entra-id
 
 acl veeam-bnr src 10.85.20.3
 
