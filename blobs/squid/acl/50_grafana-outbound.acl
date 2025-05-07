@@ -1,0 +1,8 @@
+acl telegram-api dstdomain api.telegram.org
+acl grafana dstdomain grafana.com
+
+acl monitoring-server src 10.85.10.5
+
+http_access allow safe-methods monitoring-server grafana
+http_access allow safe-methods monitoring-server telegram-api
+http_access allow safe-methods monitoring-server mso-common
