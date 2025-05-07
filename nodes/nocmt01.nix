@@ -164,6 +164,12 @@
     };
   };
 
+  
+  systemd.services.grafana.environment = {
+    http_proxy = "http://10.85.20.10:3128";
+    https_proxy = "http://10.85.20.10:3128";
+  };
+
   environment.persistence."/nix/persist".directories = [
     "/var/lib/grafana"
     "/var/lib/oxidized/store"
