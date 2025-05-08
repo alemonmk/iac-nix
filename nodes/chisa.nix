@@ -131,6 +131,7 @@
         "drawio"
         "librewolf"
         "visual-studio-code"
+        "sqlitestudio"
         "coconutbattery"
         "keyboardcleantool"
         "linearmouse"
