@@ -2,7 +2,7 @@ acl nixos dstdomain cache.nixos.org tarballs.nixos.org channels.nixos.org code.r
 acl github dstdomain github.com api.github.com codeload.github.com
 acl github dstdomain raw.githubusercontent.com github-production-release-asset-2e65be.s3.amazonsaws.com objects.githubusercontent.com
 acl golang dstdomain proxy.golang.org storage.googleapis.com
-acl rust-crates dstdomain crates.io static.crates.io
+acl rust dstdomain crates.io static.crates.io static.rust-lang.org
 
 acl nixos-servers src 10.85.10.1
 acl nixos-servers src 10.85.10.2
@@ -16,4 +16,4 @@ acl nixos-servers src 10.85.20.66
 http_access allow safe-methods nixos-servers nixos
 http_access allow safe-methods nixos-servers github
 http_access allow safe-methods nixos-servers golang
-http_access allow safe-methods nixos-servers rust-crates
+http_access allow safe-methods nixos-servers rust

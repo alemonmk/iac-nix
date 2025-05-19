@@ -3,8 +3,10 @@ acl powershell-gallery dstdomain onegetcdn.azureedge.net psg-prod-eastus.azureed
 acl vscode dstdomain marketplace.visualstudio.com update.code.visualstudio.com az764295.vo.msecnd.net
 acl vscode dstdomain ms-vscode-remote.gallery.vsassets.io ms-vscode-remote.gallerycdn.vsassets.io
 acl debian dstdomain deb.debian.org security.debian.org
+acl npm dstdomain registry.npmjs.org
+acl maven dstdomain repo1.maven.org mvnrepository.com repo1.maven.org
 acl rubygems dstdomain rubygems.org index.rubygems.org
-acl dbeaver dstdomain dbeaver.io mvnrepository.com repo1.maven.org
+acl dbeaver dstdomain dbeaver.io 
 
 acl mgmt-workstation src 10.85.20.1
 
@@ -12,9 +14,12 @@ http_access allow safe-methods mgmt-workstation powershell-gallery
 http_access allow safe-methods mgmt-workstation github
 http_access allow safe-methods mgmt-workstation vscode
 http_access allow safe-methods mgmt-workstation debian
+http_access allow safe-methods mgmt-workstation maven
 http_access allow safe-methods mgmt-workstation dbeaver
 
 acl nix-mgmt-workstation src 10.85.20.11
 
 http_access allow safe-methods nix-mgmt-workstation vscode
 http_access allow safe-methods nix-mgmt-workstation rubygems
+http_access allow safe-methods nix-mgmt-workstation npm
+http_access allow safe-methods nix-mgmt-workstation maven
