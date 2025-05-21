@@ -3,7 +3,7 @@
   buildGoModule,
   fetchFromGitHub,
 }:
-buildGoModule rec {
+buildGoModule {
   pname = "chrony-exporter";
   version = "0.12.0";
 
@@ -17,10 +17,11 @@ buildGoModule rec {
   vendorHash = "sha256-3zL7BrCdMVnt7F1FiZ2eQnKVhmCeW3aYKKX9v01ms/k=";
 
   meta = {
-    description = "Prometheus Exporter for Chrony NTP.";
-    mainProgram = "chrony_exporter";
+    description = "Prometheus Exporter for Chrony";
     homepage = "https://github.com/SuperQ/chrony_exporter";
     license = lib.licenses.asl20;
-    maintainers = with lib; [];
+    platforms = lib.platforms.linux;
+    mainProgram = "chrony_exporter";
+    maintainers = with lib.maintainers; [];
   };
 }
