@@ -23,5 +23,6 @@ final: prev: {
       withTxtDoc = false;
     };
   };
+
   prometheus-chrony-exporter = final.callPackage ../pkgs/prometheus-chrony-exporter.nix {};
 }
