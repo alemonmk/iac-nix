@@ -54,11 +54,14 @@
     };
     prometheus.exporters.chrony = {
       enable = true;
-      address = "0.0.0.0";
-      extraFlags = [
-        "--chrony.address=127.0.0.1:323"
-        "--collector.sources"
+      chronyServerAddress = "127.0.0.1:323";
+      enabledCollectors = [
+        "tracking"
+        "sources"
+        "serverstats"
+        "dns-lookups"
       ];
+      disabledCollectors = ["sources.with-ntpdata"];
     };
   };
 }
