@@ -31,6 +31,8 @@
     };
   };
 
+  nixpkgs.config.permittedInsecurePackages = ["squid-7.0.1"];
+
   environment.etc."squid/acl".source = ../blobs/squid/acl;
 
   services = {
