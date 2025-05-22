@@ -90,7 +90,6 @@ in {
           system = linuxSystem;
           overlays = [(import ../overlays/next.nix)];
           config.allowUnfree = true;
-          config.permittedInsecurePackages = ["squid-7.0.1"];
         };
       };
       modules =
