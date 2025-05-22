@@ -10,6 +10,10 @@
     automatic = true;
     dates = "weekly";
   };
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [(import ../overlays/stable.nix)];
+  };
   environment.shellAliases = {
     upgrade-diff = "nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)";
   };

@@ -86,11 +86,6 @@ in {
       system = linuxSystem;
       specialArgs = {
         inherit impermanence sops-nix;
-        pkgs = import nixpkgs {
-          system = linuxSystem;
-          overlays = [(import ../overlays/stable.nix)];
-          config.allowUnfree = true;
-        };
         nixpkgs-next = import nixpkgs-next {
           system = linuxSystem;
           overlays = [(import ../overlays/next.nix)];
