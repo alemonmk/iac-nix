@@ -91,9 +91,9 @@
     code-server = {
       enable = true;
       proxyDomain = "nix-mgr.snct.rmntn.net";
-      package = nixpkgs-next.vscode-with-extensions.override {
-        vscode = nixpkgs-next.code-server;
-        vscodeExtensions = with nixpkgs-next.vscode-extensions; [
+      package = pkgs.vscode-with-extensions.override {
+        vscode = pkgs.code-server;
+        vscodeExtensions = with pkgs.vscode-extensions; [
           bbenoist.nix
           jeff-hykin.better-nix-syntax
           kamadorueda.alejandra

@@ -36,7 +36,6 @@
   services = {
     squid = {
       enable = true;
-      package = nixpkgs-next.squid;
       configText = builtins.readFile ../blobs/squid/config;
     };
     syslog-ng = {
