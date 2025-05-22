@@ -38,6 +38,7 @@
   services = {
     squid = {
       enable = true;
+      validateConfig = false;
       configText = builtins.readFile ../blobs/squid/config;
     };
     syslog-ng = {
