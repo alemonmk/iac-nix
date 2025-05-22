@@ -30,7 +30,6 @@
   services = {
     technitium-dns-server = {
       enable = true;
-      package = nixpkgs-next.technitium-dns-server;
     };
     caddy = {
       enable = true;
