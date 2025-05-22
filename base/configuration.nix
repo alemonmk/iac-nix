@@ -16,7 +16,7 @@
   system.stateVersion = "24.11";
 
   time.timeZone = "Asia/Taipei";
-  i18n.defaultLocale = "en_US.UTF8";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
