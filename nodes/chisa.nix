@@ -6,12 +6,12 @@
   system.stateVersion = 5;
 
   nixpkgs.hostPlatform = "x86_64-darwin";
-  services.nix-daemon.enable = true;
   nix.settings.experimental-features = "nix-command flakes";
   nix.optimise.automatic = true;
   nix.gc.automatic = true;
   nixpkgs.config.allowUnfree = true;
 
+  system.primaryUser = "alemonmk";
   system.defaults = {
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
@@ -92,7 +92,7 @@
   environment.systemPackages = [
     pkgs.coreutils
     pkgs.screen
-    pkgs.darwin.iproute2mac
+    pkgs.iproute2mac
     pkgs.curl
     pkgs.jq
     pkgs.git
