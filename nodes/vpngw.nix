@@ -46,7 +46,7 @@
       };
       joinNetworks = ["1fdfc25cb4361829"];
     };
-    bird2 = {
+    bird = {
       enable = true;
       config = ''
         log syslog all;
