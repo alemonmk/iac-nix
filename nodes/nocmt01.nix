@@ -126,7 +126,6 @@
         users = {
           allow_sign_up = false;
           allow_org_create = false;
-          editors_can_admin = true;
         };
         "auth.azuread" = {
           enabled = true;
