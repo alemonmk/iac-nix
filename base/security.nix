@@ -51,10 +51,6 @@
     createHome = true;
     hashedPassword = "$y$j9T$4aptXoA1kNKy28totn4Vb0$wDbr9oHaSmcMl.OiSXhilWNOIT0GazwRmt9dfVAhueD";
   };
-  users.ms-ad = {
-    enable = lib.mkDefault true;
-    domain = "snct.rmntn.net";
-  };
 
   services = {
     openssh = {
