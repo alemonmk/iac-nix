@@ -90,8 +90,6 @@ in {
         adcli
         oddjob
         samba
-        sssd
-        krb5
         realmd
       ];
 
