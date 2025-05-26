@@ -19,10 +19,4 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
-
-  environment.systemPackages = [pkgs.git pkgs.nvd];
-
-  environment.shellAliases = {
-    upgrade-system = "sudo nixos-rebuild boot --flake git+https://code.rmntn.net/iac/nix#$(hostname); upgrade-diff";
-  };
 }
