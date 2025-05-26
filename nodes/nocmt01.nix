@@ -34,9 +34,9 @@
       sopsFile = ../secrets/nocmt01/monitoring.yaml;
     };
     templates."oxidized-cfg" = {
-      file = pkgs.substituteAll {
+      file = pkgs.replaceVarsWith {
         src = ../blobs/monitoring/oxidized/config.yml;
-        ncmPassword = config.sops.placeholder.ncm-password;
+        replacements = {ncmPassword = config.sops.placeholder.ncm-password;};
       };
       mode = "0440";
       owner = config.users.users.oxidized.name;
