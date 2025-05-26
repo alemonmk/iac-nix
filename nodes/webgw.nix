@@ -34,6 +34,7 @@
   nixpkgs.config.permittedInsecurePackages = ["squid-7.0.1"];
 
   environment.etc."squid/acl".source = ../blobs/squid/acl;
+  systemd.services.squid.restartTriggers = [config.environment.etc."squid/acl".source];
 
   services = {
     squid = {
