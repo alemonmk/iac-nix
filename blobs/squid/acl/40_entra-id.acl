@@ -2,7 +2,7 @@ acl mso-common dstdomain www.office.com login.microsoftonline.com login.live.com
 
 acl entra-id dstdomain autologon.microsoftazuread-sso.com management.azure.com management.core.windows.net
 acl entra-id dstdomain adminwebservice.microsoftonline.com provisioningapi.microsoftonline.com
-acl entra-id dstdomain passwordreset.microsoftonline.com ssprdedicatedsbprodsea-1.servicebus.windows.net ssprdedicatedsbprodneu.servicebus.windows.net
+acl entra-id dstdomain passwordreset.microsoftonline.com ssprdedicatedsbprodsea-1.servicebus.windows.net ssprdedicatedsbprodneu.servicebus.windows.net ssprdedicatedsbprodweu.servicebus.windows.net
 acl entra-id dstdomain .registration.msappproxy.net autoupdate.msappproxy.net
 acl entra-id dstdomain s1.adhybridhealth.azure.com adhsprodwusehsyncia.servicebus.windows.net adhsprodwusehaddsia.servicebus.windows.net
 acl entra-id dstdomain account.activedirectory.windowsazure.com
