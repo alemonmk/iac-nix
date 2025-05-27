@@ -5,10 +5,6 @@
   nixpkgs-next,
   ...
 }: {
-  imports = [
-    ../base/configuration.nix
-  ];
-
   networking = {
     hostName = "rmnmvwebgw";
     interfaces.ens192.ipv4.addresses = [
