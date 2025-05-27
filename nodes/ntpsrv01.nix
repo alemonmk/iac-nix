@@ -4,10 +4,6 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ../base/configuration.nix
-  ];
-
   networking = {
     hostName = "rmnmvntpsrv01";
     interfaces.ens192.ipv4.addresses = [
