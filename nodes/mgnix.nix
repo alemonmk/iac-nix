@@ -83,6 +83,8 @@
     };
   };
 
+  systemd.services.nix-daemon.environment.TMPDIR = "/nix/persist/buildtmp";
+
   services = {
     code-server = {
       enable = true;
