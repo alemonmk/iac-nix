@@ -102,6 +102,17 @@ in {
         ]
         ++ sysDef;
     };
+  finalLinodeSystem = sysDef:
+    nixpkgs.lib.nixosSystem {
+      system = linuxSystem;
+      specialArgs = {inherit sops-nix;};
+      modules =
+        [
+          sops-nix.nixosModules.sops
+          ../base/linode/configuration.nix
+        ]
+        ++ sysDef;
+    };
   finalDarwinSystem = sysDef:
     nix-darwin.lib.darwinSystem {
       specialArgs = {
