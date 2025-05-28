@@ -6,11 +6,11 @@
 }: {
   imports = [
     ./hardware.nix
-    ./nix.nix
-    ./security.nix
+    ../nix.nix
+    ../security.nix
     ./ms-ad.nix
     ./networking.nix
-    ./debloats.nix
+    ../debloats.nix
     ./impermenance.nix
   ];
 
