@@ -12,6 +12,7 @@
   };
 
   fileSystems."/nix".neededForBoot = true;
+
   boot.initrd.postResumeCommands = ''
     mkdir -p /mnt/btrfs_root
     mount -o subvol=/ /dev/disk/by-partlabel/ROOT /mnt/btrfs_root
