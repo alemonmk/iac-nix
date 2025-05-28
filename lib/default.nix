@@ -98,7 +98,7 @@ in {
           impermanence.nixosModules.impermanence
           sops-nix.nixosModules.sops
           home-manager-linux.nixosModules.home-manager
-          ../base/configuration.nix
+          ../base/inhouse/configuration.nix
         ]
         ++ sysDef;
     };
