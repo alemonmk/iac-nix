@@ -1,10 +1,6 @@
 {
     "subject": {{ toJson .Insecure.CR.Subject }},
-{{- if .Insecure.User.dnsNames }}
-    "dnsNames": {{ toJson .Insecure.User.dnsNames }},
-{{- else }}
     "dnsNames": {{ toJson .Insecure.CR.DNSNames }},
-{{- end }}
 {{- if typeIs "*rsa.PublicKey" .Insecure.CR.PublicKey }}
     "keyUsage": ["keyEncipherment", "digitalSignature"],
 {{- else }}
