@@ -11,6 +11,7 @@
     terminal_output serial
   '';
   boot.kernelParams = ["console=ttyS0,19200n8"];
+  boot.kernelModules = ["virtio_net"];
 
   boot.initrd.availableKernelModules = [
     "virtio_net"
