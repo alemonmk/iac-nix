@@ -40,6 +40,7 @@
 
   services.prometheus.exporters.node = {
     enable = true;
+    listenAddress = ((import ./netconfigs.nix).getNetConfig config.networking.hostName).lo;
     extraFlags = ["--collector.disable-defaults"];
     enabledCollectors = [
       "cpu"

@@ -67,8 +67,10 @@ in {
           enabled = true;
           alloc_dir = "/opt/nomad/alloc";
           alloc_mounts_dir = "/opt/nomad/alloc-mounts";
+          options."fingerprint.network.disallow_link_local" = true;
           host_network = [
-            {public = [{interface = "eth0";}];}
+            {public_v4 = [{cidr = "${wanAddress.v4}/32";}];}
+            {public_v6 = [{cidr = "${wanAddress.v6}/128";}];}
             {private = [{cidr = "10.85.183.0/28";}];}
           ];
           host_volume = [
