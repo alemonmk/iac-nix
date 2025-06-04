@@ -16,11 +16,11 @@ scrape_configs:
     static_configs:
     - targets:
       - kotone.rmntn.net
-      - sumire.rmntn.net
-      - uzuki.rmntn.net
-      - sajuna.rmntn.net
-      - kumiko.rmntn.net
-      - sena.rmntn.net
+      - sumire.shitara.rmntn.net
+      - uzuki.shitara.rmntn.net
+      - sajuna.shitara.rmntn.net
+      - kumiko.shitara.rmntn.net
+      - sena.shitara.rmntn.net
     relabel_configs:
     - source_labels: [__address__]
       target_label: __param_target
