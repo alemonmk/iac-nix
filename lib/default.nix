@@ -81,6 +81,9 @@ in {
       ../barebone/configuration.nix
     ];
   };
+  stage1LinodeSystem = nixpkgs.lib.nixosSystem {
+    modules = [../barebone/linode/configuration.nix];
+  };
   finalSystem = sysDef:
     nixpkgs.lib.nixosSystem {
       system = linuxSystem;

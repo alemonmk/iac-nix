@@ -39,6 +39,7 @@
     nixosConfigurations = with self.lib; {
       netbootImage = stage1Installer;
       barebone = stage1System;
+      linodeBarebone = stage1LinodeSystem;
       rmnmvatpki = finalSystem [./nodes/atpki.nix];
       rmnmvntpsrv01 = finalSystem [./nodes/ntpsrv01.nix];
       rmnmvnfdns01 = finalSystem [./nodes/nfdns01.nix];
