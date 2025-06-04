@@ -56,6 +56,12 @@
             UserKnownHostsFile = "/dev/null";
           };
         };
+        "public.rmntn.net" = {
+          host = "*.shitara.rmntn.net";
+          port = 444;
+          user = "root";
+          identityFile = "/run/secrets/nix-remote-sshkey";
+        };
         "private.rmntn.net" = {
           host = "*";
           user = "root";
@@ -69,7 +75,8 @@
         upgrade-system-remote () {
           pushd ~/workspaces/nix > /dev/null
           if [ $1 ]; then
-            NIX_SSHOPTS="-F $HOME/.ssh/config" nixos-rebuild switch --target-host root@$1 --flake .#$1
+            SHORTHOST=$(cut -d "." -f 1 <<< $1)
+            NIX_SSHOPTS="-F $HOME/.ssh/config" nixos-rebuild switch --target-host root@$1 --flake .#$SHORTHOST
           fi
           popd > /dev/null
         }
