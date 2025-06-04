@@ -50,6 +50,11 @@
       rmnmvvpngw = finalSystem [./nodes/vpngw.nix];
       rmnmvwebgw = finalSystem [./nodes/webgw.nix];
       rmnmvadb02 = finalSystem [./nodes/adb02.nix];
+      sumire = finalLinodeSystem [./nodes/sumire.nix];
+      uzuki = finalLinodeSystem [./nodes/uzuki.nix];
+      sajuna = finalLinodeSystem [./nodes/sajuna.nix];
+      kumiko = finalLinodeSystem [./nodes/kumiko.nix];
+      sena = finalLinodeSystem [./nodes/sena.nix];
     };
     darwinConfigurations = with self.lib; {
       chisa = finalDarwinSystem [./nodes/chisa.nix];
