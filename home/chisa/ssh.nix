@@ -2,6 +2,15 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
+      "newdc.rmntn.net" = {
+        host = "!*.snct.rmntn.net *.shitara.rmntn.net";
+        user = "emergency";
+        port = 444;
+        identityFile = "~/.ssh/kotone.key";
+        extraOptions = {
+          PreferredAuthentications = "publickey";
+        };
+      };
       "public.rmntn.net" = {
         host = "!*.snct.rmntn.net *.rmntn.net";
         user = "monoremonton";
