@@ -24,7 +24,7 @@ in {
     zerotierone = {
       enable = true;
       localConf = {
-        settings.interfacePrefixBlacklist = ["xfrm,zt,docker"];
+        settings.interfacePrefixBlacklist = ["xfrm" "zt" "docker"];
         settings.softwareUpdate = "disable";
       };
       joinNetworks = ["1fdfc25cb4b9ceda"];
