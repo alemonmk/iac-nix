@@ -15,4 +15,14 @@
       noProxy = "127.0.0.1,localhost,.snct.rmntn.net";
     };
   };
+
+  boot.kernel.sysctl = {
+    "net.core.wmem_max" = 134217728;
+    "net.core.rmem_max" = 134217728;
+    "net.ipv4.tcp_rmem" = "4096 87380 134217728";
+    "net.ipv4.tcp_wmem" = "4096 65536 134217728";
+    "net.core.netdev_max_backlog" = 30000;
+    "net.ipv4.tcp_no_metrics_save" = 1;
+    "net.core.default_qdisc" = "fq";
+  };
 }
