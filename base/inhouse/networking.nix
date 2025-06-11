@@ -15,6 +15,11 @@
       noProxy = "127.0.0.1,localhost,.snct.rmntn.net";
     };
   };
+  services.resolved.llmnr = "false";
+
+  systemd.network.wait-online.enable = false;
+  systemd.services.systemd-networkd.stopIfChanged = false;
+  systemd.services.systemd-resolved.stopIfChanged = false;
 
   boot.kernel.sysctl = {
     "net.core.wmem_max" = 134217728;
