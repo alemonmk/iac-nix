@@ -6,29 +6,29 @@
 }: {
   networking = {
     hostName = "rmnmvvpngw";
-    interfaces.ens192.ipv4.addresses = [
-      {
-        address = "10.85.29.3";
-        prefixLength = 28;
-      }
-    ];
-    defaultGateway = {address = "10.85.29.1";};
-    interfaces.ens192.ipv6.addresses = [
-      {
-        address = "2400:8902:e002:59e9::8e01";
-        prefixLength = 64;
-      }
-    ];
-    defaultGateway6 = {address = "2400:8902:e002:59e9::1";};
     proxy = lib.mkForce {
       httpProxy = null;
       httpsProxy = null;
     };
   };
 
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = "1";
-    "net.ipv6.conf.all.forwarding" = "1";
+  systemd.network = {
+    config.networkConfig = {
+      IPv4Forwarding = true;
+      IPv6Forwarding = true;
+    };
+    networks."1-ens192" = {
+      matchConfig.Name = "ens192";
+      address = [
+        "10.85.29.3/28"
+        "2400:8902:e002:59e9::8e01/64"
+      ];
+      gateway = [
+        "10.85.29.1"
+        "2400:8902:e002:59e9::1"
+      ];
+      networkConfig.LLDP = false;
+    };
   };
 
   users.ms-ad.enable = false;
