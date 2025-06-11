@@ -43,24 +43,23 @@
 
   networking = {
     hostName = "rmnmvnocmt01";
-    interfaces.ens192.ipv4.addresses = [
-      {
-        address = "10.85.10.5";
-        prefixLength = 27;
-      }
-    ];
-    defaultGateway = {address = "10.85.10.30";};
-    interfaces.ens224.ipv4.addresses = [
-      {
-        address = "10.88.0.2";
-        prefixLength = 24;
-      }
-    ];
-    enableIPv6 = false;
+    hosts."10.85.29.2" = ["vdi.snct.rmntn.net"];
   };
 
-  networking.hosts = {
-    "10.85.29.2" = ["vdi.snct.rmntn.net"];
+  systemd.network.networks = {
+    "1-ens192" = {
+      matchConfig.Name = "ens192";
+      address = ["10.85.10.5/27"];
+      gateway = ["10.85.10.30"];
+      networkConfig = {
+        LLDP = false;
+        IPv6AcceptRA = false;
+      };
+    };
+    "2-ens224" = {
+      matchConfig.Name = "ens224";
+      address = ["10.88.0.2/24"];
+    };
   };
 
   security.pki.certificateFiles = [

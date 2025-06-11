@@ -5,22 +5,19 @@
   nixpkgs-next,
   ...
 }: {
-  networking = {
-    hostName = "rmnmvytarc";
-    interfaces.ens192.ipv4.addresses = [
-      {
-        address = "10.85.20.8";
-        prefixLength = 26;
-      }
+  networking.hostName = "rmnmvytarc";
+
+  systemd.network.networks."1-ens192" = {
+    matchConfig.Name = "ens192";
+    address = [
+      "10.85.20.8/26"
+      "2400:8902:e002:59e3::a34:910e/64"
     ];
-    defaultGateway = {address = "10.85.20.62";};
-    interfaces.ens192.ipv6.addresses = [
-      {
-        address = "2400:8902:e002:59e3::a34:910e";
-        prefixLength = 64;
-      }
+    gateway = [
+      "10.85.20.62"
+      "2400:8902:e002:59e3::ccef"
     ];
-    defaultGateway6 = {address = "2400:8902:e002:59e3::ccef";};
+    networkConfig.LLDP = false;
   };
 
   environment.systemPackages = [nixpkgs-next.yt-dlp];
