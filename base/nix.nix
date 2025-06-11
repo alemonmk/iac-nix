@@ -3,6 +3,7 @@
   pkgs,
   ...
 }: {
+  nix.channel.enable = false;
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     min-free = 512 * 1024 * 1024;
