@@ -30,12 +30,6 @@
     sudo = {
       enable = true;
       extraConfig = "Defaults lecture = never";
-      extraRules = [
-        {
-          groups = ["sg\\ server\\ administrators@snct.rmntn.net"];
-          commands = ["ALL"];
-        }
-      ];
     };
   };
 

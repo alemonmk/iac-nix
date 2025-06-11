@@ -9,8 +9,8 @@ in {
   options = {
     users.ms-ad = with lib.types; {
       enable = lib.mkOption {
-        default = false;
         type = bool;
+        default = false;
         description = ''
           Join the specified Active Directory domain.
           Run the following command after nixos-rebuild switch to actually join the domain:
@@ -22,9 +22,17 @@ in {
           ```
         '';
       };
+
       domain = lib.mkOption {
         type = str;
+        default = "";
         description = "Active Directory domain to join.";
+      };
+
+      sudoers = lib.mkOption {
+        type = listOf attrs;
+        default = [];
+        description = "Sudoers rules for the Active Directory domain";
       };
     };
   };
@@ -85,6 +93,8 @@ in {
           User = "root";
         };
       };
+
+      security.sudo.extraRules = cfg.sudoers;
 
       environment.systemPackages = with pkgs; [
         adcli
