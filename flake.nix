@@ -28,7 +28,6 @@
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     formatter.x86_64-darwin = nixpkgs-darwin.legacyPackages.x86_64-darwin.alejandra;
     nixosModules = import ./modules/nixos;
-    stage1InstallerModules = import ./modules/installer;
     nixosConfigurations = with self.lib; {
       netbootImage = stage1Installer;
       barebone = stage1System;
