@@ -3,44 +3,43 @@
   pkgs,
   lib,
   ...
-}: let
-  cfg = config.users.ms-ad;
-in {
-  options = {
-    users.ms-ad = with lib.types; {
-      enable = lib.mkOption {
-        type = bool;
-        default = false;
-        description = ''
-          Join the specified Active Directory domain.
-          Run the following command after nixos-rebuild switch to actually join the domain:
-          ```
-          sudo adcli join \
-            -D <domain> \
-            -U <user>@<CAPTALIZED DOMAIN> \
-            -O "<Full DN to desired OU>"
-          ```
-        '';
-      };
+}: {
+  options.users.ms-ad = let
+    inherit (lib.types) bool str listOf attrs;
+    inherit (lib) mkOption;
+  in {
+    enable = mkOption {
+      type = bool;
+      default = false;
+      description = ''
+        Join the specified Active Directory domain.
+        Run the following command after nixos-rebuild switch to actually join the domain:
+        ```
+        sudo adcli join \
+          -D <domain> \
+          -U <user>@<CAPTALIZED DOMAIN> \
+          -O "<Full DN to desired OU>"
+        ```
+      '';
+    };
 
-      domain = lib.mkOption {
-        type = str;
-        default = "";
-        description = "Active Directory domain to join.";
-      };
+    domain = mkOption {
+      type = str;
+      default = "";
+      description = "Active Directory domain to join.";
+    };
 
-      sudoers = lib.mkOption {
-        type = listOf attrs;
-        default = [];
-        description = "Sudoers rules for the Active Directory domain";
-      };
+    sudoers = mkOption {
+      type = listOf attrs;
+      default = [];
+      description = "Sudoers rules for the Active Directory domain";
     };
   };
 
-  config = lib.mkIf cfg.enable (
+  config = lib.mkIf config.users.ms-ad.enable (
     let
-      AD_D = lib.toUpper cfg.domain;
-      ad_d = lib.toLower cfg.domain;
+      AD_D = lib.toUpper config.users.ms-ad.domain;
+      ad_d = lib.toLower AD_D;
     in {
       services = {
         sssd = {
@@ -94,7 +93,7 @@ in {
         };
       };
 
-      security.sudo.extraRules = cfg.sudoers;
+      security.sudo.extraRules = config.users.ms-ad.sudoers;
 
       environment.systemPackages = with pkgs; [
         adcli
