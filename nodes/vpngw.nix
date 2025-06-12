@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{lib, ...}: {
   networking = {
     hostName = "rmnmvvpngw";
     proxy = lib.mkForce {

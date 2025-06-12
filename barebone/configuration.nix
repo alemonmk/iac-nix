@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
-}: {
+{pkgs, ...}: {
   system.stateVersion = "24.11";
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
@@ -36,7 +30,7 @@
   '';
 
   virtualisation.vmware.guest.enable = true;
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.hostName = "nixos-installed";

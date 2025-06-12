@@ -1,4 +1,4 @@
-{config, ...}: {
+{
   xdg = {
     autostart.enable = false;
     icons.enable = false;

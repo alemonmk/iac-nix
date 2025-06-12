@@ -1,10 +1,4 @@
 {
-  config,
-  lib,
-  pkgs,
-  nixpkgs-next,
-  ...
-}: {
   networking.hostName = "rmnmvnfdns01";
 
   systemd.network.networks."1-ens192" = {

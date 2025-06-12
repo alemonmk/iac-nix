@@ -1,8 +1,4 @@
 {
-  config,
-  modulesPath,
-  ...
-}: {
   disko.devices.disk.sda = {
     device = "/dev/sda";
     type = "disk";

@@ -21,14 +21,7 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-next,
-    impermanence,
-    sops-nix,
-    disko,
-    home-manager-linux,
     nixpkgs-darwin,
-    nix-darwin,
-    home-manager-darwin,
     ...
   } @ inputs: {
     lib = import ./lib inputs;

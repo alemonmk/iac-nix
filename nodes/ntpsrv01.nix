@@ -1,9 +1,4 @@
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
   networking.hostName = "rmnmvntpsrv01";
 
   systemd.network.networks."1-ens192" = {
