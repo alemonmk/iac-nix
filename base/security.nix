@@ -1,8 +1,4 @@
 {
-  config,
-  lib,
-  ...
-}: {
   boot.tmp.cleanOnBoot = true;
   systemd.coredump.enable = false;
 

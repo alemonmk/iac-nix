@@ -1,13 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
-}: {
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-
+{pkgs, ...}: {
   boot.loader.timeout = 10;
   boot.loader.grub.enable = true;
   boot.loader.grub.forceInstall = true;
@@ -46,6 +37,8 @@
   swapDevices = [{device = "/dev/sdb";}];
 
   system.stateVersion = "25.05";
+  nixpkgs.hostPlatform = "x86_64-linux";
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking = {
     hostName = "nixos-installed";

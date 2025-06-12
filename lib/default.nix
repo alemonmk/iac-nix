@@ -9,19 +9,16 @@
   home-manager-linux,
   home-manager-darwin,
   ...
-} @ inputs: let
+}: let
   linuxSystem = "x86_64-linux";
   darwinSystem = "x86_64-darwin";
 in {
   stage1Installer = let
     dummyTarget = nixpkgs.lib.nixosSystem {
+      system = linuxSystem;
       modules = [
         disko.nixosModules.disko
         ../barebone/diskolayout.nix
-        ({...}: {
-          nixpkgs.hostPlatform = linuxSystem;
-          system.stateVersion = "24.11";
-        })
       ];
     };
     preInstallMounts = ''
@@ -38,21 +35,13 @@ in {
     '';
     image = nixpkgs.lib.nixosSystem {
       system = linuxSystem;
-      specialArgs = {inherit inputs;};
       modules = [
-        self.stage1InstallerModules
-        ({
-          modulesPath,
-          lib,
-          pkgs,
-          ...
-        }: {
-          imports = [
-            "${modulesPath}/installer/netboot/netboot-minimal.nix"
-            "${modulesPath}/profiles/perlless.nix"
-            ./stage1installer/system.nix
-            ./stage1installer/minimalize.nix
-          ];
+        "${nixpkgs}/nixos/modules/installer/netboot/netboot-minimal.nix"
+        "${nixpkgs}/nixos/modules/profiles/perlless.nix"
+        ../modules/installer
+        ./stage1installer/system.nix
+        ./stage1installer/minimalize.nix
+        {
           disabledModules = ["profiles/base.nix"];
           unattendedInstaller = {
             enable = true;
@@ -60,7 +49,7 @@ in {
             flake = "git+https://code.rmntn.net/iac/nix?ref=main#barebone";
             preInstall = preInstallMounts;
           };
-        })
+        }
       ];
     };
   in
@@ -86,9 +75,7 @@ in {
   };
   finalSystem = sysDef:
     nixpkgs.lib.nixosSystem {
-      system = linuxSystem;
       specialArgs = {
-        inherit impermanence sops-nix;
         nixpkgs-next = import nixpkgs-next {
           system = linuxSystem;
           overlays = [(import ../overlays/next.nix)];
@@ -107,8 +94,6 @@ in {
     };
   finalLinodeSystem = sysDef:
     nixpkgs.lib.nixosSystem {
-      system = linuxSystem;
-      specialArgs = {inherit sops-nix;};
       modules =
         [
           sops-nix.nixosModules.sops

@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   networking = {
     domain = "snct.rmntn.net";
     search = ["snct.rmntn.net" "clients.snct.rmntn.net"];

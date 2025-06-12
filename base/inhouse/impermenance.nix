@@ -1,4 +1,4 @@
-{config, ...}: {
+{
   environment.persistence."/nix/persist" = {
     directories = [
       "/var/lib/nixos"
