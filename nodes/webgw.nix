@@ -33,7 +33,7 @@
     squid = {
       enable = true;
       validateConfig = false;
-      configText = builtins.readFile ../blobs/squid/config;
+      configText = lib.readFile ../blobs/squid/config;
     };
     syslog-ng = {
       enable = true;
