@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -95,7 +96,7 @@
         @version: 4.8
         @include "scl.conf"
       '';
-      extraConfig = builtins.readFile ../blobs/monitoring/log-forwarder.cfg;
+      extraConfig = lib.readFile ../blobs/monitoring/log-forwarder.cfg;
     };
 
     prometheus.exporters.blackbox = {

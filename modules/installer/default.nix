@@ -62,8 +62,9 @@
           "/run/current-system/sw"
         ];
         script = let
-          a = builtins.elemAt (builtins.split "^([^#]*)#(.*)$" config.unattendedInstaller.flake) 1;
-          flake-uri-for-nix-build = "${builtins.elemAt a 0}#nixosConfigurations.${builtins.elemAt a 1}.config.system.build.toplevel";
+          inherit (lib) elemAt split;
+          a = elemAt (split "^([^#]*)#(.*)$" config.unattendedInstaller.flake) 1;
+          flake-uri-for-nix-build = "${elemAt a 0}#nixosConfigurations.${elemAt a 1}.config.system.build.toplevel";
         in ''
           set -xeufo pipefail
           trap 'echo Installation failed!' EXIT
