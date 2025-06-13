@@ -28,7 +28,7 @@
         "/System/Applications/Launchpad.app"
         "/Applications/Safari.app"
         "/System/Applications/System Settings.app"
-        "/Applications/Alacritty.app"
+        "/Applications/Nix Apps/Alacritty.app"
         "/Applications/Bitwarden.app"
         "/Applications/Librewolf.app"
         "/Applications/Visual Studio Code.app"
@@ -91,6 +91,7 @@
 
   environment.systemPackages = [
     pkgs.coreutils
+    pkgs.alacritty
     pkgs.screen
     pkgs.iproute2mac
     pkgs.curl
@@ -125,7 +126,6 @@
         greedy = true;
       })
       [
-        "alacritty"
         "adobe-acrobat-reader"
         "araxis-merge"
         "drawio"
