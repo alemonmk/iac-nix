@@ -163,13 +163,11 @@ scrape_configs:
 
   - job_name: appmon-http-generic
     metrics_path: /probe
-    scrape_interval: 5m
+    scrape_interval: 1m
     params:
       module: [generic_http]
     static_configs:
     - targets:
-      - https://rmnmvdnldsv02.snct.rmntn.net/usenet/
-      - https://rmnmvdnldsv02.snct.rmntn.net/general/login
       - https://rmnmvdnldsv02.snct.rmntn.net/syncthing/
       - https://megumi.snct.rmntn.net
       - https://ayanami.snct.rmntn.net
@@ -180,8 +178,8 @@ scrape_configs:
       - https://vdi-hcs1.snct.rmntn.net
       - https://vdi.snct.rmntn.net
       - https://atpki.snct.rmntn.net/acme/w1/directory
-      - http://rmnmvswuds.snct.rmntn.net:8530
       - https://rmnmvswuds.snct.rmntn.net:8531
+      - https://ytarc.snct.rmntn.net/playback/
     relabel_configs:
     - source_labels: [__address__]
       target_label: __param_target
@@ -209,6 +207,7 @@ scrape_configs:
       - rmnmvadb01:49987
       - rmnmvadb01:50011
       - rmnmvadb01:53742
+      - rmnmvadb02:5432
       - rmnmvadpki:16384
     relabel_configs:
     - source_labels: [__address__]
@@ -222,7 +221,7 @@ scrape_configs:
       regex:
       - "probe_success"
 
-  - job_name: appmon-icmp-dhcpsrv
+  - job_name: appmon-icmp-liveness
     metrics_path: /probe
     scrape_interval: 1m
     params:
@@ -231,6 +230,9 @@ scrape_configs:
     - targets:
       - rmnmvdhc01
       - rmnmvdhc02
+      - rmnmvnfnac01
+      - rmnmvnfnac02
+      - rmnmvwebgw
     relabel_configs:
     - source_labels: [__address__]
       target_label: __param_target
