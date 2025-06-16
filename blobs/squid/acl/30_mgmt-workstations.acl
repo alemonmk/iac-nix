@@ -6,7 +6,8 @@ acl debian dstdomain deb.debian.org security.debian.org
 acl npm dstdomain registry.npmjs.org
 acl maven dstdomain repo1.maven.org mvnrepository.com repo1.maven.org
 acl rubygems dstdomain rubygems.org index.rubygems.org
-acl dbeaver dstdomain dbeaver.io 
+acl dbeaver dstdomain dbeaver.io
+acl terraform-registry dstdomain registry.terraform.io
 
 acl mgmt-workstation src 10.85.20.1
 
@@ -23,3 +24,4 @@ http_access allow safe-methods nix-mgmt-workstation vscode
 http_access allow safe-methods nix-mgmt-workstation rubygems
 http_access allow safe-methods nix-mgmt-workstation npm
 http_access allow safe-methods nix-mgmt-workstation maven
+http_access allow safe-methods nix-mgmt-workstation terraform-registry
