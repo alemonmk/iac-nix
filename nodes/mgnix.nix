@@ -147,7 +147,7 @@
       extraConfig = ''
         store_uri = file:///nix/bcache?write-nar-listing=true
         binary_cache_public_uri = https://nix-cache.snct.rmntn.net
-        log_prefix = https://nix-cache.snct.rmntn.net
+        log_prefix = https://nix-cache.snct.rmntn.net/
         upload_logs_to_binary_cache = true
         compress_build_logs = false
         allow_import_from_derivation = false
