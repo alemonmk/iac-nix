@@ -38,7 +38,17 @@
 
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    substituters = [
+      "https://nix-community.cachix.org"
+      "https://nix-cache.snct.rmntn.net"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-cache.snct.rmntn.net-1:PmTrNIvPsGTWCJlXEf1g29ixPemUp68gkgqNA/YcfsM="
+    ];
+  };
 
   networking = {
     hostName = "nixos-installed";
