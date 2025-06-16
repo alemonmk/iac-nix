@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -11,9 +12,17 @@
       group = config.users.users.code-server.group;
       sopsFile = ../secrets/mgnix/remote-sshkey.yaml;
     };
+    secrets.harmonia-store-key.sopsFile = ../secrets/mgnix/harmonia.yaml;
   };
 
   networking.hostName = "rmnmvmgnix";
+
+  fileSystems."/nix/bcache" = {
+    device = "/dev/disk/by-partlabel/BCACHE";
+    fsType = "ext4";
+    options = ["noatime"];
+    autoResize = true;
+  };
 
   systemd.network.networks."1-ens192" = {
     matchConfig.Name = "ens192";
@@ -85,9 +94,16 @@
     };
   };
 
-  systemd.services.nix-daemon.environment.TMPDIR = "/nix/persist/buildtmp";
+  nix = {
+    settings.gc-keep-outputs = lib.mkForce false;
+    extraOptions = ''
+      allowed-uris = https://github.com/ https://code.rmntn.net github:
+    '';
+  };
 
   services = {
+    journald.rateLimitBurst = 0;
+
     code-server = {
       enable = true;
       proxyDomain = "nix-mgr.snct.rmntn.net";
@@ -111,21 +127,69 @@
       hashedPassword = "$argon2i$v=19$m=4096,t=3,p=1$NHJ2MGczNzR1MXE4OTB5dXJ3d2Vpb3I$9SJioCgKkNW4yaSpe8vtipgdyFHpnASrqKsdcpQ8ygM";
     };
 
+    harmonia = {
+      enable = true;
+      signKeyPaths = [config.sops.secrets.harmonia-store-key.path];
+      settings = {
+        bind = "[::1]:4445";
+        priority = 41;
+        real_nix_store = "/nix/bcache";
+      };
+    };
+
+    hydra = {
+      enable = true;
+      hydraURL = "https://nix-ci.snct.rmntn.net";
+      listenHost = "localhost";
+      port = 4446;
+      useSubstitutes = true;
+      notificationSender = "nix-ci@snct.rmntn.net";
+      extraConfig = ''
+        store_uri = file:///nix/bcache?write-nar-listing=true
+        binary_cache_public_uri = https://nix-cache.snct.rmntn.net
+        log_prefix = https://nix-cache.snct.rmntn.net
+        upload_logs_to_binary_cache = true
+        compress_build_logs = false
+        allow_import_from_derivation = false
+      '';
+    };
+
     caddy = {
       enable = true;
       virtualHosts = {
-        "nix-mgr.snct.rmntn.net" = {
-          extraConfig = ''
-            reverse_proxy localhost:4444 {
-                    header_up X-Real-IP {remote_host}
-            }
-          '';
-        };
+        "nix-mgr.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${toString config.services.code-server.port}";
+        "nix-cache.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${lib.head (lib.reverseList (lib.splitString ":" config.services.harmonia.settings.bind))}";
+        "nix-ci.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${toString config.services.hydra.port}";
       };
     };
   };
 
+  systemd.services.nix-daemon.environment.TMPDIR = "/nix/persist/buildtmp";
+  systemd.services.hydra-evaluator.environment.GC_DONT_GC = "true";
+  systemd.services.hydra-prune-build-logs = {
+    description = "Clean up old build logs";
+    startAt = "weekly";
+    serviceConfig = {
+      User = "hydra-queue-runner";
+      Group = "hydra";
+      ExecStart = lib.concatStringsSep " " [
+        (lib.getExe pkgs.findutils)
+        "/var/lib/hydra/build-logs/"
+        "-ignore_readdir_race"
+        "-type"
+        "f"
+        "-mtime"
+        "+90"
+        "-delete"
+      ];
+    };
+  };
+
   environment.persistence."/nix/persist" = {
+    directories = [
+      "/var/lib/hydra"
+      "/var/lib/postgresql"
+    ];
     users.code-server = {
       directories = ["workspaces"];
       files = [".config/sops/age/keys.txt"];
