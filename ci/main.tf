@@ -28,7 +28,7 @@ resource "hydra_jobset" "nixosConfigurations" {
   flake_uri           = "git+https://code.rmntn.net/iac/nix?dir=ci/nixos&ref=main"
   state               = "enabled"
   visible             = true
-  check_interval      = 0
+  check_interval      = 600
   scheduling_shares   = 30
   keep_evaluations    = 5
   email_notifications = false
@@ -41,7 +41,7 @@ resource "hydra_jobset" "packages" {
   flake_uri           = "git+https://code.rmntn.net/iac/nix?dir=ci/packages&ref=main"
   state               = "enabled"
   visible             = true
-  check_interval      = 0
+  check_interval      = 600
   scheduling_shares   = 10
   keep_evaluations    = 5
   email_notifications = false
