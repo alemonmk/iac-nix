@@ -162,7 +162,10 @@
       enable = true;
       virtualHosts = {
         "nix-mgr.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${toString config.services.code-server.port}";
-        "nix-cache.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${lib.head (lib.reverseList (lib.splitString ":" config.services.harmonia.settings.bind))}";
+        "nix-cache.snct.rmntn.net".extraConfig = ''
+          import cors https://nix-ci.snct.rmntn.net
+          reverse_proxy localhost:${lib.head (lib.reverseList (lib.splitString ":" config.services.harmonia.settings.bind))}
+        '';
         "nix-ci.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${toString config.services.hydra.port}";
       };
     };
