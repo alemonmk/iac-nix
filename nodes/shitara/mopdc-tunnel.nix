@@ -67,7 +67,7 @@ in {
         remote_ts = ["0.0.0.0/0"];
       };
     };
-    includes = [config.sops.secrets.ipsec_psk.path];
+    includes = [config.sops.secrets.ipsec-psk.path];
   };
 
   services.bird.config = let
