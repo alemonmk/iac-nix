@@ -78,10 +78,10 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1750084246,
-        "narHash": "sha256-YxXh7qqiHwyNg+68UrIwoUvZ1thZ121uTn22zGCYkmE=",
+        "lastModified": 1750089660,
+        "narHash": "sha256-XzK9ze6Z7a6WV7d1vFeYRvvSuThfDnqUeG3/ouErqtg=",
         "ref": "main",
-        "rev": "9f875a5741737e4799916d020d30f52182eae4b8",
+        "rev": "4a18447e3c7f4358d7032b39129814ef4b7fdd93",
         "shallow": true,
         "type": "git",
         "url": "https://code.rmntn.net/iac/nix"
