@@ -5,8 +5,15 @@
     min-free = 512 * 1024 * 1024;
     log-lines = 25;
     tarball-ttl = 60;
+    substituters = [
+      "https://nix-community.cachix.org"
+      "https://nix-cache.snct.rmntn.net"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-cache.snct.rmntn.net-1:PmTrNIvPsGTWCJlXEf1g29ixPemUp68gkgqNA/YcfsM="
+    ];
   };
-  nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
     dates = "weekly";
