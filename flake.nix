@@ -27,9 +27,13 @@
     lib = import ./lib inputs;
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     formatter.x86_64-darwin = nixpkgs-darwin.legacyPackages.x86_64-darwin.alejandra;
+    packages.x86_64-linux = {
+      netbootImage = self.lib.stage1Installer;
+    };
+    overlays.stable = import ./overlays/stable.nix;
+    overlays.next = import ./overlays/next.nix;
     nixosModules = import ./modules/nixos;
     nixosConfigurations = with self.lib; {
-      netbootImage = stage1Installer;
       barebone = stage1System;
       linodeBarebone = stage1LinodeSystem;
       rmnmvatpki = finalSystem [./nodes/atpki.nix];
