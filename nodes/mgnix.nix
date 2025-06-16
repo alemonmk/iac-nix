@@ -152,6 +152,10 @@
         compress_build_logs = false
         allow_import_from_derivation = false
       '';
+      extraEnv = {
+        http_proxy = "http://10.85.20.10:3128";
+        https_proxy = "http://10.85.20.10:3128";
+      };
     };
 
     caddy = {
