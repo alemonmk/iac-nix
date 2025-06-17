@@ -26,11 +26,11 @@ resource "hydra_jobset" "builds" {
   name                = "builds"
   description         = "Builds all overlaid packages and systems."
   type                = "flake"
-  flake_uri           = "git+https://code.rmntn.net/iac/nix&ref=main"
+  flake_uri           = "git+https://code.rmntn.net/iac/nix?ref=main"
   state               = "enabled"
   visible             = true
   check_interval      = 300
   scheduling_shares   = 100
-  keep_evaluations    = 10
+  keep_evaluations    = 1
   email_notifications = false
 }
