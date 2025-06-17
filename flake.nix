@@ -7,7 +7,7 @@
     impermanence.url = "github:nix-community/impermanence";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs-next";
-    disko.url = "github:nix-community/disko";
+    disko.url = "github:nix-community/disko?ref=v1.12.0";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     home-manager-linux.url = "github:nix-community/home-manager?ref=release-25.05";
     home-manager-linux.inputs.nixpkgs.follows = "nixpkgs";
