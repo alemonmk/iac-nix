@@ -30,8 +30,6 @@
     packages.x86_64-linux = {
       netbootImage = self.lib.stage1Installer;
     };
-    overlays.stable = import ./overlays/stable.nix;
-    overlays.next = import ./overlays/next.nix;
     nixosModules = import ./modules/nixos;
     nixosConfigurations = with self.lib; {
       barebone = stage1System;
@@ -55,5 +53,6 @@
     darwinConfigurations = with self.lib; {
       chisa = finalDarwinSystem [./nodes/chisa.nix];
     };
+    hydraJobs = import ./ci {inherit inputs;};
   };
 }
