@@ -132,7 +132,7 @@
       signKeyPaths = [config.sops.secrets.harmonia-store-key.path];
       settings = {
         bind = "[::1]:4445";
-        priority = 41;
+        priority = 30;
         real_nix_store = "/nix/bcache";
       };
     };
