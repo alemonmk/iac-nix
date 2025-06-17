@@ -21,28 +21,16 @@ resource "hydra_project" "iac-nix" {
   visible      = true
 }
 
-resource "hydra_jobset" "nixosConfigurations" {
+resource "hydra_jobset" "builds" {
   project             = hydra_project.iac-nix.name
-  name                = "nixosConfigurations"
+  name                = "builds"
+  description         = "Builds all overlaid packages and systems."
   type                = "flake"
-  flake_uri           = "git+https://code.rmntn.net/iac/nix?dir=ci/nixos&ref=main"
+  flake_uri           = "git+https://code.rmntn.net/iac/nix&ref=main"
   state               = "enabled"
   visible             = true
-  check_interval      = 600
-  scheduling_shares   = 30
-  keep_evaluations    = 5
-  email_notifications = false
-}
-
-resource "hydra_jobset" "packages" {
-  project             = hydra_project.iac-nix.name
-  name                = "packages"
-  type                = "flake"
-  flake_uri           = "git+https://code.rmntn.net/iac/nix?dir=ci/packages&ref=main"
-  state               = "enabled"
-  visible             = true
-  check_interval      = 600
-  scheduling_shares   = 10
-  keep_evaluations    = 5
+  check_interval      = 300
+  scheduling_shares   = 100
+  keep_evaluations    = 10
   email_notifications = false
 }
