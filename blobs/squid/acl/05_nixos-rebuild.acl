@@ -1,4 +1,4 @@
-acl nixos dstdomain cache.nixos.org tarballs.nixos.org channels.nixos.org code.rmntn.net .cachix.org nix-cache.snct.rmntn.net
+acl nixos dstdomain cache.nixos.org tarballs.nixos.org channels.nixos.org code.rmntn.net .cachix.org
 acl github dstdomain github.com api.github.com codeload.github.com
 acl github dstdomain raw.githubusercontent.com objects.githubusercontent.com release-assets.githubusercontent.com github-production-release-asset-2e65be.s3.amazonsaws.com
 acl golang dstdomain proxy.golang.org storage.googleapis.com
