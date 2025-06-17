@@ -12,7 +12,11 @@
       group = config.users.users.code-server.group;
       sopsFile = ../secrets/mgnix/remote-sshkey.yaml;
     };
-    secrets.harmonia-store-key.sopsFile = ../secrets/mgnix/harmonia.yaml;
+    secrets.ci-signing-key = {
+      mode = "0440";
+      group = config.users.users.hydra.group;
+      sopsFile = ../secrets/mgnix/ci-signing-key.yaml;
+    };
   };
 
   networking.hostName = "rmnmvmgnix";
@@ -127,29 +131,19 @@
       hashedPassword = "$argon2i$v=19$m=4096,t=3,p=1$NHJ2MGczNzR1MXE4OTB5dXJ3d2Vpb3I$9SJioCgKkNW4yaSpe8vtipgdyFHpnASrqKsdcpQ8ygM";
     };
 
-    harmonia = {
-      enable = true;
-      signKeyPaths = [config.sops.secrets.harmonia-store-key.path];
-      settings = {
-        bind = "[::1]:4445";
-        priority = 30;
-        real_nix_store = "/nix/bcache";
-      };
-    };
-
     hydra = {
       enable = true;
       hydraURL = "https://nix-ci.snct.rmntn.net";
       listenHost = "localhost";
-      port = 4446;
+      port = 4445;
       useSubstitutes = true;
       notificationSender = "nix-ci@snct.rmntn.net";
       extraConfig = ''
-        store_uri = file:///nix/bcache?write-nar-listing=true
+        store_uri = file:///nix/bcache?write-nar-listing=true&secret-key=${config.sops.secrets.ci-signing-key.path}&compression=zstd&parallel-compression=true
         binary_cache_public_uri = https://nix-cache.snct.rmntn.net
         log_prefix = https://nix-cache.snct.rmntn.net/
         upload_logs_to_binary_cache = true
-        compress_build_logs = false
+        compress_build_logs = 0
         allow_import_from_derivation = false
       '';
       extraEnv = {
@@ -164,7 +158,25 @@
         "nix-mgr.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${toString config.services.code-server.port}";
         "nix-cache.snct.rmntn.net".extraConfig = ''
           import cors https://nix-ci.snct.rmntn.net
-          reverse_proxy localhost:${lib.head (lib.reverseList (lib.splitString ":" config.services.harmonia.settings.bind))}
+          uri query -*
+          handle /nix-cache-info {
+            header Content-Type text/x-nix-cache-info
+              respond 200 {
+              body <<TXT
+              StoreDir: /nix/store
+              WantMassQuery: 1
+              Priority: 30
+              TXT
+              close
+            }
+          }
+          respond / "nix-cache.snct.rmntn.net is up" 200
+          header /*.narinfo Content-Type text/x-nix-narinfo
+          header /nar/* Content-Type application/x-nix-nar
+          header /log/* Content-Type "text/plain; charset=utf8"
+          file_server {
+            root /nix/bcache
+          }
         '';
         "nix-ci.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${toString config.services.hydra.port}";
       };
