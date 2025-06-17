@@ -53,7 +53,6 @@
         "atpki.snct.rmntn.net" = {
           extraConfig = ''
             reverse_proxy https://localhost:8443 {
-                header_up X-Real-IP {remote_host}
                 transport http {
                     tls_trust_pool file /etc/smallstep/root_ca.crt
                     tls_server_name atpki.snct.rmntn.net

@@ -58,13 +58,8 @@
       virtualHosts = {
         "ytarc.snct.rmntn.net" = {
           extraConfig = ''
-            reverse_proxy /archiver/* localhost:8081 {
-                    header_up X-Real-IP {remote_host}
-            }
-
-            reverse_proxy /playback/* localhost:8096 {
-                    header_up X-Real-IP {remote_host}
-            }
+            reverse_proxy /archiver/* localhost:8081
+            reverse_proxy /playback/* localhost:8096
           '';
         };
       };
