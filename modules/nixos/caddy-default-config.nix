@@ -9,8 +9,8 @@
         acmeCA = "https://atpki.snct.rmntn.net/acme/w1/directory";
         email = "apps@snct.rmntn.net";
         globalConfig = ''
-          admin off
           persist_config off
+          admin
           key_type p256
         '';
         extraConfig = ''
