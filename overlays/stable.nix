@@ -31,4 +31,6 @@ final: prev: {
   });
 
   code-server = final.callPackage ../pkgs/code-server.nix {};
+
+  vlmcsd = final.callPackage ../pkgs/vlmcsd.nix {};
 }
