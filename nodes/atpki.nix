@@ -47,7 +47,6 @@
     };
     caddy = {
       enable = true;
-      package = nixpkgs-next.caddy;
       acmeCA = lib.mkForce "https://atpki.snct.rmntn.net:8443/acme/w1/directory";
       virtualHosts = {
         "atpki.snct.rmntn.net" = {
