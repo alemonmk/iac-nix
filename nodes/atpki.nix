@@ -63,9 +63,7 @@
     };
   };
 
-  environment.persistence."/nix/persist" = {
-    directories = [
-      "/var/lib/private/step-ca"
-    ];
-  };
+  systemd.services.step-ca.serviceConfig.StateDirectoryMode = "0700";
+
+  environment.persistence."/nix/persist".directories = ["/var/lib/private/step-ca"];
 }
