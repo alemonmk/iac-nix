@@ -136,7 +136,7 @@
         "keyboardcleantool"
         "linearmouse"
         "openinterminal-lite"
-        "wireshark"
+        "wireshark-app"
         "vmware-fusion"
         "zerotier-one"
         "yubico-yubikey-manager"
