@@ -33,4 +33,6 @@ final: prev: {
   code-server = final.callPackage ../pkgs/code-server.nix {};
 
   vlmcsd = final.callPackage ../pkgs/vlmcsd.nix {};
+
+  vpn-route-gen = final.callPackage ../pkgs/vpn-route-gen/package.nix {};
 }
