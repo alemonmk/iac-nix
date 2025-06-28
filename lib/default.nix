@@ -46,6 +46,7 @@ in {
     nixpkgs.lib.nixosSystem {
       modules =
         [
+          self.nixosModules.vpn-route-gen
           sops-nix.nixosModules.sops
           ../base/linode/configuration.nix
         ]
