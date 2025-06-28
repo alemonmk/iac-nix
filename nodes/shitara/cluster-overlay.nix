@@ -61,6 +61,7 @@ in {
             ''include "${ospfInClusterCfgFile}";''
           ]
         );
+      preCheckConfig = "touch reroute-via-vpn.conf";
     };
 
     prometheus.exporters.bird = {

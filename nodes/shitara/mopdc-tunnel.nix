@@ -18,6 +18,8 @@
     (netConfig.pdc-tunnel.peer ? v6)
     netConfig.pdc-tunnel.peer.v6;
 in {
+  import = [../modules/nixos/vpn-route-gen.nix];
+
   systemd.network = {
     config.networkConfig.IPv6Forwarding = localTunAddrV6 != "";
     networks."2-eth0".xfrm = ["xfrm0"];
