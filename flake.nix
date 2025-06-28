@@ -16,6 +16,8 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     home-manager-darwin.url = "github:nix-community/home-manager?ref=release-25.05";
     home-manager-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs-next";
   };
 
   outputs = {
@@ -27,12 +29,11 @@
     nixosModules = import ./modules/nixos inputs;
     sysDefs = import ./systems inputs;
     ciDefs = import ./ci inputs;
+    formatter = import ./treefmt.nix inputs;
     barebone = lib.stage1System;
     linodeBarebone = lib.stage1LinodeSystem;
   in {
-    inherit lib nixosModules;
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-    formatter.x86_64-darwin = nixpkgs-darwin.legacyPackages.x86_64-darwin.alejandra;
+    inherit lib formatter nixosModules;
     packages.x86_64-linux = {
       netbootImage = import ./lib/stage1installer inputs;
       vlmcsd = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/vlmcsd.nix {};
