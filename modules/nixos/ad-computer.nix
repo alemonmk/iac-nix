@@ -32,7 +32,7 @@
     sudoers = mkOption {
       type = listOf attrs;
       default = [];
-      description = "Sudoers rules for the Active Directory domain";
+      description = "Sudoers rules for the Active Directory domain.";
     };
   };
 
