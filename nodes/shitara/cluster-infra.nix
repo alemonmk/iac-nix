@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  netConfig = (import ./netconfigs.nix).getNetConfig config.networking.hostName;
+  netConfig = import ./netconfigs.nix {inherit (config.networking) hostName;};
   loAddress = netConfig.lo;
   wanAddress = netConfig.wan;
 in {

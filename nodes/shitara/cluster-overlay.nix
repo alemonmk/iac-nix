@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (config.networking) hostName;
-  netConfig = (import ./netconfigs.nix).getNetConfig hostName;
+  netConfig = import ./netconfigs.nix {inherit hostName;};
   loAddress = netConfig.lo;
   role =
     if config.services.strongswan-swanctl.enable
