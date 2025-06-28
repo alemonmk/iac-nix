@@ -24,7 +24,7 @@
     networkConfig.LLDP = false;
   };
 
-  nixpkgs.config.permittedInsecurePackages = ["squid-7.0.1"];
+  nixpkgs.config.allowInsecurePredicate = pkg: lib.elem (lib.getName pkg) ["squid"];
 
   environment.etc."squid/acl".source = ../blobs/squid/acl;
   systemd.services.squid.restartTriggers = [config.environment.etc."squid/acl".source];
