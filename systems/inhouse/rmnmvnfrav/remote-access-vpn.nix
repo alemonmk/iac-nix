@@ -6,7 +6,7 @@
         physical."2400:8902:e002:5900::/56".blacklist = true;
         settings.softwareUpdate = "disable";
       };
-      joinNetworks = ["1fdfc25cb4361829"];
+      joinNetworks = [ "1fdfc25cb4361829" ];
     };
 
     bird = {
@@ -60,5 +60,5 @@
     };
   };
 
-  environment.persistence."/nix/persist".directories = ["/var/lib/zerotier-one"];
+  environment.persistence."/nix/persist".directories = [ "/var/lib/zerotier-one" ];
 }

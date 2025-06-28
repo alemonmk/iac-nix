@@ -3,7 +3,7 @@
     enable = true;
     userName = "Lemon Lam";
     userEmail = "alemonmk@users.noreply.github.com";
-    ignores = [".DS_Store"];
+    ignores = [ ".DS_Store" ];
     extraConfig = {
       init.defaultBranch = "main";
       diff.submodule = "log";

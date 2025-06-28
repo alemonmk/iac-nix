@@ -3,44 +3,53 @@
   pkgs,
   lib,
   ...
-}: {
-  options.users.ms-ad = let
-    inherit (lib.types) bool str listOf attrs;
-    inherit (lib) mkOption;
-  in {
-    enable = mkOption {
-      type = bool;
-      default = false;
-      description = ''
-        Join the specified Active Directory domain.
-        Run the following command after nixos-rebuild switch to actually join the domain:
-        ```
-        sudo adcli join \
-          -D <domain> \
-          -U <user>@<CAPTALIZED DOMAIN> \
-          -O "<Full DN to desired OU>"
-        ```
-      '';
-    };
+}:
+{
+  options.users.ms-ad =
+    let
+      inherit (lib.types)
+        bool
+        str
+        listOf
+        attrs
+        ;
+      inherit (lib) mkOption;
+    in
+    {
+      enable = mkOption {
+        type = bool;
+        default = false;
+        description = ''
+          Join the specified Active Directory domain.
+          Run the following command after nixos-rebuild switch to actually join the domain:
+          ```
+          sudo adcli join \
+            -D <domain> \
+            -U <user>@<CAPTALIZED DOMAIN> \
+            -O "<Full DN to desired OU>"
+          ```
+        '';
+      };
 
-    domain = mkOption {
-      type = str;
-      default = "";
-      description = "Active Directory domain to join.";
-    };
+      domain = mkOption {
+        type = str;
+        default = "";
+        description = "Active Directory domain to join.";
+      };
 
-    sudoers = mkOption {
-      type = listOf attrs;
-      default = [];
-      description = "Sudoers rules for the Active Directory domain.";
+      sudoers = mkOption {
+        type = listOf attrs;
+        default = [ ];
+        description = "Sudoers rules for the Active Directory domain.";
+      };
     };
-  };
 
   config = lib.mkIf config.users.ms-ad.enable (
     let
       AD_D = lib.toUpper config.users.ms-ad.domain;
       ad_d = lib.toLower AD_D;
-    in {
+    in
+    {
       services = {
         sssd = {
           enable = true;
@@ -83,8 +92,8 @@
 
       systemd.services.realmd = {
         description = "Realm Discovery Service";
-        wantedBy = ["multi-user.target"];
-        after = ["network.target"];
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
         serviceConfig = {
           Type = "dbus";
           BusName = "org.freedesktop.realmd";
@@ -103,8 +112,8 @@
       ];
 
       environment.persistence."/nix/persist" = {
-        directories = ["/var/lib/sss"];
-        files = ["/etc/krb5.keytab"];
+        directories = [ "/var/lib/sss" ];
+        files = [ "/etc/krb5.keytab" ];
       };
     }
   );

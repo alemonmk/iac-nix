@@ -1,1 +1,4 @@
-{flakeRoot, ...}: {imports = ["${flakeRoot}/base/shitara/node.nix"];}
+{ flakeRoot, ... }:
+{
+  imports = [ "${flakeRoot}/base/shitara/node.nix" ];
+}

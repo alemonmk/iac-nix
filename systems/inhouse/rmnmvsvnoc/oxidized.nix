@@ -2,7 +2,8 @@
   config,
   flakeRoot,
   ...
-}: {
+}:
+{
   services = {
     oxidized = {
       enable = true;
@@ -17,5 +18,5 @@
     '';
   };
 
-  environment.persistence."/nix/persist".directories = ["/var/lib/oxidized/store"];
+  environment.persistence."/nix/persist".directories = [ "/var/lib/oxidized/store" ];
 }

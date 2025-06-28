@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   boot.loader.timeout = 10;
   boot.loader.grub.enable = true;
   boot.loader.grub.forceInstall = true;
@@ -8,8 +9,8 @@
     terminal_input serial;
     terminal_output serial
   '';
-  boot.kernelParams = ["console=ttyS0,19200n8"];
-  boot.kernelModules = ["virtio_net"];
+  boot.kernelParams = [ "console=ttyS0,19200n8" ];
+  boot.kernelModules = [ "virtio_net" ];
 
   boot.initrd.availableKernelModules = [
     "virtio_net"
@@ -34,12 +35,15 @@
     fsType = "ext4";
   };
 
-  swapDevices = [{device = "/dev/sdb";}];
+  swapDevices = [ { device = "/dev/sdb"; } ];
 
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     substituters = [
       "https://nix-community.cachix.org"
       "https://nix-cache.snct.rmntn.net"
@@ -53,18 +57,18 @@
   networking = {
     hostName = "nixos-installed";
     domain = "rmntn.net";
-    timeServers = ["ats1.e-timing.ne.jp"];
+    timeServers = [ "ats1.e-timing.ne.jp" ];
     useDHCP = true;
     usePredictableInterfaceNames = false;
   };
 
-  environment.systemPackages = [pkgs.git];
+  environment.systemPackages = [ pkgs.git ];
 
   services = {
     lvm.enable = false;
     openssh = {
       enable = true;
-      ports = [444];
+      ports = [ 444 ];
       hostKeys = [
         {
           type = "ed25519";
@@ -88,7 +92,7 @@
   users.users.emergency = {
     isNormalUser = true;
     description = "Emergency local account";
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
     home = "/home/emergency";
     createHome = true;
     hashedPassword = "$y$j9T$xFls5U8.oYFxKFI8JUMgW0$FgKAm0BA/xc/JZaXrAJQwhYUK.TMboBo/S0iPaOb0BB";

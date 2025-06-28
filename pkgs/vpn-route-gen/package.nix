@@ -19,14 +19,17 @@ python313Packages.buildPythonApplication {
       --replace-fail "/usr/sbin/birdc" "${bird3}/bin/birdc"
   '';
 
-  nativeBuildInputs = with python313Packages; [setuptools];
-  propagatedBuildInputs = with python313Packages; [aggregate6 dnspython];
+  nativeBuildInputs = with python313Packages; [ setuptools ];
+  propagatedBuildInputs = with python313Packages; [
+    aggregate6
+    dnspython
+  ];
 
   meta = {
     description = "Build static routes with various sources to be used in Bird";
     mainProgram = "vpn-route-gen";
     homepage = "";
-    license = with lib.licenses; [gpl2Only];
-    maintainers = with lib.maintainers; [];
+    license = with lib.licenses; [ gpl2Only ];
+    maintainers = with lib.maintainers; [ ];
   };
 }

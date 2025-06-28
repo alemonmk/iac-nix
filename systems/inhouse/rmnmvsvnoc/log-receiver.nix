@@ -3,7 +3,8 @@
   lib,
   flakeRoot,
   ...
-}: {
+}:
+{
   services = {
     victorialogs = {
       enable = true;
@@ -25,5 +26,5 @@
     };
   };
 
-  environment.persistence."/nix/persist".directories = ["/var/lib/private/victorialogs"];
+  environment.persistence."/nix/persist".directories = [ "/var/lib/private/victorialogs" ];
 }

@@ -1,4 +1,5 @@
-{config, ...}: {
+{ config, ... }:
+{
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
@@ -7,7 +8,7 @@
   virtualisation.oci-containers.containers = {
     "pgsql-patroni" = {
       image = "ghcr.io/alemonmk/nomad-pgsql-patroni:17.4-1.tsdb_gis";
-      extraOptions = ["--network=host"];
+      extraOptions = [ "--network=host" ];
       environment.POSTGRES_INITDB_ARGS = "--data-checksums";
       volumes = [
         "/nix/persist/var/lib/postgresql:/var/lib/postgresql/data"

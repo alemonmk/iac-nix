@@ -3,7 +3,7 @@
   systemd.coredump.enable = false;
 
   security = {
-    pki.certificateFiles = [../blobs/pki/root_ca.crt];
+    pki.certificateFiles = [ ../blobs/pki/root_ca.crt ];
     pki.caCertificateBlacklist = [
       "BJCA Global Root CA1"
       "BJCA Global Root CA2"
@@ -36,7 +36,7 @@
   users.users.emergency = {
     isNormalUser = true;
     description = "Emergency local account";
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
     home = "/home/emergency";
     createHome = true;
     hashedPassword = "$y$j9T$4aptXoA1kNKy28totn4Vb0$wDbr9oHaSmcMl.OiSXhilWNOIT0GazwRmt9dfVAhueD";

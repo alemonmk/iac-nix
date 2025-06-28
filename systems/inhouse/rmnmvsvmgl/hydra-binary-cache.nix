@@ -3,11 +3,12 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   fileSystems."/nix/bcache" = {
     device = "/dev/disk/by-partlabel/BCACHE";
     fsType = "ext4";
-    options = ["noatime"];
+    options = [ "noatime" ];
     autoResize = true;
   };
 
@@ -40,7 +41,8 @@
       };
     };
 
-    caddy.virtualHosts."nix-ci.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${toString config.services.hydra.port}";
+    caddy.virtualHosts."nix-ci.snct.rmntn.net".extraConfig =
+      "reverse_proxy localhost:${toString config.services.hydra.port}";
     caddy.virtualHosts."nix-cache.snct.rmntn.net".extraConfig = ''
       import cors https://nix-ci.snct.rmntn.net
       uri query -*

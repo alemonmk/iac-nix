@@ -3,20 +3,19 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.networking) hostName;
-  netConfig = import ./netconfigs.nix {inherit hostName;};
+  netConfig = import ./netconfigs.nix { inherit hostName; };
   loAddress = netConfig.lo;
-  role =
-    if config.services.strongswan-swanctl.enable
-    then "border"
-    else "internal";
-in {
+  role = if config.services.strongswan-swanctl.enable then "border" else "internal";
+in
+{
   systemd.network = {
     config.networkConfig.IPv4Forwarding = true;
     networks."1-lo" = {
       matchConfig.Name = "lo";
-      address = ["${loAddress}/32"];
+      address = [ "${loAddress}/32" ];
     };
   };
 
@@ -24,31 +23,38 @@ in {
     zerotierone = {
       enable = true;
       localConf = {
-        settings.interfacePrefixBlacklist = ["xfrm" "zt" "docker"];
+        settings.interfacePrefixBlacklist = [
+          "xfrm"
+          "zt"
+          "docker"
+        ];
         settings.softwareUpdate = "disable";
       };
-      joinNetworks = ["1fdfc25cb4b9ceda"];
+      joinNetworks = [ "1fdfc25cb4b9ceda" ];
     };
 
     bird = {
       enable = true;
       checkConfig = false;
-      config = let
-        commonFile = pkgs.replaceVarsWith {
-          src = ../../blobs/shitara-overlay/common.conf;
-          replacements = {
-            inherit loAddress;
-            inherit (config.networking) fqdn;
+      config =
+        let
+          commonFile = pkgs.replaceVarsWith {
+            src = ../../blobs/shitara-overlay/common.conf;
+            replacements = {
+              inherit loAddress;
+              inherit (config.networking) fqdn;
+            };
           };
-        };
-        bgpCfgFile = pkgs.replaceVarsWith {
-          src = ../../blobs/shitara-overlay/bgp-cluster-${role}.conf;
-          replacements = {inherit loAddress;};
-        };
-        ospfInClusterCfgFile = ../../blobs/shitara-overlay/ospf-cluster-internal.conf;
-        ospfBorderCfgFile = ../../blobs/shitara-overlay/ospf-cluster-border.conf;
-        borderIbgpCfgFile = lib.optionalString (role == "border") ../../blobs/shitara-overlay/bgp-border-${hostName}.conf;
-      in
+          bgpCfgFile = pkgs.replaceVarsWith {
+            src = ../../blobs/shitara-overlay/bgp-cluster-${role}.conf;
+            replacements = { inherit loAddress; };
+          };
+          ospfInClusterCfgFile = ../../blobs/shitara-overlay/ospf-cluster-internal.conf;
+          ospfBorderCfgFile = ../../blobs/shitara-overlay/ospf-cluster-border.conf;
+          borderIbgpCfgFile = lib.optionalString (
+            role == "border"
+          ) ../../blobs/shitara-overlay/bgp-border-${hostName}.conf;
+        in
         lib.concatLines (
           [
             ''include "${commonFile.outPath}";''
@@ -75,7 +81,7 @@ in {
     };
   };
 
-  systemd.services.bird.after = ["vpn-route-gen.service"];
+  systemd.services.bird.after = [ "vpn-route-gen.service" ];
 
   networking.nftables.tables.global.content =
     ''

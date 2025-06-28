@@ -6,7 +6,7 @@
 
   virtualisation.oci-containers.containers."metube" = {
     image = "ghcr.io/alexta69/metube:2025-06-26";
-    extraOptions = ["--network=host"];
+    extraOptions = [ "--network=host" ];
     environment = {
       UID = "2500";
       GID = "2500";
@@ -22,5 +22,6 @@
     ];
   };
 
-  services.caddy.virtualHosts."ytarc.snct.rmntn.net".extraConfig = "reverse_proxy /archiver/* localhost:8081";
+  services.caddy.virtualHosts."ytarc.snct.rmntn.net".extraConfig =
+    "reverse_proxy /archiver/* localhost:8081";
 }

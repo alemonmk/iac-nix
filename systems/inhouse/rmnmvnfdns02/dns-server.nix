@@ -10,5 +10,5 @@
     '';
   };
 
-  environment.persistence."/nix/persist".directories = ["/var/lib/private/technitium-dns-server"];
+  environment.persistence."/nix/persist".directories = [ "/var/lib/private/technitium-dns-server" ];
 }

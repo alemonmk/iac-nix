@@ -14,7 +14,7 @@
             type = "filesystem";
             format = "vfat";
             mountpoint = "/boot";
-            mountOptions = ["umask=0077"];
+            mountOptions = [ "umask=0077" ];
           };
         };
         b-root = {
@@ -25,7 +25,7 @@
             subvolumes = {
               "/rootfs" = {
                 mountpoint = "/";
-                mountOptions = ["noatime"];
+                mountOptions = [ "noatime" ];
               };
             };
           };
@@ -37,7 +37,7 @@
             type = "filesystem";
             format = "ext4";
             mountpoint = "/nix";
-            mountOptions = ["noatime"];
+            mountOptions = [ "noatime" ];
           };
         };
         d-swap = {

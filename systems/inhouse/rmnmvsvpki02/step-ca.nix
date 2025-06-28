@@ -3,13 +3,17 @@
   lib,
   flakeRoot,
   ...
-}: {
-  networking.hosts."127.0.0.1" = ["atpki.snct.rmntn.net"];
+}:
+{
+  networking.hosts."127.0.0.1" = [ "atpki.snct.rmntn.net" ];
 
-  environment.etc."smallstep/x509template.tpl".text = lib.readFile "${flakeRoot}/blobs/pki/step-ca/x509template.tpl";
+  environment.etc."smallstep/x509template.tpl".text =
+    lib.readFile "${flakeRoot}/blobs/pki/step-ca/x509template.tpl";
   environment.etc."smallstep/root_ca.crt".text = lib.readFile "${flakeRoot}/blobs/pki/root_ca.crt";
-  environment.etc."smallstep/intermediate_ca.crt".text = lib.readFile "${flakeRoot}/blobs/pki/step-ca/intermediate_ca.crt";
-  environment.etc."smallstep/intermediate_ca_key".text = lib.readFile "${flakeRoot}/blobs/pki/step-ca/intermediate_ca_key";
+  environment.etc."smallstep/intermediate_ca.crt".text =
+    lib.readFile "${flakeRoot}/blobs/pki/step-ca/intermediate_ca.crt";
+  environment.etc."smallstep/intermediate_ca_key".text =
+    lib.readFile "${flakeRoot}/blobs/pki/step-ca/intermediate_ca_key";
 
   services = {
     step-ca = {
@@ -36,5 +40,5 @@
 
   systemd.services.step-ca.serviceConfig.StateDirectoryMode = "0700";
 
-  environment.persistence."/nix/persist".directories = ["/var/lib/private/step-ca"];
+  environment.persistence."/nix/persist".directories = [ "/var/lib/private/step-ca" ];
 }

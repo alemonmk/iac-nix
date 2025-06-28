@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   services = {
     grafana = {
       enable = true;
@@ -47,5 +48,5 @@
     https_proxy = "http://10.85.20.10:3128";
   };
 
-  environment.persistence."/nix/persist".directories = ["/var/lib/grafana"];
+  environment.persistence."/nix/persist".directories = [ "/var/lib/grafana" ];
 }

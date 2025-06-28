@@ -24,15 +24,15 @@ final: prev: {
     };
   };
 
-  squid = prev.squid.override {ipv6 = false;};
+  squid = prev.squid.override { ipv6 = false; };
 
   technitium-dns-server = prev.technitium-dns-server.overrideAttrs (old: rec {
-    patches = [../blobs/technitium-dns-server/webReqProxy.patch];
+    patches = [ ../blobs/technitium-dns-server/webReqProxy.patch ];
   });
 
-  code-server = final.callPackage ../pkgs/code-server.nix {};
+  code-server = final.callPackage ../pkgs/code-server.nix { };
 
-  vlmcsd = final.callPackage ../pkgs/vlmcsd.nix {};
+  vlmcsd = final.callPackage ../pkgs/vlmcsd.nix { };
 
-  vpn-route-gen = final.callPackage ../pkgs/vpn-route-gen/package.nix {};
+  vpn-route-gen = final.callPackage ../pkgs/vpn-route-gen/package.nix { };
 }

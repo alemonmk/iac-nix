@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   services = {
     code-server = {
       enable = true;
@@ -27,7 +28,8 @@
       hashedPassword = "$argon2i$v=19$m=4096,t=3,p=1$NHJ2MGczNzR1MXE4OTB5dXJ3d2Vpb3I$9SJioCgKkNW4yaSpe8vtipgdyFHpnASrqKsdcpQ8ygM";
     };
 
-    caddy.virtualHosts."nix-mgr.snct.rmntn.net".extraConfig = "reverse_proxy localhost:${toString config.services.code-server.port}";
+    caddy.virtualHosts."nix-mgr.snct.rmntn.net".extraConfig =
+      "reverse_proxy localhost:${toString config.services.code-server.port}";
   };
 
   users.users.code-server = {
@@ -83,11 +85,13 @@
   };
 
   environment.persistence."/nix/persist".users.code-server = {
-    directories = ["workspaces"];
+    directories = [ "workspaces" ];
     files = [
       {
         file = ".config/sops/age/keys.txt";
-        parentDirectory = {mode = "770";};
+        parentDirectory = {
+          mode = "770";
+        };
       }
     ];
   };

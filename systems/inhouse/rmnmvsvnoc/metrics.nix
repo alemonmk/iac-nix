@@ -2,8 +2,9 @@
   config,
   flakeRoot,
   ...
-}: {
-  networking.hosts."10.85.29.2" = ["vdi.snct.rmntn.net"];
+}:
+{
+  networking.hosts."10.85.29.2" = [ "vdi.snct.rmntn.net" ];
 
   security.pki.certificateFiles = [
     "${flakeRoot}/blobs/pki/g1.crt"
@@ -30,5 +31,5 @@
     };
   };
 
-  environment.persistence."/nix/persist".directories = ["/var/lib/private/victoriametrics"];
+  environment.persistence."/nix/persist".directories = [ "/var/lib/private/victoriametrics" ];
 }

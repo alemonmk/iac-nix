@@ -3,7 +3,8 @@
   nixpkgs-next,
   flakeRoot,
   ...
-}: {
+}:
+{
   system.stateVersion = 5;
 
   nixpkgs.hostPlatform = "x86_64-darwin";
@@ -63,7 +64,7 @@
   time.timeZone = "Asia/Taipei";
 
   security.pki = {
-    certificateFiles = ["${flakeRoot}/blobs/pki/root_ca.crt"];
+    certificateFiles = [ "${flakeRoot}/blobs/pki/root_ca.crt" ];
     caCertificateBlacklist = [
       "BJCA Global Root CA1"
       "BJCA Global Root CA2"
@@ -122,35 +123,35 @@
     ];
     casks =
       map
-      (x: {
-        name = x;
-        greedy = true;
-      })
-      [
-        "adobe-acrobat-reader"
-        "araxis-merge"
-        "drawio"
-        "librewolf"
-        "visual-studio-code"
-        "sqlitestudio"
-        "coconutbattery"
-        "keyboardcleantool"
-        "linearmouse"
-        "openinterminal-lite"
-        "wireshark-app"
-        "vmware-fusion"
-        "zerotier-one"
-        "yubico-yubikey-manager"
-        "omnissa-horizon-client"
-        "windows-app"
-        "anydesk"
-        "wechat"
-        "whatsapp"
-        "microsoft-teams"
-        "voov-meeting"
-        "webex"
-        "zoom"
-      ];
+        (x: {
+          name = x;
+          greedy = true;
+        })
+        [
+          "adobe-acrobat-reader"
+          "araxis-merge"
+          "drawio"
+          "librewolf"
+          "visual-studio-code"
+          "sqlitestudio"
+          "coconutbattery"
+          "keyboardcleantool"
+          "linearmouse"
+          "openinterminal-lite"
+          "wireshark-app"
+          "vmware-fusion"
+          "zerotier-one"
+          "yubico-yubikey-manager"
+          "omnissa-horizon-client"
+          "windows-app"
+          "anydesk"
+          "wechat"
+          "whatsapp"
+          "microsoft-teams"
+          "voov-meeting"
+          "webex"
+          "zoom"
+        ];
     masApps = {
       "Brother P-touch Editor" = 1453365242;
       "Bitwarden" = 1352778147;

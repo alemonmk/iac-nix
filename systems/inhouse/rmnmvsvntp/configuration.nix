@@ -12,5 +12,5 @@
     networkConfig.LLDP = false;
   };
 
-  imports = [./chrony.nix];
+  imports = [ ./chrony.nix ];
 }

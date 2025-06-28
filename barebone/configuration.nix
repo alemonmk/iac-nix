@@ -1,13 +1,18 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   system.stateVersion = "24.11";
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = ["ata_piix" "vmw_pvscsi" "sd_mod"];
+  boot.initrd.availableKernelModules = [
+    "ata_piix"
+    "vmw_pvscsi"
+    "sd_mod"
+  ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   fileSystems."/nix".neededForBoot = true;
-  boot.initrd.supportedFilesystems = ["btrfs"];
+  boot.initrd.supportedFilesystems = [ "btrfs" ];
   boot.initrd.postResumeCommands = ''
     mkdir -p /mnt/btrfs_root
     mount -o subvol=/ /dev/disk/by-partlabel/ROOT /mnt/btrfs_root
@@ -32,7 +37,10 @@
   virtualisation.vmware.guest.enable = true;
   nixpkgs.hostPlatform = "x86_64-linux";
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     substituters = [
       "https://nix-community.cachix.org"
       "https://nix-cache.snct.rmntn.net"
@@ -46,7 +54,7 @@
   networking.hostName = "nixos-installed";
   networking.useDHCP = true;
 
-  environment.systemPackages = [pkgs.git];
+  environment.systemPackages = [ pkgs.git ];
 
   services = {
     lvm.enable = false;
@@ -75,7 +83,7 @@
   users.users.emergency = {
     isNormalUser = true;
     description = "Emergency local account";
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
     home = "/home/emergency";
     createHome = true;
     hashedPassword = "$y$j9T$xFls5U8.oYFxKFI8JUMgW0$FgKAm0BA/xc/JZaXrAJQwhYUK.TMboBo/S0iPaOb0BB";

@@ -1,4 +1,5 @@
-{config, ...}: {
+{ config, ... }:
+{
   imports = [
     ./firewall.nix
     ./cluster-overlay.nix
@@ -7,7 +8,7 @@
   ];
 
   sops = {
-    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets.ipsec-psk.sopsFile = ../../secrets/shitara/ipsec.yaml;
   };
 
@@ -30,20 +31,22 @@
     ip6tables = false;
   };
 
-  services.prometheus.exporters.node = let
-    netConfig = import ./netconfigs.nix {inherit (config.networking) hostName;};
-  in {
-    enable = true;
-    listenAddress = netConfig.lo;
-    extraFlags = ["--collector.disable-defaults"];
-    enabledCollectors = [
-      "cpu"
-      "meminfo"
-      "loadavg"
-      "netdev"
-      "stat"
-    ];
-  };
+  services.prometheus.exporters.node =
+    let
+      netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };
+    in
+    {
+      enable = true;
+      listenAddress = netConfig.lo;
+      extraFlags = [ "--collector.disable-defaults" ];
+      enabledCollectors = [
+        "cpu"
+        "meminfo"
+        "loadavg"
+        "netdev"
+        "stat"
+      ];
+    };
 
   networking.nftables.tables.global.content = ''
     chain service-input {

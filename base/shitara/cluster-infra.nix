@@ -2,11 +2,13 @@
   config,
   lib,
   ...
-}: let
-  netConfig = import ./netconfigs.nix {inherit (config.networking) hostName;};
+}:
+let
+  netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };
   loAddress = netConfig.lo;
   wanAddress = netConfig.wan;
-in {
+in
+{
   networking.nftables.tables.global.content = ''
     chain service-input {
       iifname "eth0" tcp dport https counter accept
@@ -30,10 +32,7 @@ in {
         bind_addr = loAddress;
         server = true;
         bootstrap_expect = 3;
-        retry_join =
-          lib.map
-          (x: "10.85.183.${builtins.toString x}:8301")
-          (lib.lists.range 1 5);
+        retry_join = lib.map (x: "10.85.183.${builtins.toString x}:8301") (lib.lists.range 1 5);
         node_meta = {
           wan_address_v4 = wanAddress.v4;
           wan_address_v6 = wanAddress.v6;
@@ -71,12 +70,12 @@ in {
           alloc_mounts_dir = "/opt/nomad/alloc-mounts";
           options."fingerprint.network.disallow_link_local" = true;
           host_network = [
-            {public_v4 = [{cidr = "${wanAddress.v4}/32";}];}
-            {public_v6 = [{cidr = "${wanAddress.v6}/128";}];}
-            {private = [{cidr = "10.85.183.0/28";}];}
+            { public_v4 = [ { cidr = "${wanAddress.v4}/32"; } ]; }
+            { public_v6 = [ { cidr = "${wanAddress.v6}/128"; } ]; }
+            { private = [ { cidr = "10.85.183.0/28"; } ]; }
           ];
           host_volume = [
-            {"postgres-db" = [{path = "/opt/database/postgres";}];}
+            { "postgres-db" = [ { path = "/opt/database/postgres"; } ]; }
           ];
         };
         plugin = [
@@ -102,41 +101,49 @@ in {
     resolved = {
       enable = true;
       llmnr = "false";
-      fallbackDns = ["127.0.0.1" "::1"];
+      fallbackDns = [
+        "127.0.0.1"
+        "::1"
+      ];
     };
 
     unbound = {
       enable = true;
       settings = {
-        server = let
-          private-domains = [
-            "consul"
-            "snct.rmntn.net"
-            "10.in-addr.arpa"
-          ];
-        in {
-          do-not-query-localhost = true;
-          unblock-lan-zones = true;
-          insecure-lan-zones = true;
-          private-domain = private-domains;
-          domain-insecure = private-domains;
-        };
+        server =
+          let
+            private-domains = [
+              "consul"
+              "snct.rmntn.net"
+              "10.in-addr.arpa"
+            ];
+          in
+          {
+            do-not-query-localhost = true;
+            unblock-lan-zones = true;
+            insecure-lan-zones = true;
+            private-domain = private-domains;
+            domain-insecure = private-domains;
+          };
         forward-zone = [
           {
             name = "consul";
-            forward-addr =
-              lib.map
-              (x: "10.85.183.${builtins.toString x}@8600")
-              (lib.lists.range 1 5);
+            forward-addr = lib.map (x: "10.85.183.${builtins.toString x}@8600") (lib.lists.range 1 5);
           }
         ];
         stub-zone =
           lib.map
-          (d: {
-            name = d;
-            stub-addr = ["10.85.11.1" "10.85.11.2"];
-          })
-          ["snct.rmntn.net" "10.in-addr.arpa"];
+            (d: {
+              name = d;
+              stub-addr = [
+                "10.85.11.1"
+                "10.85.11.2"
+              ];
+            })
+            [
+              "snct.rmntn.net"
+              "10.in-addr.arpa"
+            ];
       };
     };
   };

@@ -1,4 +1,5 @@
-{config, ...}: {
+{ config, ... }:
+{
   nixpkgs.hostPlatform = "x86_64-linux";
 
   boot.loader.timeout = 10;
@@ -10,8 +11,8 @@
     terminal_input serial;
     terminal_output serial
   '';
-  boot.kernelParams = ["console=ttyS0,19200n8"];
-  boot.kernelModules = ["virtio_net"];
+  boot.kernelParams = [ "console=ttyS0,19200n8" ];
+  boot.kernelModules = [ "virtio_net" ];
 
   boot.initrd.availableKernelModules = [
     "virtio_net"
@@ -36,5 +37,5 @@
     fsType = "ext4";
   };
 
-  swapDevices = [{device = "/dev/sdb";}];
+  swapDevices = [ { device = "/dev/sdb"; } ];
 }
