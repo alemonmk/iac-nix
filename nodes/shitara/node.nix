@@ -32,9 +32,11 @@
     ip6tables = false;
   };
 
-  services.prometheus.exporters.node = {
+  services.prometheus.exporters.node = let
+    netConfig = import ./netconfigs.nix {inherit (config.networking) hostName;};
+  in {
     enable = true;
-    listenAddress = ((import ./netconfigs.nix).getNetConfig config.networking.hostName).lo;
+    listenAddress = netConfig.lo;
     extraFlags = ["--collector.disable-defaults"];
     enabledCollectors = [
       "cpu"

@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (config.networking) hostName;
-  netConfig = (import ./netconfigs.nix).getNetConfig hostName;
+  netConfig = import ./netconfigs.nix {inherit hostName;};
   wanAddress = netConfig.wan.v4;
   localTunAddrV4 = netConfig.pdc-tunnel.local.v4;
   localTunAddrV6 =
