@@ -1,6 +1,6 @@
 {
-  imports = [./shitara/node.nix];
-  disabledModules = [./shitara/mopdc-tunnel.nix];
+  imports = [../base/shitara/node.nix];
+  disabledModules = [../base/shitara/mopdc-tunnel.nix];
 
   networking.hostName = "sajuna";
 }

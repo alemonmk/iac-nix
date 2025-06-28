@@ -31,11 +31,13 @@ in {
         server = true;
         bootstrap_expect = 3;
         retry_join =
-          builtins.map
+          lib.map
           (x: "10.85.183.${builtins.toString x}:8301")
           (lib.lists.range 1 5);
-        node_meta.wan_address_v4 = wanAddress.v4;
-        node_meta.wan_address_v6 = wanAddress.v6;
+        node_meta = {
+          wan_address_v4 = wanAddress.v4;
+          wan_address_v6 = wanAddress.v6;
+        };
         discard_check_output = true;
         telemetry = {
           prometheus_retention_time = "60s";
@@ -79,11 +81,9 @@ in {
         };
         plugin = [
           {
-            docker = {
-              config = {
-                allow_privileged = true;
-                volumes.enabled = true;
-              };
+            docker.config = {
+              allow_privileged = true;
+              volumes.enabled = true;
             };
           }
         ];
