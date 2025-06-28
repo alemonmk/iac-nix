@@ -207,7 +207,7 @@ scrape_configs:
       - rmnmvadb01:49987
       - rmnmvadb01:50011
       - rmnmvadb01:53742
-      - rmnmvadb02:5432
+      - rmnmvsvadb02:5432
       - rmnmvadpki:16384
     relabel_configs:
     - source_labels: [__address__]
