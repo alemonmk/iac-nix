@@ -40,18 +40,18 @@ def main():
     ) as u:
         aws_ranges = json.load(u)
         cf_jp_global = [
-            p
+            p["ip_prefix"]
             for p in aws_ranges["prefixes"]
             if p["service"] == "CLOUDFRONT"
             and p["region"].startswith(("GLOBAL", "ap-northeast-"))
         ]
         s3_eu = [
-            p
+            p["ip_prefix"]
             for p in aws_ranges["prefixes"]
             if p["service"] == "S3" and p["region"].startswith("eu-")
         ]
-        unaggregated_routes.append(cf_jp_global["ip_prefix"])
-        unaggregated_routes.append(s3_eu["ip_prefix"])
+        unaggregated_routes += cf_jp_global
+        unaggregated_routes += s3_eu
 
     # Individual domain names
     domains = []

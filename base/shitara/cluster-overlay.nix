@@ -75,6 +75,8 @@ in {
     };
   };
 
+  systemd.services.bird.after = ["vpn-route-gen.service"];
+
   networking.nftables.tables.global.content =
     ''
       chain overlay-input {
