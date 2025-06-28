@@ -12,6 +12,7 @@
 }: let
   linuxSystem = "x86_64-linux";
   darwinSystem = "x86_64-darwin";
+  flakeRoot = ./..;
 in {
   stage1System = nixpkgs.lib.nixosSystem {
     modules = [
@@ -26,6 +27,7 @@ in {
   finalSystem = sysDef:
     nixpkgs.lib.nixosSystem {
       specialArgs = {
+        inherit flakeRoot;
         nixpkgs-next = import nixpkgs-next {
           system = linuxSystem;
           overlays = [(import ../overlays/next.nix)];
@@ -45,6 +47,7 @@ in {
     };
   finalLinodeSystem = sysDef:
     nixpkgs.lib.nixosSystem {
+      specialArgs = {inherit flakeRoot;};
       modules =
         [
           self.nixosModules.vpn-route-gen
@@ -56,6 +59,7 @@ in {
   finalDarwinSystem = sysDef:
     nix-darwin.lib.darwinSystem {
       specialArgs = {
+        inherit flakeRoot;
         nixpkgs-next = import nixpkgs-next {
           system = darwinSystem;
           config.allowUnfree = true;
