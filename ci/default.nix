@@ -1,4 +1,4 @@
-{inputs}: let
+inputs: let
   inherit (inputs) self nixpkgs nixpkgs-next;
   pkgs-stable = import nixpkgs {
     system = "x86_64-linux";
