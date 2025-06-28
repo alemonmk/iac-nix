@@ -33,8 +33,9 @@ in {
         };
       };
       modules =
+        nixpkgs.lib.attrValues self.nixosModules
+        ++
         [
-          self.nixosModules
           impermanence.nixosModules.impermanence
           sops-nix.nixosModules.sops
           home-manager-linux.nixosModules.home-manager
