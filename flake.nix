@@ -30,7 +30,7 @@
     packages.x86_64-linux = {
       netbootImage = import ./lib/stage1installer inputs;
     };
-    nixosModules = import ./modules/nixos;
+    nixosModules = import ./modules/nixos inputs;
     nixosConfigurations = with self.lib; {
       barebone = stage1System;
       linodeBarebone = stage1LinodeSystem;
