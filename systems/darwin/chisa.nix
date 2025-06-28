@@ -1,6 +1,7 @@
 {
   pkgs,
   nixpkgs-next,
+  flakeRoot,
   ...
 }: {
   system.stateVersion = 5;
@@ -62,7 +63,7 @@
   time.timeZone = "Asia/Taipei";
 
   security.pki = {
-    certificateFiles = [../blobs/pki/root_ca.crt];
+    certificateFiles = ["${flakeRoot}/blobs/pki/root_ca.crt"];
     caCertificateBlacklist = [
       "BJCA Global Root CA1"
       "BJCA Global Root CA2"
@@ -171,7 +172,7 @@
   };
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = false;
-  home-manager.users.alemonmk = import ../home/chisa;
+  home-manager.users.alemonmk = import "${flakeRoot}/home/chisa";
 
   environment = {
     shellAliases = {
