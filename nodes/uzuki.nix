@@ -1,5 +1,5 @@
 {
-  imports = [./shitara/node.nix];
+  imports = [../base/shitara/node.nix];
 
   networking.hostName = "uzuki";
 }
