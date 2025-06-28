@@ -111,7 +111,7 @@ scrape_configs:
   - job_name: chrony
     static_configs:
     - targets:
-      - rmnmvntpsrv01.snct.rmntn.net:9123
+      - rmnmvsvntp.snct.rmntn.net:9123
     metric_relabel_configs:
     - action: drop_metrics
       regex:
