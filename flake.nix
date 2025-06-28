@@ -21,38 +21,24 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-darwin,
     ...
-  } @ inputs: {
+  } @ inputs: let
     lib = import ./lib inputs;
+    nixosModules = import ./modules/nixos inputs;
+    sysDefs = import ./systems inputs;
+    ciDefs = import ./ci inputs;
+    barebone = lib.stage1System;
+    linodeBarebone = lib.stage1LinodeSystem;
+  in {
+    inherit lib nixosModules;
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     formatter.x86_64-darwin = nixpkgs-darwin.legacyPackages.x86_64-darwin.alejandra;
     packages.x86_64-linux = {
       netbootImage = import ./lib/stage1installer inputs;
+      vlmcsd = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/vlmcsd.nix {};
     };
-    nixosModules = import ./modules/nixos inputs;
-    nixosConfigurations = with self.lib; {
-      barebone = stage1System;
-      linodeBarebone = stage1LinodeSystem;
-      rmnmvatpki = finalSystem [./nodes/atpki.nix];
-      rmnmvntpsrv01 = finalSystem [./nodes/ntpsrv01.nix];
-      rmnmvnfdns01 = finalSystem [./nodes/nfdns01.nix];
-      rmnmvnfdns02 = finalSystem [./nodes/nfdns02.nix];
-      rmnmvytarc = finalSystem [./nodes/ytarc.nix];
-      rmnmvnocmt01 = finalSystem [./nodes/nocmt01.nix];
-      rmnmvmgnix = finalSystem [./nodes/mgnix.nix];
-      rmnmvvpngw = finalSystem [./nodes/vpngw.nix];
-      rmnmvwebgw = finalSystem [./nodes/webgw.nix];
-      rmnmvadb02 = finalSystem [./nodes/adb02.nix];
-      sumire = finalLinodeSystem [./nodes/sumire.nix];
-      uzuki = finalLinodeSystem [./nodes/uzuki.nix];
-      sajuna = finalLinodeSystem [./nodes/sajuna.nix];
-      kumiko = finalLinodeSystem [./nodes/kumiko.nix];
-      sena = finalLinodeSystem [./nodes/sena.nix];
-    };
-    darwinConfigurations = with self.lib; {
-      chisa = finalDarwinSystem [./nodes/chisa.nix];
-    };
-    hydraJobs = import ./ci inputs;
+    nixosConfigurations = {inherit barebone linodeBarebone;} // sysDefs.nixos;
+    darwinConfigurations = sysDefs.darwin;
+    hydraJobs = ciDefs;
   };
 }
