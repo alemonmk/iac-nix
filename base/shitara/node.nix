@@ -4,7 +4,6 @@
     ./cluster-overlay.nix
     ./mopdc-tunnel.nix
     ./cluster-infra.nix
-    ./unbound.nix
   ];
 
   sops = {
