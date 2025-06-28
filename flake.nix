@@ -53,6 +53,6 @@
     darwinConfigurations = with self.lib; {
       chisa = finalDarwinSystem [./nodes/chisa.nix];
     };
-    hydraJobs = import ./ci {inherit inputs;};
+    hydraJobs = import ./ci inputs;
   };
 }
