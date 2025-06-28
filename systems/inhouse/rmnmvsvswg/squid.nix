@@ -31,7 +31,7 @@
         log {
           source { system(); };
           filter { facility("local2"); };
-          destination { syslog("rmnmvnocmt01.snct.rmntn.net" transport("tcp") port(3514)); };
+          destination { syslog("rmnmvsvnoc.snct.rmntn.net" transport("tcp") port(3514)); };
         };
       '';
     };
