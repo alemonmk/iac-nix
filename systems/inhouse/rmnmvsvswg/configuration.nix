@@ -12,5 +12,5 @@
     networkConfig.LLDP = false;
   };
 
-  imports = [./squid.nix];
+  imports = [ ./squid.nix ];
 }

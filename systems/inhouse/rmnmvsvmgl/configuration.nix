@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   systemd.network.networks."1-ens192" = {
     matchConfig.Name = "ens192";
     address = [

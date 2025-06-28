@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   options.services.vpn-route-gen.enable = lib.mkEnableOption "vpn-route-gen";
 
   config.systemd = lib.mkIf config.services.vpn-route-gen.enable {

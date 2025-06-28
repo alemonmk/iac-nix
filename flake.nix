@@ -20,26 +20,31 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs-next";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: let
-    lib = import ./lib inputs;
-    nixosModules = import ./modules/nixos inputs;
-    sysDefs = import ./systems inputs;
-    ciDefs = import ./ci inputs;
-    formatter = import ./treefmt.nix inputs;
-    barebone = lib.stage1System;
-    linodeBarebone = lib.stage1LinodeSystem;
-  in {
-    inherit lib formatter nixosModules;
-    packages.x86_64-linux = {
-      netbootImage = import ./lib/stage1installer inputs;
-      vlmcsd = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/vlmcsd.nix {};
+  outputs =
+    {
+      self,
+      nixpkgs,
+      ...
+    }@inputs:
+    let
+      lib = import ./lib inputs;
+      nixosModules = import ./modules/nixos inputs;
+      sysDefs = import ./systems inputs;
+      ciDefs = import ./ci inputs;
+      formatter = import ./treefmt.nix inputs;
+      barebone = lib.stage1System;
+      linodeBarebone = lib.stage1LinodeSystem;
+    in
+    {
+      inherit lib formatter nixosModules;
+      packages.x86_64-linux = {
+        netbootImage = import ./lib/stage1installer inputs;
+        vlmcsd = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/vlmcsd.nix { };
+      };
+      nixosConfigurations = {
+        inherit barebone linodeBarebone;
+      } // sysDefs.nixos;
+      darwinConfigurations = sysDefs.darwin;
+      hydraJobs = ciDefs;
     };
-    nixosConfigurations = {inherit barebone linodeBarebone;} // sysDefs.nixos;
-    darwinConfigurations = sysDefs.darwin;
-    hydraJobs = ciDefs;
-  };
 }

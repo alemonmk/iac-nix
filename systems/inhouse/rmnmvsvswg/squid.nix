@@ -3,8 +3,9 @@
   lib,
   flakeRoot,
   ...
-}: {
-  nixpkgs.config.allowInsecurePredicate = pkg: lib.elem (lib.getName pkg) ["squid"];
+}:
+{
+  nixpkgs.config.allowInsecurePredicate = pkg: lib.elem (lib.getName pkg) [ "squid" ];
 
   networking.proxy = {
     httpProxy = null;
@@ -12,7 +13,7 @@
   };
 
   environment.etc."squid/acl".source = "${flakeRoot}/blobs/squid/acl";
-  systemd.services.squid.restartTriggers = [config.environment.etc."squid/acl".source];
+  systemd.services.squid.restartTriggers = [ config.environment.etc."squid/acl".source ];
 
   services = {
     squid = {

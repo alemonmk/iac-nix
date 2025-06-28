@@ -12,5 +12,5 @@
     networkConfig.LLDP = false;
   };
 
-  imports = [./dns-server.nix];
+  imports = [ ./dns-server.nix ];
 }

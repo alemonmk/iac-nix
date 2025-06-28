@@ -59,5 +59,5 @@ let
   ];
   inherit (builtins) head filter;
 in
-  {hostName}: head (filter (e: e.host == hostName) netConfigs)
-
+{ hostName }:
+head (filter (e: e.host == hostName) netConfigs)

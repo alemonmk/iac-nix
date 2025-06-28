@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   config.services.caddy = lib.mkIf config.services.caddy.enable {
     acmeCA = "https://atpki.snct.rmntn.net/acme/w1/directory";
     email = "apps@snct.rmntn.net";
@@ -29,5 +30,5 @@
     '';
   };
 
-  config.environment.persistence."/nix/persist".directories = ["/var/lib/caddy/.local"];
+  config.environment.persistence."/nix/persist".directories = [ "/var/lib/caddy/.local" ];
 }

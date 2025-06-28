@@ -3,9 +3,10 @@
   pkgs,
   flakeRoot,
   ...
-}: {
+}:
+{
   sops = {
-    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets.entra-client-id = {
       mode = "0440";
       owner = config.users.users.grafana.name;
@@ -28,7 +29,9 @@
     templates."oxidized-cfg" = {
       file = pkgs.replaceVarsWith {
         src = "${flakeRoot}/blobs/monitoring/oxidized/config.yml";
-        replacements = {ncmPassword = config.sops.placeholder.ncm-password;};
+        replacements = {
+          ncmPassword = config.sops.placeholder.ncm-password;
+        };
       };
       mode = "0440";
       owner = config.users.users.oxidized.name;

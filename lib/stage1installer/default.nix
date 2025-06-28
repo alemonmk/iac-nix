@@ -2,7 +2,8 @@
   nixpkgs,
   disko,
   ...
-}: let
+}:
+let
   linuxSystem = "x86_64-linux";
   dummyTarget = nixpkgs.lib.nixosSystem {
     system = linuxSystem;
@@ -31,7 +32,7 @@
       ./system.nix
       ./minimalize.nix
       {
-        disabledModules = ["profiles/base.nix"];
+        disabledModules = [ "profiles/base.nix" ];
         unattendedInstaller = {
           enable = true;
           target = dummyTarget;
@@ -42,13 +43,13 @@
     ];
   };
 in
-  with image;
-    pkgs.symlinkJoin {
-      name = "netbootImage";
-      paths = with config.system.build; [
-        netbootRamdisk
-        kernel
-        netbootIpxeScript
-      ];
-      preferLocalBuild = true;
-    }
+with image;
+pkgs.symlinkJoin {
+  name = "netbootImage";
+  paths = with config.system.build; [
+    netbootRamdisk
+    kernel
+    netbootIpxeScript
+  ];
+  preferLocalBuild = true;
+}

@@ -3,8 +3,9 @@
   lib,
   flakeRoot,
   ...
-}: {
-  imports = ["${flakeRoot}/base/shitara/node.nix"];
+}:
+{
+  imports = [ "${flakeRoot}/base/shitara/node.nix" ];
 
   sops.secrets.onedev-dbpw.sopsFile = "${flakeRoot}/secrets/shitara/onedev-dbpw.yaml";
 
@@ -13,16 +14,22 @@
     fsType = "ext4";
   };
 
-  services.zerotierone.localConf.settings.allowManagementFrom = ["10.85.183.0/24" "10.91.145.32/28"];
+  services.zerotierone.localConf.settings.allowManagementFrom = [
+    "10.85.183.0/24"
+    "10.91.145.32/28"
+  ];
 
   virtualisation.oci-containers = {
     backend = "docker";
-    containers = let
-      commonOptions = {
-        networks = ["host"];
-        capabilities = {all = false;};
-      };
-    in
+    containers =
+      let
+        commonOptions = {
+          networks = [ "host" ];
+          capabilities = {
+            all = false;
+          };
+        };
+      in
       lib.attrsets.mapAttrs (_: c: commonOptions // c) {
         "onedev" = {
           image = "1dev/server:11.10.3";
@@ -41,8 +48,18 @@
         };
         "hath" = {
           image = "cloverdefa/hath:0.4.2";
-          cmd = ["java" "-jar" "/hath/HentaiAtHome.jar"];
-          volumes = lib.map (d: "/opt/hath/${d}:/hath/${d}") ["cache" "data" "download" "log" "tmp"];
+          cmd = [
+            "java"
+            "-jar"
+            "/hath/HentaiAtHome.jar"
+          ];
+          volumes = lib.map (d: "/opt/hath/${d}:/hath/${d}") [
+            "cache"
+            "data"
+            "download"
+            "log"
+            "tmp"
+          ];
         };
       };
   };

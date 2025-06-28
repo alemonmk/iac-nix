@@ -35,9 +35,7 @@ def main():
 
     # Cloudfront Global, ap-northeast-*, S3 eu-*
     print("Processing Cloudfront Global and ap-northeast-*...")
-    with urllib.request.urlopen(
-        "https://ip-ranges.amazonaws.com/ip-ranges.json"
-    ) as u:
+    with urllib.request.urlopen("https://ip-ranges.amazonaws.com/ip-ranges.json") as u:
         aws_ranges = json.load(u)
         cf_jp_global = [
             p["ip_prefix"]
@@ -84,8 +82,4 @@ def main():
         for route in aggregated:
             f.write(f'route {route} via "eth0";\n')
 
-    print(
-        run_command(
-            ["/usr/sbin/birdc", "configure"], encoding="utf-8", text=True
-        )
-    )
+    print(run_command(["/usr/sbin/birdc", "configure"], encoding="utf-8", text=True))

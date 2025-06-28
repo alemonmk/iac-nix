@@ -36,7 +36,7 @@
         "serverstats"
         "dns-lookups"
       ];
-      disabledCollectors = ["sources.with-ntpdata"];
+      disabledCollectors = [ "sources.with-ntpdata" ];
     };
   };
 }

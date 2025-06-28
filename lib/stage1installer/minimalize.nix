@@ -2,8 +2,9 @@
   config,
   lib,
   ...
-}: {
-  nix.registry = lib.mkForce {};
+}:
+{
+  nix.registry = lib.mkForce { };
   system.installer.channel.enable = false;
   system.tools.nixos-option.enable = false;
   environment.ldso32 = null;

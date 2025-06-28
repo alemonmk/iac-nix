@@ -1,5 +1,6 @@
-{nixpkgs-next, ...}: {
-  environment.systemPackages = [nixpkgs-next.yt-dlp];
+{ nixpkgs-next, ... }:
+{
+  environment.systemPackages = [ nixpkgs-next.yt-dlp ];
 
   services = {
     jellyfin.enable = true;
