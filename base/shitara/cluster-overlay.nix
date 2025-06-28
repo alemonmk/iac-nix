@@ -32,6 +32,7 @@ in {
 
     bird = {
       enable = true;
+      checkConfig = false;
       config = let
         commonFile = pkgs.replaceVarsWith {
           src = ../../blobs/shitara-overlay/common.conf;
@@ -61,7 +62,6 @@ in {
             ''include "${ospfInClusterCfgFile}";''
           ]
         );
-      preCheckConfig = "touch reroute-via-vpn.conf";
     };
 
     prometheus.exporters.bird = {
