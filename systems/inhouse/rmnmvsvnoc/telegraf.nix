@@ -1,26 +1,32 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  flakeRoot,
+  ...
+}: {
   services.telegraf = {
     enable = true;
     environmentFiles = [config.sops.secrets.monitoring-creds.path];
     extraConfig = {
-      agent = {
-        snmp_translator = "gosmi";
-      };
-      inputs = {
-        snmp = [
+      agent.snmp_translator = "gosmi";
+      inputs = let
+        commonParams = {
+          version = 3;
+          sec_name = "nop";
+          sec_level = "authPriv";
+          auth_protocol = "SHA";
+          priv_protocol = "AES";
+          auth_password = "\${SNMP_AUTH}";
+          priv_password = "\${SNMP_PRIV}";
+          agent_host_tag = "source";
+          path = ["${flakeRoot}/blobs/monitoring/snmp/mibs"];
+          tagexclude = ["host"];
+        };
+      in {
+        snmp = lib.map (x: commonParams // x) [
           # ups
           {
             agents = ["udp://10.88.0.3:161"];
-            version = 3;
-            sec_name = "nop";
-            sec_level = "authPriv";
-            auth_protocol = "SHA";
-            priv_protocol = "AES";
-            auth_password = "\${SNMP_AUTH}";
-            priv_password = "\${SNMP_PRIV}";
-            agent_host_tag = "source";
-            path = [../blobs/monitoring/snmp/mibs];
-            tagexclude = ["host"];
             field = [
               {
                 oid = "PowerNet-MIB::upsBasicIdentName.0";
@@ -120,16 +126,6 @@
           # core switch
           {
             agents = ["udp://10.88.0.4:161"];
-            version = 3;
-            sec_name = "nop";
-            sec_level = "authPriv";
-            auth_protocol = "SHA";
-            priv_protocol = "AES";
-            auth_password = "\${SNMP_AUTH}";
-            priv_password = "\${SNMP_PRIV}";
-            agent_host_tag = "source";
-            path = [../blobs/monitoring/snmp/mibs];
-            tagexclude = ["host"];
             field = [
               {
                 oid = "SNMPv2-MIB::sysName.0";
@@ -178,16 +174,7 @@
           # core firewall
           {
             agents = ["udp://10.88.0.5:161"];
-            version = 3;
-            sec_name = "nop";
-            sec_level = "authPriv";
             auth_protocol = "SHA256";
-            priv_protocol = "AES";
-            auth_password = "\${SNMP_AUTH}";
-            priv_password = "\${SNMP_PRIV}";
-            agent_host_tag = "source";
-            path = [../blobs/monitoring/snmp/mibs];
-            tagexclude = ["host"];
             field = [
               {
                 oid = "SNMPv2-MIB::sysName.0";
@@ -240,16 +227,7 @@
           {
             agents = ["udp://10.88.0.7:161" "udp://10.88.0.8:161"];
             interval = "15s";
-            version = 3;
-            sec_name = "nop";
-            sec_level = "authPriv";
             auth_protocol = "SHA256";
-            priv_protocol = "AES";
-            auth_password = "\${SNMP_AUTH}";
-            priv_password = "\${SNMP_PRIV}";
-            agent_host_tag = "source";
-            path = [../blobs/monitoring/snmp/mibs];
-            tagexclude = ["host"];
             field = [
               {
                 oid = "SNMPv2-MIB::sysName.0";
@@ -321,16 +299,6 @@
           # nas
           {
             agents = ["udp://10.81.70.1:161" "udp://10.81.70.2:161"];
-            version = 3;
-            sec_name = "nop";
-            sec_level = "authPriv";
-            auth_protocol = "SHA";
-            priv_protocol = "AES";
-            auth_password = "\${SNMP_AUTH}";
-            priv_password = "\${SNMP_PRIV}";
-            agent_host_tag = "source";
-            path = [../blobs/monitoring/snmp/mibs];
-            tagexclude = ["host"];
             field = [
               {
                 oid = "SNMPv2-MIB::sysName.0";
