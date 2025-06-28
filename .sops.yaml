@@ -3,7 +3,7 @@ keys:
   - &chisa age1n3u2cl6w3m693auxqwvayf0pzjg9m3kmraqtepcsf9ysyh4f348sjveq3t
   - &kyouka age18mxj9jae06at5tv9q6dk2t93v0n7c2lmcuml0qdskea2tncjlafshanl25
   - &rmnmvatpki age14g9f8nptt7z554qeuavjy2uczd0m6wlxddcgzmyvku34zp2grd8qd7nrl3
-  - &rmnmvmgnix age1rmy535v6qmm552pzsvgjna4k4wmu2pjya796lm8k253pmfne3s0scn8zmz
+  - &rmnmvsvmgl age1rmy535v6qmm552pzsvgjna4k4wmu2pjya796lm8k253pmfne3s0scn8zmz
   - &rmnmvnocmt01 age15kvyh0pjnv7ng09svtf2xtpqs89d6hxjxq7p07l2tnwcfe6p3y7qrhzkuv
   - &rmnmvsvadb02 age1ay20thc0y39hucs8mge0u448wgcn06gupf8332e0423uj330wdssfnpskj
   - &sumire age1sjaxe6w33yf8xuvwx732f6wfrx3398mcm9x6ajrvs5m520uduesszhy6xl
@@ -32,13 +32,13 @@ creation_rules:
         - *chisa
         - *kyouka
         - *rmnmvnocmt01
-  - path_regex: secrets(\\|/)mgnix(\\|/)[^/]+\.yaml$
+  - path_regex: secrets(\\|/)svmgl(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
         - *nix-mgr
         - *chisa
         - *kyouka
-        - *rmnmvmgnix
+        - *rmnmvsvmgl
   - path_regex: secrets(\\|/)svadb02(\\|/)[^/]+\.yaml$
     key_groups:
     - age:
