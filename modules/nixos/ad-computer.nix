@@ -66,7 +66,7 @@
             cache_credentials = True
             id_provider = ad
             krb5_store_password_if_offline = True
-            default_shell = ${pkgs.bashInteractive}/bin/bash
+            default_shell = /run/current-system/sw/bin/bash
             ldap_id_mapping = True
             use_fully_qualified_names = True
             access_provider = simple
