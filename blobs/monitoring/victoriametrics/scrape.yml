@@ -168,7 +168,7 @@ scrape_configs:
       module: [generic_http]
     static_configs:
     - targets:
-      - https://rmnmvdnldsv02.snct.rmntn.net/syncthing/
+      - https://rmnmvsvdwl.snct.rmntn.net/syncthing/
       - https://megumi.snct.rmntn.net
       - https://ayanami.snct.rmntn.net
       - https://mo-apcont-n1.noc.snct.rmntn.net
@@ -178,7 +178,7 @@ scrape_configs:
       - https://vdi-hcs1.snct.rmntn.net
       - https://vdi.snct.rmntn.net
       - https://atpki.snct.rmntn.net/acme/w1/directory
-      - https://rmnmvswuds.snct.rmntn.net:8531
+      - https://rmnmvsvwus.snct.rmntn.net:8531
       - https://ytarc.snct.rmntn.net/playback/
     relabel_configs:
     - source_labels: [__address__]
@@ -204,9 +204,9 @@ scrape_configs:
       - rmnmvfss02:445
       - rmnmpfss03:445
       - rmnmvfss04:445
-      - rmnmvadb01:49987
-      - rmnmvadb01:50011
-      - rmnmvadb01:53742
+      - rmnmvsvadb01:49987
+      - rmnmvsvadb01:50011
+      - rmnmvsvadb01:53742
       - rmnmvsvadb02:5432
       - rmnmvadpki:16384
     relabel_configs:
@@ -228,8 +228,8 @@ scrape_configs:
       module: [icmp]
     static_configs:
     - targets:
-      - rmnmvdhc01
-      - rmnmvdhc02
+      - rmnmvnfdhc01
+      - rmnmvnfdhc02
       - rmnmvnfnac01
       - rmnmvnfnac02
       - rmnmvsvswg
