@@ -76,6 +76,8 @@
             simple_allow_groups = SG Server Administrators
           '';
         };
+
+        realmd.enable = true;
       };
 
       security.pam.services.sshd.makeHomeDir = true;
@@ -90,17 +92,7 @@
         };
       };
 
-      systemd.services.realmd = {
-        description = "Realm Discovery Service";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
-        serviceConfig = {
-          Type = "dbus";
-          BusName = "org.freedesktop.realmd";
-          ExecStart = "${pkgs.realmd}/libexec/realmd";
-          User = "root";
-        };
-      };
+      security.polkit.enable = true;
 
       security.sudo.extraRules = config.users.ms-ad.sudoers;
 
