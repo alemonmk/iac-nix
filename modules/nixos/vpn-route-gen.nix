@@ -18,6 +18,7 @@
     };
     timers.vpn-route-gen = {
       description = "Refresh internet prefixes to be rerouted via VPN every 6 hours";
+      wantedBy = [ "timers.target" ];
       timerConfig = {
         OnBootSec = "10s";
         OnUnitActiveSec = "6h";
