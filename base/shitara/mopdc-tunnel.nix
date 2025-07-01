@@ -19,6 +19,7 @@ in
     networks."2-eth0".xfrm = [ "xfrm0" ];
     networks."10-xfrm0" = {
       matchConfig.Name = "xfrm0";
+      linkConfig.MTUBytes = 1400;
       address = [ "${localTunAddrV4}/31" ] ++ lib.optional (localTunAddrV6 != "") "${localTunAddrV6}/64";
     };
     netdevs."10-xfrm0" = {
