@@ -31,6 +31,6 @@ resource "hydra_jobset" "builds" {
   visible             = true
   check_interval      = 300
   scheduling_shares   = 100
-  keep_evaluations    = 1
+  keep_evaluations    = 3
   email_notifications = false
 }
