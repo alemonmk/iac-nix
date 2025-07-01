@@ -8,7 +8,7 @@
     ];
     useNetworkd = true;
     useDHCP = false;
-    timeServers = [ "rmnmvntpsrv01.snct.rmntn.net" ];
+    timeServers = [ "rmnmvsvntp.snct.rmntn.net" ];
     nameservers = [
       "10.85.10.1"
       "10.85.10.2"
