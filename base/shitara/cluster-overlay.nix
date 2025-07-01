@@ -82,6 +82,13 @@ in
   };
 
   systemd.services.bird.after = [ "vpn-route-gen.service" ];
+  systemd.tmpfiles.settings = lib.optionalAttrs (role == "border") {
+    "10-vpn-route-gen"."/etc/bird/reroute-via-vpn.conf".f = {
+      mode = "0644";
+      user = "root";
+      group = "root";
+    };
+  };
 
   networking.nftables.tables.global.content =
     ''
