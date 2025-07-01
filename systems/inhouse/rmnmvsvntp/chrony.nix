@@ -39,4 +39,6 @@
       disabledCollectors = [ "sources.with-ntpdata" ];
     };
   };
+
+  environment.persistence."/nix/persist".directories = [ "/var/lib/chrony" ];
 }
