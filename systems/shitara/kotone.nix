@@ -32,6 +32,8 @@
     "10.85.183.0/24"
     "10.91.145.32/28"
   ];
+  services.consul.enable = lib.mkForce false;
+  services.nomad.enable = lib.mkForce false;
 
   virtualisation.oci-containers = {
     backend = "docker";
