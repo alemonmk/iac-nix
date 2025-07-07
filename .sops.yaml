@@ -6,6 +6,7 @@ keys:
   - &rmnmvsvmgl age1rmy535v6qmm552pzsvgjna4k4wmu2pjya796lm8k253pmfne3s0scn8zmz
   - &rmnmvsvnoc age15kvyh0pjnv7ng09svtf2xtpqs89d6hxjxq7p07l2tnwcfe6p3y7qrhzkuv
   - &rmnmvsvadb02 age1ay20thc0y39hucs8mge0u448wgcn06gupf8332e0423uj330wdssfnpskj
+  - &kotone age19jn40tfeespt7dwute2yejc2u5ruthddgcyryp7pvqr5z46653xqjx7rjx
   - &sumire age1sjaxe6w33yf8xuvwx732f6wfrx3398mcm9x6ajrvs5m520uduesszhy6xl
   - &uzuki age1srx92ehlpmrvw4uf0lrj6hu3fk6pdfhhuqja36qwxr0tvjfnsgmstckyru
   - &sajuna age1h6wq6zvrcfxnynkg09td8zpk0wnspnpe5pclmt2lzr85n0cx0d2qlwz3fx
@@ -47,12 +48,20 @@ creation_rules:
       - *kyouka
       - *rmnmvsvadb02
     encrypted_suffix: password
-  - path_regex: secrets(\\|/)shitara(\\|/)[^/]+\.yaml$
+  - path_regex: secrets(\\|/)shitara(\\|/)onedev-dbpw\.yaml$
     key_groups:
     - age:
       - *nix-mgr
       - *chisa
       - *kyouka
+      - *kotone
+  - path_regex: secrets(\\|/)shitara(\\|/)ipsec\.yaml$
+    key_groups:
+    - age:
+      - *nix-mgr
+      - *chisa
+      - *kyouka
+      - *kotone
       - *sumire
       - *uzuki
       - *sajuna
