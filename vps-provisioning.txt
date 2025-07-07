@@ -10,6 +10,7 @@ $ on nix-mgmt
 {
 # swapon /dev/sdb
 # nix shell nixpkgs#e2fsprogs; mkfs.ext4 -q /dev/sda; exit
+# mount /dev/sda /mnt
 # nixos-install --no-channel-copy --no-root-password --flake git+https://code.rmntn.net/iac/nix#linodeBarebone
 }
 # or
@@ -17,8 +18,9 @@ $ on nix-mgmt
 $ tar -czf nix.tar.gz nix
 $ scp nix.tar.gz root@<remote>:/root
 # tar -xzf nix.tar.gz
+# mount /dev/sda /mnt
 # nixos-install --no-channel-copy --no-root-password --flake ./nix#linodeBarebone
 # reboot
 }
 
-$ NIX_SSHOPT="-F $HOME/.ssh/config -p 444" nixos-rebuild switch --target-host 192.0.2.1 --flake .#<hostname>
+$ NIX_SSHOPTS="-F $HOME/.ssh/config -p 444" nixos-rebuild switch --target-host 192.0.2.1 --flake .#<hostname>
