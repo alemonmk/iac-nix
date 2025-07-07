@@ -60,8 +60,8 @@ in
       if_id_out = builtins.toString netConfig.pdc-tunnel.xfrmId;
       children.default = {
         esp_proposals = [ "aes256gcm16-ecp384" ];
-        local_ts = [ "0.0.0.0/0" ];
-        remote_ts = [ "0.0.0.0/0" ];
+        local_ts = [ "0.0.0.0/0" ] ++ lib.optional (localTunAddrV6 != "") "::/0";
+        remote_ts = [ "0.0.0.0/0" ] ++ lib.optional (localTunAddrV6 != "") "::/0";
       };
     };
     includes = [ config.sops.secrets.ipsec-psk.path ];
