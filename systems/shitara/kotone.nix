@@ -14,6 +14,20 @@
     fsType = "ext4";
   };
 
+  users.users.hath = {
+    uid = 9999;
+    group = "hath";
+    isNormalUser = true;
+    createHome = false;
+    home = "/opt/hath";
+  };
+  users.groups.hath = {
+    gid = 9999;
+  };
+  systemd.tmpfiles.settings = {
+    "10-hath"."/opt/hath/download"."a+".argument = "u:emergency:rwx";
+  };
+
   services.zerotierone.localConf.settings.allowManagementFrom = [
     "10.85.183.0/24"
     "10.91.145.32/28"
@@ -47,12 +61,8 @@
           ];
         };
         "hath" = {
-          image = "cloverdefa/hath:0.4.2";
-          cmd = [
-            "java"
-            "-jar"
-            "/hath/HentaiAtHome.jar"
-          ];
+          image = "frosty5689/hath:1.6.4";
+          user = "9999:9999";
           volumes = lib.map (d: "/opt/hath/${d}:/hath/${d}") [
             "cache"
             "data"
