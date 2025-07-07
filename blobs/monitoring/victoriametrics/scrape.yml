@@ -42,7 +42,7 @@ scrape_configs:
   - job_name: public-cloud-dc1-nodes
     static_configs:
     - targets:
-      - 10.91.145.17:9100
+      - 10.85.183.6:9100
       - 10.85.183.1:9100
       - 10.85.183.2:9100
       - 10.85.183.3:9100
@@ -61,7 +61,7 @@ scrape_configs:
   - job_name: public-cloud-dc1-bird
     static_configs:
     - targets:
-      - 10.91.145.17:9324
+      - 10.85.183.6:9324
       - 10.85.183.1:9324
       - 10.85.183.2:9324
       - 10.85.183.3:9324
