@@ -11,7 +11,7 @@ $ on nix-mgmt
 # swapon /dev/sdb
 # nix shell nixpkgs#e2fsprogs; mkfs.ext4 -q /dev/sda; exit
 # mount /dev/sda /mnt
-# nixos-install --no-channel-copy --no-root-password --flake git+https://code.rmntn.net/iac/nix#linodeBarebone
+# nix shell nixpkgs#gitMinimal; nixos-install --no-channel-copy --no-root-password --flake git+https://code.rmntn.net/iac/nix#linodeBarebone
 }
 # or
 {
