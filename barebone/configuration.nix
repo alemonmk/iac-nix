@@ -9,7 +9,6 @@
     "vmw_pvscsi"
     "sd_mod"
   ];
-  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   fileSystems."/nix".neededForBoot = true;
   boot.initrd.supportedFilesystems = [ "btrfs" ];
