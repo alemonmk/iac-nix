@@ -23,7 +23,6 @@
     useDHCP = false;
     usePredictableInterfaceNames = false;
   };
-  services.resolved.llmnr = "false";
 
   boot.kernel.sysctl = {
     "net.core.wmem_max" = 134217728;
