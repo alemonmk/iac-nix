@@ -2,8 +2,26 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      general = {
-        live_config_reload = true;
+      general.live_config_reload = true;
+      cursor = {
+        blink_interval = 500;
+        style.blinking = "Always";
+      };
+      mouse.hide_when_typing = true;
+      selection.save_to_clipboard = true;
+      window = {
+        decorations = "Full";
+        dynamic_title = true;
+        opacity = 0.8;
+        option_as_alt = "Both";
+        padding.x = 6;
+        padding.y = 6;
+      };
+      font = {
+        size = 12.0;
+        normal.family = "Menlo";
+        offset.x = 1;
+        offset.y = 2;
       };
       colors = {
         primary = {
@@ -11,6 +29,30 @@
           foreground = "#4c4f69";
           dim_foreground = "#8c8fa1";
           bright_foreground = "#4c4f69";
+        };
+        normal = {
+          black = "#bcc0cc";
+          red = "#d20f39";
+          green = "#40a02b";
+          yellow = "#df8e1d";
+          blue = "#1e66f5";
+          magenta = "#ea76cb";
+          cyan = "#179299";
+          white = "#5c5f77";
+        };
+        bright = {
+          black = "#acb0be";
+          red = "#d20f39";
+          green = "#40a02b";
+          yellow = "#df8e1d";
+          blue = "#1e66f5";
+          magenta = "#ea76cb";
+          cyan = "#179299";
+          white = "#6c6f85";
+        };
+        selection = {
+          text = "#eff1f5";
+          background = "#dc8a78";
         };
         cursor = {
           text = "#eff1f5";
@@ -44,30 +86,6 @@
             background = "#6c6f85";
           };
         };
-        selection = {
-          text = "#eff1f5";
-          background = "#dc8a78";
-        };
-        normal = {
-          black = "#bcc0cc";
-          red = "#d20f39";
-          green = "#40a02b";
-          yellow = "#df8e1d";
-          blue = "#1e66f5";
-          magenta = "#ea76cb";
-          cyan = "#179299";
-          white = "#5c5f77";
-        };
-        bright = {
-          black = "#acb0be";
-          red = "#d20f39";
-          green = "#40a02b";
-          yellow = "#df8e1d";
-          blue = "#1e66f5";
-          magenta = "#ea76cb";
-          cyan = "#179299";
-          white = "#6c6f85";
-        };
         indexed_colors = [
           {
             index = 16;
@@ -78,38 +96,6 @@
             color = "#dc8a78";
           }
         ];
-      };
-      cursor = {
-        blink_interval = 500;
-        style = {
-          blinking = "Always";
-        };
-      };
-      font = {
-        size = 12.0;
-        normal = {
-          family = "Menlo";
-        };
-        offset = {
-          x = 1;
-          y = 2;
-        };
-      };
-      mouse = {
-        hide_when_typing = true;
-      };
-      selection = {
-        save_to_clipboard = true;
-      };
-      window = {
-        decorations = "Full";
-        dynamic_title = true;
-        opacity = 0.8;
-        option_as_alt = "Both";
-        padding = {
-          x = 6;
-          y = 6;
-        };
       };
     };
   };
