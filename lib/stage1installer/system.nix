@@ -5,7 +5,6 @@
 }:
 {
   system.stateVersion = "24.11";
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
   boot.kernelParams = [
     "quiet"
     "systemd.show_status=no"
