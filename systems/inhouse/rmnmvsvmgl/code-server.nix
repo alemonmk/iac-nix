@@ -89,9 +89,7 @@
     files = [
       {
         file = ".config/sops/age/keys.txt";
-        parentDirectory = {
-          mode = "770";
-        };
+        parentDirectory.mode = "770";
       }
     ];
   };
