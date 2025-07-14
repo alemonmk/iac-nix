@@ -71,6 +71,7 @@
           if [ $1 ]; then
             SHORTHOST=$(cut -d "." -f 1 <<< $1)
             NIX_SSHOPTS="-F $HOME/.ssh/config" nixos-rebuild switch --target-host root@$1 --flake .#$SHORTHOST
+            ssh $1 'nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)'
           fi
           popd > /dev/null
         }
