@@ -51,7 +51,7 @@
           };
         };
         "public.rmntn.net" = {
-          host = "*.shitara.rmntn.net";
+          host = "*.shitara.rmntn.net kotone.rmntn.net";
           port = 444;
           user = "root";
           identityFile = "/run/secrets/nix-remote-sshkey";
