@@ -203,10 +203,6 @@
                   name = "cpuMgmtLoad";
                 }
                 {
-                  oid = "JUNIPER-CHASSIS-FWDD-MIB::jnxFwddRtThreadsCPUUsage";
-                  name = "cpuDataLoad";
-                }
-                {
                   oid = "JUNIPER-MIB::jnxOperatingTemp.9.1.0.0";
                   name = "cpuTemperature";
                 }
@@ -225,6 +221,10 @@
                       is_tag = true;
                     }
                     { oid = "IF-MIB::ifOperStatus"; }
+                    { oid = "IF-MIB::ifHCInOctets"; }
+                    { oid = "IF-MIB::ifHCOutOctets"; }
+                    { oid = "IF-MIB::ifHCInUcastPkts"; }
+                    { oid = "IF-MIB::ifHCOutUcastPkts"; }
                     { oid = "JUNIPER-IF-MIB::ifHCIn1SecOctets"; }
                     { oid = "JUNIPER-IF-MIB::ifHCOut1SecOctets"; }
                     { oid = "JUNIPER-IF-MIB::ifIn1SecPkts"; }
