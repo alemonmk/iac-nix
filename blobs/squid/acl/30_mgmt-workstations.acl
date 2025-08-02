@@ -1,5 +1,5 @@
 acl powershell-gallery dstdomain .nuget.org devopsgallerystorage.blob.core.windows.net go.microsoft.com
-acl powershell-gallery dstdomain onegetcdn.azureedge.net psg-prod-eastus.azureedge.net www.powershellgallery.com
+acl powershell-gallery dstdomain onegetcdn.azureedge.net psg-prod-eastus.azureedge.net .powershellgallery.com
 acl vscode dstdomain marketplace.visualstudio.com update.code.visualstudio.com az764295.vo.msecnd.net
 acl vscode dstdomain ms-vscode-remote.gallery.vsassets.io ms-vscode-remote.gallerycdn.vsassets.io
 acl debian dstdomain deb.debian.org security.debian.org
