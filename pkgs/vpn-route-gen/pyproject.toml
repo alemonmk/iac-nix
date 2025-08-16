@@ -3,8 +3,8 @@ name = "vpn-route-gen"
 version = "0.0.1"
 requires-python = ">=3.13"
 dependencies = [
-    "aggregate6>=1.0.14",
-    "dnspython==2.7.0"
+  "aggregate6>=1.0.14",
+  "dnspython==2.7.0"
 ]
 
 [project.scripts]

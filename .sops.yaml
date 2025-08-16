@@ -16,54 +16,54 @@ creation_rules:
   - path_regex: secrets(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
-        - *nix-mgr
-        - *chisa
-        - *kyouka
+          - *nix-mgr
+          - *chisa
+          - *kyouka
   - path_regex: secrets(\\|/)svpki02(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
-        - *nix-mgr
-        - *chisa
-        - *kyouka
-        - *rmnmvsvpki02
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *rmnmvsvpki02
   - path_regex: secrets(\\|/)svnoc(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
-        - *nix-mgr
-        - *chisa
-        - *kyouka
-        - *rmnmvsvnoc
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *rmnmvsvnoc
   - path_regex: secrets(\\|/)svmgl(\\|/)[^/]+\.yaml$
     key_groups:
       - age:
-        - *nix-mgr
-        - *chisa
-        - *kyouka
-        - *rmnmvsvmgl
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *rmnmvsvmgl
   - path_regex: secrets(\\|/)svadb02(\\|/)[^/]+\.yaml$
     key_groups:
-    - age:
-      - *nix-mgr
-      - *chisa
-      - *kyouka
-      - *rmnmvsvadb02
+      - age:
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *rmnmvsvadb02
     encrypted_suffix: password
   - path_regex: secrets(\\|/)shitara(\\|/)onedev-dbpw\.yaml$
     key_groups:
-    - age:
-      - *nix-mgr
-      - *chisa
-      - *kyouka
-      - *kotone
+      - age:
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *kotone
   - path_regex: secrets(\\|/)shitara(\\|/)ipsec\.yaml$
     key_groups:
-    - age:
-      - *nix-mgr
-      - *chisa
-      - *kyouka
-      - *kotone
-      - *sumire
-      - *uzuki
-      - *sajuna
-      - *kumiko
-      - *sena
+      - age:
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *kotone
+          - *sumire
+          - *uzuki
+          - *sajuna
+          - *kumiko
+          - *sena

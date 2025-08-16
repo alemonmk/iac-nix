@@ -90,23 +90,22 @@ in
     };
   };
 
-  networking.nftables.tables.global.content =
-    ''
-      chain overlay-input {
-        iifname "eth0" udp dport ${toString config.services.zerotierone.port} counter accept
-        iifname "ztinv*" ip protocol 89 counter accept
-        iifname "ztinv*" udp dport 3784 counter accept # BFD
-        ip saddr 10.85.10.5 tcp dport ${toString config.services.prometheus.exporters.bird.port} counter accept
-      }
-    ''
-    + lib.optionalString (role == "border") ''
-      chain overlay-input {
-        iifname "ztinv*" tcp dport bgp counter accept
-      }
-    ''
-    + ''
-      chain input {
-        jump overlay-input
-      }
-    '';
+  networking.nftables.tables.global.content = ''
+    chain overlay-input {
+      iifname "eth0" udp dport ${toString config.services.zerotierone.port} counter accept
+      iifname "ztinv*" ip protocol 89 counter accept
+      iifname "ztinv*" udp dport 3784 counter accept # BFD
+      ip saddr 10.85.10.5 tcp dport ${toString config.services.prometheus.exporters.bird.port} counter accept
+    }
+  ''
+  + lib.optionalString (role == "border") ''
+    chain overlay-input {
+      iifname "ztinv*" tcp dport bgp counter accept
+    }
+  ''
+  + ''
+    chain input {
+      jump overlay-input
+    }
+  '';
 }
