@@ -55,7 +55,8 @@ in
         self.nixosModules.vpn-route-gen
         sops-nix.nixosModules.sops
         ../base/linode/configuration.nix
-      ] ++ sysDef;
+      ]
+      ++ sysDef;
     };
   finalDarwinSystem =
     sysDef:

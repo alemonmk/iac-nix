@@ -43,7 +43,8 @@
       };
       nixosConfigurations = {
         inherit barebone linodeBarebone;
-      } // sysDefs.nixos;
+      }
+      // sysDefs.nixos;
       darwinConfigurations = sysDefs.darwin;
       hydraJobs = ciDefs;
     };

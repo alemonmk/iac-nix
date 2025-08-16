@@ -10,10 +10,10 @@ modules:
     timeout: 3s
     http:
       valid_status_codes:
-      - 200
-      - 303
-      - 401
-      - 403
+        - 200
+        - 303
+        - 401
+        - 403
       preferred_ip_protocol: "ip4"
   dns_ad:
     prober: dns
