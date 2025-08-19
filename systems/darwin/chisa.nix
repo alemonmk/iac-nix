@@ -141,7 +141,7 @@
           "wireshark-app"
           "vmware-fusion"
           "zerotier-one"
-          "yubico-yubikey-manager"
+          "yubico-authenticator"
           "omnissa-horizon-client"
           "windows-app"
           "anydesk"
