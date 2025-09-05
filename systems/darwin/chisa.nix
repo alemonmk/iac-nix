@@ -105,7 +105,7 @@
     nixpkgs-next.terraform
     pkgs.consul
     nixpkgs-next.nomad
-    pkgs.alejandra
+    pkgs.nixfmt-rfc-style
     pkgs.sops
     pkgs.age
     pkgs.ruff
