@@ -53,7 +53,7 @@ def main():
 
     # Individual domain names
     domains = [
-        "www.fnmoc.navy.mil",
+        "science.nrlmry.navy.mil",
     ]
     r = dns.resolver.Resolver(configure=False)
     r.nameservers = ["10.85.10.1"]
