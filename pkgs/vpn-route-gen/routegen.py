@@ -52,7 +52,9 @@ def main():
         unaggregated_routes += s3_eu
 
     # Individual domain names
-    domains = []
+    domains = [
+        "www.fnmoc.navy.mil",
+    ]
     r = dns.resolver.Resolver(configure=False)
     r.nameservers = ["10.85.10.1"]
     for domain in domains:
