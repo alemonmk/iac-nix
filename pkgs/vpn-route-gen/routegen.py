@@ -41,19 +41,21 @@ def main():
             p["ip_prefix"]
             for p in aws_ranges["prefixes"]
             if p["service"] == "CLOUDFRONT"
-            and p["region"].startswith(("GLOBAL", "ap-northeast-"))
+            and p["region"] in ["GLOBAL", "ap-northeast-1", "ap-northeast-3"]
         ]
-        s3_eu = [
+        ec2_jp = [
             p["ip_prefix"]
             for p in aws_ranges["prefixes"]
-            if p["service"] == "S3" and p["region"].startswith("eu-")
+            if p["service"] in ["EC2"]
+            and p["region"] in ["ap-northeast-1", "ap-northeast-3"]
         ]
         unaggregated_routes += cf_jp_global
-        unaggregated_routes += s3_eu
+        unaggregated_routes += ec2_jp
 
     # Individual domain names
     domains = [
         "science.nrlmry.navy.mil",
+        "ipv4.imgur.map.fastly.net"
     ]
     r = dns.resolver.Resolver(configure=False)
     r.nameservers = ["10.85.10.1"]
@@ -69,7 +71,6 @@ def main():
         "151.101.108.0/22",  # fastly jpn nodes
         "151.101.40.0/22",
         "151.101.52.0/22",
-        "51.101.24.0/22",  # fastly imgur
         "8.255.0.0/16",  # tlu.dl.delivery.mp.microsoft.com Lumen CDN
     ]
 

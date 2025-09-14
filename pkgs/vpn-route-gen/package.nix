@@ -8,7 +8,7 @@
 }:
 python313Packages.buildPythonApplication {
   pname = "vpn-route-gen";
-  version = "0.0.3";
+  version = "0.0.4";
   pyproject = true;
 
   src = ./.;
