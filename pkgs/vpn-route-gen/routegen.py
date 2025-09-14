@@ -55,7 +55,6 @@ def main():
     # Individual domain names
     domains = [
         "science.nrlmry.navy.mil",
-        "ipv4.imgur.map.fastly.net"
     ]
     r = dns.resolver.Resolver(configure=False)
     r.nameservers = ["10.85.10.1"]
