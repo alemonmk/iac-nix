@@ -31,7 +31,8 @@
     pkgs.nvd
   ];
   environment.shellAliases = {
-    upgrade-system = "sudo nixos-rebuild boot --flake git+https://code.rmntn.net/iac/nix#$(hostname); upgrade-diff";
+    upgrade-system = "sudo nixos-rebuild switch --flake git+https://code.rmntn.net/iac/nix#$(hostname); upgrade-diff";
+    upgrade-system-reboot = "sudo nixos-rebuild boot --flake git+https://code.rmntn.net/iac/nix#$(hostname); upgrade-diff; read -n 1 -s -p 'Press any key when ready to reboot'; sudo reboot";
     upgrade-diff = "nvd diff $(ls -dv /nix/var/nix/profiles/system-*-link | tail -2)";
   };
 }
