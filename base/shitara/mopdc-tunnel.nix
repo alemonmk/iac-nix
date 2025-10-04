@@ -112,6 +112,10 @@ in
     nat = {
       family = "ip";
       content = ''
+        chain clamp-mss {
+          type filter hook forward priority filter; policy accept
+          tcp flags syn tcp option maxseg size set rt mtu
+        }
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept
           oifname "eth0" ip saddr 10.0.0.0/8 ip daddr ne 10.0.0.0/8 counter masquerade
