@@ -48,7 +48,7 @@
       in
       lib.attrsets.mapAttrs (_: c: commonOptions // c) {
         "onedev" = {
-          image = "1dev/server:12.0.10";
+          image = "1dev/server:13.0.7";
           environment = {
             hibernate_dialect = "io.onedev.server.persistence.PostgreSQLDialect";
             hibernate_connection_driver_class = "org.postgresql.Driver";
