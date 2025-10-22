@@ -25,7 +25,7 @@
     gid = 9999;
   };
   systemd.tmpfiles.settings = {
-    "10-hath"."/opt/hath/download"."a+".argument = "u:emergency:rwx";
+    "10-hath"."/opt/hath/download"."a".argument = "d:u:emergency:rwx,u:emergency:rwx";
   };
 
   services.zerotierone.localConf.settings.allowManagementFrom = [
