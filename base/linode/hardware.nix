@@ -33,9 +33,9 @@
   ];
 
   fileSystems."/" = {
-    device = "/dev/sda";
+    device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi-disk-0";
     fsType = "ext4";
   };
 
-  swapDevices = [ { device = "/dev/sdb"; } ];
+  swapDevices = [ { device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi-disk-1"; } ];
 }
