@@ -13,11 +13,11 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "code-server";
-  version = "4.101.2";
+  version = "4.105.1";
 
   src = fetchzip {
     url = "https://github.com/coder/code-server/releases/download/v${finalAttrs.version}/code-server-${finalAttrs.version}-linux-amd64.tar.gz";
-    hash = "sha256-YegoXynLE8JH//GXQgdvtabqF2Qwf4QwLq3QUWv+PEY=";
+    hash = "sha256-BrdLTmbv0vD5IHkJQnueERjcpt4eJPygx9TlHTRd0+Q=";
   };
 
   dontPatch = true;
@@ -34,15 +34,14 @@ stdenv.mkDerivation (finalAttrs: {
     node-pre-gyp rebuild --nodedir=${nodejsSrc_22} -C ./node_modules/argon2
     node-gyp rebuild --nodedir=${nodejsSrc_22} -C ./lib/vscode/node_modules/@vscode/spdlog
     node-gyp rebuild --nodedir=${nodejsSrc_22} -C ./lib/vscode/node_modules/@parcel/watcher
+    node-gyp rebuild --nodedir=${nodejsSrc_22} -C ./lib/vscode/node_modules/native-watchdog
     node-gyp rebuild --nodedir=${nodejsSrc_22} -C ./lib/vscode/node_modules/node-pty
     CXXFLAGS="-I${krb5.dev}/include" node-gyp rebuild --nodedir=${nodejsSrc_22} -C ./lib/vscode/node_modules/kerberos
-    rm -r ./lib/vscode/node_modules/@parcel/watcher-linux-x64-{glibc,musl}
   '';
   installPhase = ''
     mkdir -p $out
     rm lib/node
     ln -s ${nodejs_22}/bin/node lib/node
-    ln -s node_modules node_modules.asar
     cp -R . $out
   '';
 
