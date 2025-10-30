@@ -13,7 +13,7 @@
         vscodeExtensions = with pkgs.vscode-extensions; [
           bbenoist.nix
           jeff-hykin.better-nix-syntax
-          kamadorueda.alejandra
+          brettm12345.nixfmt-vscode
           davidanson.vscode-markdownlint
           shd101wyy.markdown-preview-enhanced
           signageos.signageos-vscode-sops
