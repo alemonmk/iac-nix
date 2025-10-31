@@ -95,12 +95,14 @@ in
     global.content = ''
       chain mopdc-input {
         iifname "eth0" udp dport {isakmp, ipsec-nat-t} counter accept
-        iifname "xfrm0" ip saddr 10.91.145.0/26 ip daddr ${localTunAddrV4} tcp dport bgp counter accept
+        iifname "xfrm0" ip saddr ${peerTunAddrV4} ip daddr ${localTunAddrV4} tcp dport bgp counter accept
+        iifname "xfrm0" ip saddr ${peerTunAddrV4} ip daddr ${localTunAddrV4} udp dport 3784 counter accept
       }
     ''
     + lib.optionalString (localTunAddrV6 != "") ''
       chain mopdc-input {
         iifname "xfrm0" ip6 saddr ${peerTunAddrV6} ip6 daddr ${localTunAddrV6} tcp dport bgp counter accept
+        iifname "xfrm0" ip6 saddr ${peerTunAddrV6} ip6 daddr ${localTunAddrV6} udp dport 3784 counter accept
       }
     ''
     + ''
