@@ -35,4 +35,6 @@ final: prev: {
   vlmcsd = final.callPackage ../pkgs/vlmcsd.nix { };
 
   vpn-route-gen = final.callPackage ../pkgs/vpn-route-gen/package.nix { };
+
+  zerotierone = final.callPackage ../pkgs/zerotierone/package.nix { enableUnfree = true; };
 }
