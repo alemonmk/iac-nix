@@ -1,6 +1,7 @@
 {
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
       "newdc.rmntn.net" = {
         host = "!*.snct.rmntn.net *.shitara.rmntn.net *.rmntn.net";
