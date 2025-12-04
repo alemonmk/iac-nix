@@ -1,6 +1,6 @@
-{ nixpkgs-next, ... }:
+{ pkgs, ... }:
 {
-  environment.systemPackages = [ nixpkgs-next.yt-dlp ];
+  environment.systemPackages = with pkgs; [ yt-dlp ];
 
   services = {
     jellyfin.enable = true;

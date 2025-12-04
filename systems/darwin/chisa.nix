@@ -1,6 +1,5 @@
 {
   pkgs,
-  nixpkgs-next,
   flakeRoot,
   ...
 }:
@@ -22,7 +21,6 @@
       NSDocumentSaveNewDocumentsToCloud = false;
       "com.apple.trackpad.enableSecondaryClick" = true;
     };
-    alf.globalstate = 0;
     controlcenter.BatteryShowPercentage = true;
     dock = {
       magnification = true;
@@ -57,6 +55,7 @@
       TrackpadRightClick = true;
     };
   };
+  networking.applicationFirewall.enable = false;
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToControl = true;
@@ -91,24 +90,25 @@
     hostName = "chisa";
   };
 
-  environment.systemPackages = [
-    pkgs.coreutils
-    pkgs.alacritty
-    pkgs.screen
-    pkgs.iproute2mac
-    pkgs.curl
-    pkgs.jq
-    pkgs.git
-    pkgs.eza
-    pkgs.fd
-    pkgs.python313
-    nixpkgs-next.terraform
-    pkgs.consul
-    nixpkgs-next.nomad
-    pkgs.nixfmt-rfc-style
-    pkgs.sops
-    pkgs.age
-    pkgs.ruff
+  environment.systemPackages = with pkgs; [
+    coreutils
+    alacritty
+    screen
+    iproute2mac
+    curl
+    jq
+    git
+    eza
+    fd
+    python314
+    terraform
+    consul
+    nomad
+    nixfmt-rfc-style
+    sops
+    age
+    ruff
+    nmap
   ];
   homebrew = {
     enable = true;
@@ -168,9 +168,7 @@
     };
   };
 
-  users.users.alemonmk = {
-    home = "/Users/alemonmk";
-  };
+  users.users.alemonmk.home = "/Users/alemonmk";
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = false;
   home-manager.users.alemonmk = import "${flakeRoot}/home/chisa";

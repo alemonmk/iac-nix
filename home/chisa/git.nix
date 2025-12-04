@@ -1,10 +1,11 @@
 {
   programs.git = {
     enable = true;
-    userName = "Lemon Lam";
-    userEmail = "alemonmk@users.noreply.github.com";
-    ignores = [ ".DS_Store" ];
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Lemon Lam";
+        email = "alemonmk@users.noreply.github.com";
+      };
       init.defaultBranch = "main";
       diff.submodule = "log";
       submodule.recurse = true;
@@ -12,5 +13,6 @@
       push.autoSetupRemote = true;
       push.recurseSubmodules = "on-demand";
     };
+    ignores = [ ".DS_Store" ];
   };
 }
