@@ -23,5 +23,20 @@
         }
       '';
     };
+    tables.nat = {
+      family = "ip";
+      content = ''
+        chain source-nat {
+        }
+        chain clamp-mss {
+          type filter hook forward priority filter; policy accept;
+          tcp flags syn tcp option maxseg size set rt mtu
+        }
+        chain postrouting {
+          type nat hook postrouting priority srcnat; policy accept;
+          jump source-nat
+        }
+      '';
+    };
   };
 }

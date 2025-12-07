@@ -48,7 +48,7 @@
       in
       lib.attrsets.mapAttrs (_: c: commonOptions // c) {
         "onedev" = {
-          image = "1dev/server:13.0.9";
+          image = "1dev/server:13.1.3";
           environment = {
             hibernate_dialect = "io.onedev.server.persistence.PostgreSQLDialect";
             hibernate_connection_driver_class = "org.postgresql.Driver";
@@ -76,13 +76,20 @@
       };
   };
 
-  networking.nftables.tables.global.content = ''
-    chain overlay-input {
-      iifname "ztinv*" ip daddr 10.85.183.6 tcp dport ${toString config.services.zerotierone.port} counter accept # Zerotier controller
-    }
-    chain service-input {
-      iifname "ztinv*" ip daddr 10.85.183.6 tcp dport 6610 counter accept # OneDev
-      iifname "eth0" tcp dport 8472 counter accept # HatH
-    }
-  '';
+  networking.nftables.tables = {
+    global.content = ''
+      chain overlay-input {
+        iifname "ztinv*" ip daddr 10.85.183.6 tcp dport ${toString config.services.zerotierone.port} counter accept # Zerotier controller
+      }
+      chain service-input {
+        iifname "ztinv*" ip daddr 10.85.183.6 tcp dport 6610 counter accept # OneDev
+        iifname "eth0" tcp dport 8472 counter accept # HatH
+      }
+    '';
+    nat.content = ''
+      chain source-nat {
+        iifname "docker0" oifname "eth0" ip saddr 172.17.0.0/16 counter masquerade
+      }
+    '';
+  };
 }
