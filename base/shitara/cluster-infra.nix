@@ -88,6 +88,7 @@ in
         ];
         telemetry = {
           prometheus_metrics = true;
+          publish_allocation_metrics = true;
           use_node_name = true;
         };
         ui = {
