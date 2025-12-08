@@ -22,7 +22,10 @@
     useNetworkd = true;
     useDHCP = false;
     usePredictableInterfaceNames = false;
+    tempAddresses = "disabled";
   };
+
+  systemd.network.config.networkConfig.IPv6PrivacyExtensions = false;
 
   boot.kernel.sysctl = {
     "net.core.wmem_max" = 134217728;
