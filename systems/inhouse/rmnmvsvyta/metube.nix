@@ -23,6 +23,10 @@
       "${flakeRoot}/blobs/youtube-archiver/ytdlp-options.json:/app/ytdlp-options.json"
     ];
   };
+  virtualisation.oci-containers.containers."pot-provider" = {
+    image = "brainicism/bgutil-ytdlp-pot-provider";
+    extraOptions = [ "--network=host" ];
+  };
 
   services.caddy.virtualHosts."ytarc.snct.rmntn.net".extraConfig =
     "reverse_proxy /archiver/* localhost:8081";
