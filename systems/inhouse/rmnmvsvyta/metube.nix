@@ -8,9 +8,8 @@
   virtualisation.oci-containers.containers."metube" = {
     image = "ghcr.io/alexta69/metube:2025.12.09";
     extraOptions = [ "--network=host" ];
+    user = "2500:2500";
     environment = {
-      UID = "2500";
-      GID = "2500";
       URL_PREFIX = "/archiver/";
       OUTPUT_TEMPLATE = "%(uploader)s/%(upload_date>%Y)s/[%(upload_date>%y%m%d)s][%(id)s].%(ext)s";
       DOWNLOAD_MODE = "sequential";
