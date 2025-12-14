@@ -1,7 +1,7 @@
 acl docker dstdomain download.docker.com ghcr.io pkg-containers.githubusercontent.com hub.docker.com registry-1.docker.io auth.docker.io production.cloudflare.docker.com
 acl jellyfin dstdomain repo.jellyfin.org sgp1.mirror.jellyfin.org
 acl twitch dstdomain .twitch.tv static-cdn.jtvnw.net .ttvnw.net .twitchcdn.net d1m7jfoe9zdc1j.cloudfront.net dgeft87wbj63p.cloudfront.net
-acl youtube dstdomain .youtube.com .googlevideo.com .ytimg.com .youtu.be accounts.google.com
+acl youtube dstdomain .youtube.com .googlevideo.com .ytimg.com .youtu.be accounts.google.com www.google.com .googleapis.com
 
 acl youtube-archiver src 10.85.20.8
 
