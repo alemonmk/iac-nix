@@ -1,4 +1,4 @@
-{ flakeRoot, ... }:
+{ flakeRoot, pkgs, ... }:
 {
   virtualisation.podman = {
     enable = true;
@@ -6,7 +6,8 @@
   };
 
   virtualisation.oci-containers.containers."metube" = {
-    image = "ghcr.io/alexta69/metube:2025.12.09";
+    image = "metube-pot-plugin:2025.12.09";
+    imageFile = pkgs.metube;
     extraOptions = [ "--network=host" ];
     user = "2500:2500";
     environment = {
@@ -17,7 +18,7 @@
     };
     volumes = [
       "/mnt/pfs3/ytarchive:/downloads"
-      "/nix/persist/opt/metube/.cache:/.cache"
+      "/nix/persist/opt/metube/.cache:/app/.cache"
       "/nix/persist/opt/metube/cookies.txt:/app/cookies.txt"
       "${flakeRoot}/blobs/youtube-archiver/ytdlp-options.json:/app/ytdlp-options.json"
     ];

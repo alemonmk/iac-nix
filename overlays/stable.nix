@@ -37,4 +37,6 @@ final: prev: {
   vpn-route-gen = final.callPackage ../pkgs/vpn-route-gen/package.nix { };
 
   zerotierone = prev.zerotierone.override { enableUnfree = true; };
+
+  metube = final.callPackage ../pkgs/metube.nix { };
 }
