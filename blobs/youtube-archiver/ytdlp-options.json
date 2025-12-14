@@ -3,6 +3,7 @@
   "cookiefile": "/app/cookies.txt",
   "proxy": "http://rmnmvsvswg.snct.rmntn.net:3128",
   "source_address": "0.0.0.0",
+  "downloader": "curl",
   "writeinfojson": true,
   "writesubtitles": true,
   "subtitleslangs": [
