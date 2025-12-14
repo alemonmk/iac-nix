@@ -6,7 +6,7 @@
   };
 
   virtualisation.oci-containers.containers."metube" = {
-    image = "ghcr.io/alexta69/metube:2025.12.05";
+    image = "ghcr.io/alexta69/metube:2025.12.09";
     extraOptions = [ "--network=host" ];
     environment = {
       UID = "2500";
