@@ -18,7 +18,6 @@
     };
     volumes = [
       "/mnt/pfs3/ytarchive:/downloads"
-      "/nix/persist/opt/metube/.cache:/app/.cache"
       "/nix/persist/opt/metube/cookies.txt:/app/cookies.txt"
       "${flakeRoot}/blobs/youtube-archiver/ytdlp-options.json:/app/ytdlp-options.json"
     ];
