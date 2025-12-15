@@ -135,6 +135,6 @@ dockerTools.buildLayeredImage {
   };
   extraCommands = ''
     mkdir -m 1777 tmp
-    mkdir -p .cache && chmod 777 .cache
+    mkdir -p app/.cache && chmod 770 app/.cache
   '';
 }
