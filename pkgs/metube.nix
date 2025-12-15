@@ -133,5 +133,8 @@ dockerTools.buildLayeredImage {
       "/metube/app/main.py"
     ];
   };
-  extraCommands = ''mkdir -p .cache && chmod 777 .cache'';
+  extraCommands = ''
+    mkdir -m 1777 tmp
+    mkdir -p .cache && chmod 777 .cache
+  '';
 }
