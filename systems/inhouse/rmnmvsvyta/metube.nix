@@ -6,7 +6,7 @@
   };
 
   virtualisation.oci-containers.containers."metube" = {
-    image = "metube-pot-plugin:2025.12.09";
+    image = "metube-pot-plugin:2025.12.26";
     imageFile = pkgs.metube;
     extraOptions = [ "--network=host" ];
     user = "2500:2500";
