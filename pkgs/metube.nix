@@ -1,7 +1,11 @@
 {
+  lib,
   fetchFromGitHub,
   stdenvNoCC,
-  buildNpmPackage,
+  nodejs,
+  pnpm,
+  pnpmConfigHook,
+  fetchPnpmDeps,
   dockerTools,
   python3,
   python313Packages,
@@ -66,24 +70,38 @@ let
       yt-dlp'
     ]
   );
-  metubeVersion = "2025.12.09";
+  metubeVersion = "2025.12.26";
   metube =
     let
       metube-src = fetchFromGitHub {
         owner = "alexta69";
         repo = "metube";
         tag = metubeVersion;
-        hash = "sha256-NENBHMaQGI1kwnoIOYTAqEXopGWgykQ7I6S2Ur4r6NQ=";
+        hash = "sha256-x70gns4QxsBwkhlXiUKPD4QOQ0skHuk2KWDXR6guMo8=";
       };
-      metube-ui = buildNpmPackage {
+      metube-ui = stdenvNoCC.mkDerivation (finalAttrs: {
         pname = "metube-ui";
         version = metubeVersion;
         src = metube-src;
         sourceRoot = "source/ui";
-        npmDepsHash = "sha256-dG/did1ch6ezcqRimT2zVTdOVRpF89QlTrnKkcftvs4=";
-        buildPhase = "./node_modules/.bin/ng build --configuration production";
+        nativeBuildInputs = [
+          nodejs
+          pnpm
+          pnpmConfigHook
+        ];
+        pnpmDeps = pnpm.fetchDeps {
+          inherit (finalAttrs)
+            pname
+            version
+            src
+            sourceRoot
+            ;
+          fetcherVersion = 3;
+          hash = "sha256-sV83ZjYcsoMo2TOvotcUu2MYnOL00Z1lbH62Z+Ttp0s=";
+        };
+        buildPhase = "pnpm run build";
         installPhase = "cp -R dist $out";
-      };
+      });
     in
     stdenvNoCC.mkDerivation {
       pname = "metube";
@@ -97,7 +115,7 @@ let
       installPhase = ''
         mkdir -p $out/metube
         cp -r app/ $out/metube/app/
-        cp -r ui/ $out/metube/ui
+        cp -r ui/ $out/metube/ui/
       '';
     };
 in
