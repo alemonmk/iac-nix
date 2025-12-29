@@ -70,14 +70,14 @@ let
       yt-dlp'
     ]
   );
-  metubeVersion = "2025.12.26";
+  metubeVersion = "2025.12.27";
   metube =
     let
       metube-src = fetchFromGitHub {
         owner = "alexta69";
         repo = "metube";
         tag = metubeVersion;
-        hash = "sha256-x70gns4QxsBwkhlXiUKPD4QOQ0skHuk2KWDXR6guMo8=";
+        hash = "sha256-RXJ4dGqpaX519enHliJ//LMRtGJ2e4DcUR/frVOzLes=";
       };
       metube-ui = stdenvNoCC.mkDerivation (finalAttrs: {
         pname = "metube-ui";
