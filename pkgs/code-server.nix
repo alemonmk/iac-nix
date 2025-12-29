@@ -13,11 +13,11 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "code-server";
-  version = "4.105.1";
+  version = "4.107.0";
 
   src = fetchzip {
     url = "https://github.com/coder/code-server/releases/download/v${finalAttrs.version}/code-server-${finalAttrs.version}-linux-amd64.tar.gz";
-    hash = "sha256-BrdLTmbv0vD5IHkJQnueERjcpt4eJPygx9TlHTRd0+Q=";
+    hash = "sha256-R10S7SAFWFmax6xw0M49AX4JOyT9cfjsfieJi1KBK9k=";
   };
 
   dontPatch = true;
