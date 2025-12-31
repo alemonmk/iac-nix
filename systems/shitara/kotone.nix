@@ -93,8 +93,8 @@
       in
       ''
         table cluster-net { 10.85.183.0/28, 10.91.145.32/28 }
-        table outbound-src { ${netConfig.wan.v4}, ${netConfig.wan.v6} }
-        filter dkim-sign proc-exec "${pkgs.opensmtpd-filter-dkimsign}/libexec/opensmtpd/filter-dkimsign -tz -a rsa-sha256 -d rmntn.net -s appmsgs -k ${config.sops.secrets.dkimkey.path}" user ${dkimsignuser} group ${dkimsignuser}
+        table outbound-src { ${netConfig.wan.v4} }
+        filter dkim-sign proc-exec "${pkgs.opensmtpd-filter-dkimsign}/libexec/opensmtpd/filter-dkimsign -t -c relaxed/relaxed -a rsa-sha256 -d rmntn.net -s appmsgs -k ${config.sops.secrets.dkimkey.path}" user ${dkimsignuser} group ${dkimsignuser}
         listen on socket filter "dkim-sign"
         listen on ${netConfig.lo} port 25 filter "dkim-sign"
         action "outbound" relay src <outbound-src>
