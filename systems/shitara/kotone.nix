@@ -1,13 +1,20 @@
 {
   config,
   lib,
+  pkgs,
   flakeRoot,
   ...
 }:
 {
   imports = [ "${flakeRoot}/base/shitara/node.nix" ];
 
-  sops.secrets.onedev-dbpw.sopsFile = "${flakeRoot}/secrets/shitara/onedev-dbpw.yaml";
+  sops.secrets = {
+    onedev-dbpw.sopsFile = "${flakeRoot}/secrets/shitara/onedev-dbpw.yaml";
+    dkimkey = {
+      owner = config.users.users.dkimsign.name;
+      sopsFile = "${flakeRoot}/secrets/shitara/kotone/dkimkey.yaml";
+    };
+  };
 
   fileSystems."/opt/hath" = {
     device = "/dev/disk/by-id/scsi-0Linode_Volume_hath";
@@ -76,6 +83,35 @@
       };
   };
 
+  users.users.dkimsign = {
+    group = "dkimsign";
+    isSystemUser = true;
+  };
+  users.groups.dkimsign = {};
+
+  services.opensmtpd = {
+    enable = true;
+    setSendmail = false;
+    procPackages = [ pkgs.opensmtpd-filter-dkimsign ];
+    extraServerArgs = [ "-P mda" ];
+    serverConfiguration =
+      let
+        netConfig = import "${flakeRoot}/base/shitara/netconfigs.nix" {
+          inherit (config.networking) hostName;
+        };
+        dkimsignuser = config.users.users.dkimsign.name;
+      in
+      ''
+        table cluster-net { 10.85.183.0/28, 10.91.145.32/28 }
+        table outbound-src { ${netConfig.wan.v4}, ${netConfig.wan.v6} }
+        filter dkim-sign proc-exec "filter-dkimsign -tz -a rsa-sha256 -d rmntn.net -s appmsgs -k ${config.sops.secrets.dkimkey.path}" user ${dkimsignuser} group ${dkimsignuser}
+        listen on socket filter "dkim-sign"
+        listen on ${netConfig.lo} port 25 filter "dkim-sign"
+        action "outbound" relay src <outbound-src>
+        match from src <cluster-net> for any action "outbound"
+      '';
+  };
+
   networking.nftables.tables = {
     global.content = ''
       chain overlay-input {
@@ -83,6 +119,7 @@
       }
       chain service-input {
         iifname "ztinv*" ip daddr 10.85.183.6 tcp dport 6610 counter accept # OneDev
+        iifname "ztinv*" ip daddr 10.85.183.6 tcp dport 25 counter accept # App mails
         iifname "eth0" tcp dport 8472 counter accept # HatH
       }
     '';
