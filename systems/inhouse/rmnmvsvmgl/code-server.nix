@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -40,28 +41,29 @@
     home.stateVersion = "24.11";
     programs.ssh = {
       enable = true;
-      matchBlocks = {
-        "nix-staging" = {
-          host = "10.85.20.61";
-          user = "root";
-          identityFile = "/run/secrets/nix-remote-sshkey";
-          extraOptions = {
-            StrictHostKeyChecking = "no";
-            UserKnownHostsFile = "/dev/null";
+      matchBlocks =
+        let
+          commonOptions = {
+            user = "root";
+            identityFile = "/run/secrets/nix-remote-sshkey";
+          };
+        in
+        lib.attrsets.mapAttrs (_: c: commonOptions // c) {
+          "nix-staging" = {
+            host = "10.85.20.61";
+            extraOptions = {
+              StrictHostKeyChecking = "no";
+              UserKnownHostsFile = "/dev/null";
+            };
+          };
+          "public.rmntn.net" = {
+            host = "*.shitara.rmntn.net kotone.rmntn.net";
+            port = 444;
+          };
+          "private.rmntn.net" = {
+            host = "*";
           };
         };
-        "public.rmntn.net" = {
-          host = "*.shitara.rmntn.net kotone.rmntn.net";
-          port = 444;
-          user = "root";
-          identityFile = "/run/secrets/nix-remote-sshkey";
-        };
-        "private.rmntn.net" = {
-          host = "*";
-          user = "root";
-          identityFile = "/run/secrets/nix-remote-sshkey";
-        };
-      };
     };
     programs.bash = {
       enable = true;
