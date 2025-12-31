@@ -48,6 +48,13 @@ creation_rules:
           - *kyouka
           - *rmnmvsvadb02
     encrypted_suffix: password
+  - path_regex: secrets(\\|/)shitara(\\|/)kotone(\\|/)[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *kotone
   - path_regex: secrets(\\|/)shitara(\\|/)onedev-dbpw\.yaml$
     key_groups:
       - age:
