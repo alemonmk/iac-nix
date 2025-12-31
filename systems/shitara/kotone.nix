@@ -21,6 +21,15 @@
     fsType = "ext4";
   };
 
+  services.zerotierone.localConf.settings.allowManagementFrom = [
+    "10.85.183.0/24"
+    "10.91.145.32/28"
+  ];
+  services.consul.enable = lib.mkForce false;
+  services.nomad.enable = lib.mkForce false;
+
+  virtualisation.oci-containers.backend = "docker";
+
   users.users.hath = {
     uid = 9999;
     group = "hath";
@@ -33,60 +42,43 @@
   systemd.tmpfiles.settings = {
     "10-hath"."/opt/hath/download"."a".argument = "d:u:emergency:rwx,u:emergency:rwx";
   };
+  virtualisation.oci-containers.containers."hath" = {
+    image = "frosty5689/hath:1.6.4";
+    user = "9999:9999";
+    networks = [ "host" ];
+    capabilities.all = false;
+    volumes = lib.map (d: "/opt/hath/${d}:/hath/${d}") [
+      "cache"
+      "data"
+      "download"
+      "log"
+      "tmp"
+    ];
+  };
 
-  services.zerotierone.localConf.settings.allowManagementFrom = [
-    "10.85.183.0/24"
-    "10.91.145.32/28"
-  ];
-  services.consul.enable = lib.mkForce false;
-  services.nomad.enable = lib.mkForce false;
-
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers =
-      let
-        commonOptions = {
-          networks = [ "host" ];
-          capabilities = {
-            all = false;
-          };
-        };
-      in
-      lib.attrsets.mapAttrs (_: c: commonOptions // c) {
-        "onedev" = {
-          image = "1dev/server:13.1.7";
-          environment = {
-            hibernate_dialect = "io.onedev.server.persistence.PostgreSQLDialect";
-            hibernate_connection_driver_class = "org.postgresql.Driver";
-            hibernate_connection_url = "jdbc:postgresql://primary.pg-ha-1.service.consul:5432/onedev";
-            hibernate_connection_username = "onedev";
-            hibernate_connection_password_file = "/secrets/onedev-dbpw";
-          };
-          volumes = [
-            "/run/docker.sock:/var/run/docker.sock"
-            "/opt/onedev/data:/opt/onedev"
-            "${config.sops.secrets.onedev-dbpw.path}:/secrets/onedev-dbpw"
-          ];
-        };
-        "hath" = {
-          image = "frosty5689/hath:1.6.4";
-          user = "9999:9999";
-          volumes = lib.map (d: "/opt/hath/${d}:/hath/${d}") [
-            "cache"
-            "data"
-            "download"
-            "log"
-            "tmp"
-          ];
-        };
-      };
+  virtualisation.oci-containers.containers."onedev" = {
+    image = "1dev/server:13.1.7";
+    networks = [ "host" ];
+    capabilities.all = false;
+    environment = {
+      hibernate_dialect = "io.onedev.server.persistence.PostgreSQLDialect";
+      hibernate_connection_driver_class = "org.postgresql.Driver";
+      hibernate_connection_url = "jdbc:postgresql://primary.pg-ha-1.service.consul:5432/onedev";
+      hibernate_connection_username = "onedev";
+      hibernate_connection_password_file = "/secrets/onedev-dbpw";
+    };
+    volumes = [
+      "/run/docker.sock:/var/run/docker.sock"
+      "/opt/onedev/data:/opt/onedev"
+      "${config.sops.secrets.onedev-dbpw.path}:/secrets/onedev-dbpw"
+    ];
   };
 
   users.users.dkimsign = {
     group = "dkimsign";
     isSystemUser = true;
   };
-  users.groups.dkimsign = {};
+  users.groups.dkimsign = { };
 
   services.opensmtpd = {
     enable = true;
