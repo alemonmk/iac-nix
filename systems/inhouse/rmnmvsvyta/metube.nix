@@ -9,6 +9,7 @@
     image = "metube-pot-plugin:2025.12.27";
     imageFile = pkgs.metube;
     networks = [ "host" ];
+    capabilities.all = false;
     user = "2500:2500";
     environment = {
       URL_PREFIX = "/archiver/";
@@ -25,6 +26,7 @@
   virtualisation.oci-containers.containers."pot-provider" = {
     image = "brainicism/bgutil-ytdlp-pot-provider";
     networks = [ "host" ];
+    capabilities.all = false;
   };
 
   services.caddy.virtualHosts."ytarc.snct.rmntn.net".extraConfig =
