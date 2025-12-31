@@ -25,7 +25,6 @@
     uid = 9999;
     group = "hath";
     isNormalUser = true;
-    createHome = false;
     home = "/opt/hath";
   };
   users.groups.hath = {
