@@ -30,6 +30,6 @@ python313Packages.buildPythonApplication {
     mainProgram = "vpn-route-gen";
     homepage = "";
     license = with lib.licenses; [ gpl2Only ];
-    maintainers = with lib.maintainers; [ ];
+    maintainers = with lib.maintainers; [ alemonmk ];
   };
 }

@@ -62,7 +62,7 @@ stdenv.mkDerivation (finalAttrs: {
     '';
     homepage = "https://github.com/coder/code-server";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = with lib.maintainers; [ alemonmk ];
     platforms = [ "x86_64-linux" ];
     mainProgram = "code-server";
   };
