@@ -42,7 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Portable open-source KMS Emulator in C";
     homepage = "https://github.com/Wind4/vlmcsd";
     license = lib.licenses.publicDomain;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = with lib.maintainers; [ alemonmk ];
     platforms = lib.platforms.linux;
   };
 })
