@@ -39,6 +39,4 @@ final: prev: {
   zerotierone = prev.zerotierone.override { enableUnfree = true; };
 
   metube = final.callPackage ../pkgs/metube.nix { };
-
-  gitness = final.callPackage ../pkgs/harness-gitness.nix { };
 }
