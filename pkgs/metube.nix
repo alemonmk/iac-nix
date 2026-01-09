@@ -13,6 +13,7 @@
   ffmpeg-headless,
   curlMinimal,
   cacert,
+  file,
 }:
 let
   ffmpeg-headless' = ffmpeg-headless.override {
@@ -70,14 +71,14 @@ let
       yt-dlp'
     ]
   );
-  metubeVersion = "2025.12.27";
+  metubeVersion = "2026.01.08";
   metube =
     let
       metube-src = fetchFromGitHub {
         owner = "alexta69";
         repo = "metube";
         tag = metubeVersion;
-        hash = "sha256-RXJ4dGqpaX519enHliJ//LMRtGJ2e4DcUR/frVOzLes=";
+        hash = "sha256-gxsxqJLAR0xdKqHgJhS27Ffg9Y2c98ZwVaWMl9BDFoM=";
       };
       metube-ui = stdenvNoCC.mkDerivation (finalAttrs: {
         pname = "metube-ui";
@@ -127,6 +128,7 @@ dockerTools.buildLayeredImage {
     metube
     cacert
     deno
+    file
     curl'
     ffmpeg-headless'
   ];
