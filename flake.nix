@@ -39,7 +39,6 @@
         netbootImage = import ./lib/stage1installer inputs;
         vlmcsd = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/vlmcsd.nix { };
         metube = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/metube.nix { };
-        gitness = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/harness-gitness.nix { };
       };
       nixosConfigurations = {
         inherit barebone linodeBarebone;
