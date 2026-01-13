@@ -6,7 +6,7 @@
   };
 
   virtualisation.oci-containers.containers."metube" = {
-    image = "metube-pot-plugin:2025.12.27";
+    image = "metube-pot-plugin:2026.01.11";
     imageFile = pkgs.metube;
     networks = [ "host" ];
     capabilities.all = false;
@@ -14,7 +14,7 @@
     environment = {
       URL_PREFIX = "/archiver/";
       OUTPUT_TEMPLATE = "%(uploader)s/%(upload_date>%Y)s/[%(upload_date>%y%m%d)s][%(id)s].%(ext)s";
-      DOWNLOAD_MODE = "sequential";
+      MAX_CONCURRENT_DOWNLOADS = "1";
       YTDL_OPTIONS_FILE = "/app/ytdlp-options.json";
     };
     volumes = [
