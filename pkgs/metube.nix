@@ -71,14 +71,14 @@ let
       yt-dlp'
     ]
   );
-  metubeVersion = "2026.01.08";
+  metubeVersion = "2026.01.11";
   metube =
     let
       metube-src = fetchFromGitHub {
         owner = "alexta69";
         repo = "metube";
         tag = metubeVersion;
-        hash = "sha256-gxsxqJLAR0xdKqHgJhS27Ffg9Y2c98ZwVaWMl9BDFoM=";
+        hash = "sha256-t1S2V9pPprlIMdirBNAYOplwTxUPFz8VXBCCEzGbMSc=";
       };
       metube-ui = stdenvNoCC.mkDerivation (finalAttrs: {
         pname = "metube-ui";
@@ -98,7 +98,7 @@ let
             sourceRoot
             ;
           fetcherVersion = 3;
-          hash = "sha256-sV83ZjYcsoMo2TOvotcUu2MYnOL00Z1lbH62Z+Ttp0s=";
+          hash = "sha256-FiHCdN+IK9fyMj34Hwok8CRfOS4MGwK43zucEpX06Jw=";
         };
         buildPhase = "pnpm run build";
         installPhase = "cp -R dist $out";
