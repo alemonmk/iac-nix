@@ -7,7 +7,7 @@
 
   virtualisation.oci-containers.containers = {
     "pgsql-patroni" = {
-      image = "ghcr.io/alemonmk/nomad-pgsql-patroni:17.4-1.tsdb_gis";
+      image = "ghcr.io/alemonmk/nomad-pgsql-patroni:17.7-1.tsdb_gis";
       networks = [ "host" ];
       environment.POSTGRES_INITDB_ARGS = "--data-checksums";
       volumes = [
