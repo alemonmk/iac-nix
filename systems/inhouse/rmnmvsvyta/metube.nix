@@ -1,4 +1,4 @@
-{ flakeRoot, pkgs, ... }:
+{ flakeRoot, ... }:
 {
   virtualisation.podman = {
     enable = true;
@@ -6,8 +6,7 @@
   };
 
   virtualisation.oci-containers.containers."metube" = {
-    image = "metube-pot-plugin:2026.01.11";
-    imageFile = pkgs.metube;
+    image = "ghcr.io/alexta69/metube:2026.02.03";
     networks = [ "host" ];
     capabilities.all = false;
     user = "2500:2500";
@@ -22,11 +21,6 @@
       "/nix/persist/opt/metube/cookies.txt:/app/cookies.txt"
       "${flakeRoot}/blobs/youtube-archiver/ytdlp-options.json:/app/ytdlp-options.json"
     ];
-  };
-  virtualisation.oci-containers.containers."pot-provider" = {
-    image = "brainicism/bgutil-ytdlp-pot-provider";
-    networks = [ "host" ];
-    capabilities.all = false;
   };
 
   services.caddy.virtualHosts."ytarc.snct.rmntn.net".extraConfig =
