@@ -9,6 +9,10 @@
       };
       mouse.hide_when_typing = true;
       selection.save_to_clipboard = true;
+      terminal.shell = {
+        program = "/run/current-system/sw/bin/nu";
+        args = [ "-l" ];
+      };
       window = {
         decorations = "Full";
         dynamic_title = true;
@@ -19,7 +23,7 @@
       };
       font = {
         size = 12.0;
-        normal.family = "Menlo";
+        normal.family = "Input Mono";
         offset.x = 1;
         offset.y = 2;
       };

@@ -1,0 +1,59 @@
+{
+  config,
+  lib,
+  nixpkgs-next,
+  ...
+}:
+let
+  resolvePath =
+    s: lib.replaceStrings [ "$HOME" "$USER" ] [ config.home.homeDirectory config.home.username ] s;
+  toNushellPathAdds = p: lib.concatMapStringsSep "\n" (s: "path add `" + (resolvePath s) + "`") p;
+  nuscripts = "${nixpkgs-next.nu_scripts}/share/nu_scripts";
+in
+{
+  programs.nushell = {
+    enable = true;
+    package = nixpkgs-next.nushell;
+    environmentVariables = config.home.sessionVariables;
+    shellAliases = {
+      nopen = "open";
+      open = "^open";
+    };
+    settings = {
+      buffer_editor = "nano";
+      show_banner = false;
+      float_precision = 2;
+      bracketed_paste = true;
+      use_ansi_coloring = true;
+      completions.external.enable = true;
+      filesize.unit = "metric";
+      filesize.precision = 2;
+      ls.use_ls_colors = true;
+      table = {
+        mode = "light";
+        index_mode = "auto";
+        show_empty = false;
+      };
+    };
+    extraConfig = ''
+      $env.SHELL = "nu"
+
+      use std/util "path add"                       # Add paths using std path add (prepends by default)
+      path add "/usr/local/bin"                     # Standard UNIX paths (add first = lower priority)
+      path add "/nix/var/nix/profiles/default/bin"  # Nix paths (add last = higher priority)
+      path add "/run/current-system/sw/bin"
+      path add ($env.HOME | path join ".nix-profile" "bin")
+      ${toNushellPathAdds config.home.sessionPath}
+
+      use ${nuscripts}/themes/nu-themes/catppuccin-latte.nu
+      $env.config.color_config = (catppuccin-latte)
+      $env.LS_COLORS = (${lib.getExe nixpkgs-next.vivid} generate catppuccin-latte)
+
+      use std/dirs
+      use std/dirs shells-aliases *
+
+      source ${nuscripts}/modules/filesystem/expand.nu
+      source ${nuscripts}/modules/network/sockets/sockets.nu
+    '';
+  };
+}
