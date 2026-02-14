@@ -1,6 +1,8 @@
 {
   pkgs,
+  nixpkgs-next,
   flakeRoot,
+  lib,
   ...
 }:
 {
@@ -90,26 +92,32 @@
     hostName = "chisa";
   };
 
-  environment.systemPackages = with pkgs; [
-    coreutils
-    alacritty
-    screen
-    iproute2mac
-    curl
-    jq
-    git
-    eza
-    fd
-    python314
-    terraform
-    consul
-    nomad
-    nixfmt-rfc-style
-    sops
-    age
-    ruff
-    nmap
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      coreutils
+      alacritty
+      screen
+      iproute2mac
+      curl
+      jq
+      git
+      eza
+      fd
+      python314
+      terraform
+      consul
+      nomad
+      nixfmt-rfc-style
+      sops
+      age
+      ruff
+      nmap
+      unar
+      uv
+    ])
+    ++ (with nixpkgs-next; [
+      nushell
+    ]);
   homebrew = {
     enable = true;
     onActivation = {
@@ -117,12 +125,8 @@
       cleanup = "zap";
       upgrade = true;
     };
-    brews = [
-      "unar"
-      "uv"
-    ];
     casks =
-      map
+      lib.map
         (x: {
           name = x;
           greedy = true;
@@ -151,6 +155,7 @@
           "voov-meeting"
           "webex"
           "zoom"
+          "font-input"
         ];
     masApps = {
       "Brother P-touch Editor" = 1453365242;
@@ -158,29 +163,19 @@
       "ICMPUtil" = 866965011;
     };
   };
+  environment.shells = [
+    pkgs.bashInteractive
+    pkgs.zsh
+    nixpkgs-next.nushell
+  ];
 
-  programs.zsh = {
-    enable = true;
-    promptInit = "autoload -U promptinit && promptinit && setopt PROMPT_SP && setopt PROMPT_SUBST";
-    enableSyntaxHighlighting = true;
-    variables = {
-      PROMPT = "%n@%m %1~ %# ";
-    };
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = false;
+    extraSpecialArgs = { inherit nixpkgs-next; };
   };
-
-  users.users.alemonmk.home = "/Users/alemonmk";
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = false;
-  home-manager.users.alemonmk = import "${flakeRoot}/home/chisa";
-
-  environment = {
-    shellAliases = {
-      ls = "eza -aalh -s type --git --git-repos";
-      lt = "eza -lhT -s type --git --git-repos --git-ignore";
-      find = "fd -HIu";
-    };
-    variables = {
-      TERM = "xterm-256color";
-    };
-  };
+  imports = [
+    "${flakeRoot}/home/chisa/alemonmk"
+    "${flakeRoot}/home/chisa/root"
+  ];
 }
