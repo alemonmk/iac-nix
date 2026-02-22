@@ -1,8 +1,4 @@
-{
-  config,
-  flakeRoot,
-  ...
-}:
+{ flakeRoot, ... }:
 {
   networking.hosts."10.85.29.2" = [ "vdi.snct.rmntn.net" ];
 
