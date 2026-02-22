@@ -39,7 +39,6 @@
     createHome = true;
   };
   home-manager.users.code-server = {
-    home.stateVersion = "24.11";
     programs.ssh = {
       enable = true;
       matchBlocks =
