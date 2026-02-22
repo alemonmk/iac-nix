@@ -33,11 +33,14 @@ in
         show_empty = false;
       };
     };
+    environmentVariables = {
+      SHELL = "nu";
+      LS_COLORS = lib.hm.nushell.mkNushellInline "vivid generate ${config.programs.vivid.activeTheme}";
+    };
     extraConfig = ''
       const NU_LIB_DIRS = [
         "${nixpkgs-next.nu_scripts}/share/nu_scripts"
       ]
-      $env.SHELL = "nu"
 
       use std/util "path add"                       # Add paths using std path add (prepends by default)
       path add "/usr/local/bin"                     # Standard UNIX paths (add first = lower priority)
@@ -46,14 +49,12 @@ in
 
       use themes/nu-themes/catppuccin-latte.nu
       $env.config.color_config = (catppuccin-latte)
-      $env.LS_COLORS = (${lib.getExe nixpkgs-next.vivid} generate catppuccin-latte)
 
       use std/dirs
       use std/dirs shells-aliases *
     '';
     extraLogin = ''
       load-env ${lib.hm.nushell.toNushell { } config.home.sessionVariables}
-      use std/util "path add"
       path add ($env.HOME | path join ".nix-profile" "bin")
       ${toNushellPathAdds config.home.sessionPath}
     '';

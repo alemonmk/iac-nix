@@ -1,8 +1,7 @@
 inputs:
 let
-  inherit (inputs) self nixpkgs;
-  inherit (self.lib) finalSystem finalLinodeSystem finalDarwinSystem;
-  inherit (nixpkgs.lib)
+  inherit (inputs.self.lib) finalSystem finalLinodeSystem finalDarwinSystem;
+  inherit (inputs.nixpkgs.lib)
     attrNames
     genAttrs
     mapAttrs
@@ -12,13 +11,25 @@ let
     ;
   inherit (builtins) readDir;
 
+  homeManagerGlobalConfig =
+    { nixpkgs-next, ... }:
+    {
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = false;
+        extraSpecialArgs = { inherit nixpkgs-next; };
+      };
+    };
+
   systemByNameFolders =
     sysFunc: base:
     mapAttrs (
       n: _:
       sysFunc [
-        "${base}/${n}/configuration.nix"
+        homeManagerGlobalConfig
         { networking.hostName = n; }
+        "${base}/${n}/configuration.nix"
+        ../home/inhouse
       ]
     ) (filterAttrs (k: v: v == "directory") (readDir base));
 
@@ -29,8 +40,9 @@ let
       (
         n:
         sysFunc [
-          "${base}/${n}.nix"
+          homeManagerGlobalConfig
           { networking.hostName = n; }
+          "${base}/${n}.nix"
         ]
       );
 

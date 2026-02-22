@@ -4,7 +4,6 @@
     enable = true;
     package = nixpkgs-next.starship;
     enableNushellIntegration = true;
-    enableZshIntegration = false;
     settings = {
       format = "$username$hostname $directory$python$character";
       right_format = "$git_status$git_branch$git_state";

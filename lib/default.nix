@@ -54,6 +54,7 @@ in
       modules = [
         self.nixosModules.vpn-route-gen
         sops-nix.nixosModules.sops
+        home-manager-linux.nixosModules.home-manager
         ../base/linode/configuration.nix
       ]
       ++ sysDef;

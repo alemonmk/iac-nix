@@ -4,7 +4,6 @@
     enable = true;
     package = nixpkgs-next.carapace;
     enableNushellIntegration = true;
-    enableZshIntegration = false;
   };
 
   programs.nushell.extraConfig = ''
