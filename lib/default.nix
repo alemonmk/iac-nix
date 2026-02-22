@@ -38,7 +38,7 @@ in
         };
       };
       modules =
-        nixpkgs.lib.attrValues self.nixosModules
+        nixpkgs.lib.attrsets.attrValues self.nixosModules
         ++ [
           impermanence.nixosModules.impermanence
           sops-nix.nixosModules.sops

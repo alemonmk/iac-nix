@@ -13,7 +13,7 @@
         listOf
         attrs
         ;
-      inherit (lib) mkOption;
+      inherit (lib.options) mkOption;
     in
     {
       enable = mkOption {
@@ -44,12 +44,13 @@
       };
     };
 
-  config = lib.mkIf config.users.ms-ad.enable (
+  config =
     let
-      AD_D = lib.toUpper config.users.ms-ad.domain;
-      ad_d = lib.toLower AD_D;
+      inherit (lib.strings) toUpper toLower;
+      AD_D = toUpper config.users.ms-ad.domain;
+      ad_d = toLower AD_D;
     in
-    {
+    lib.modules.mkIf config.users.ms-ad.enable {
       services = {
         sssd = {
           enable = true;
@@ -66,7 +67,7 @@
             cache_credentials = True
             id_provider = ad
             krb5_store_password_if_offline = True
-            default_shell = /run/current-system/sw/bin/bash
+            default_shell = ${pkgs.bashInteractive}/bin/bash
             ldap_id_mapping = True
             use_fully_qualified_names = True
             access_provider = simple
@@ -107,6 +108,5 @@
         directories = [ "/var/lib/sss" ];
         files = [ "/etc/krb5.keytab" ];
       };
-    }
-  );
+    };
 }

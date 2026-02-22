@@ -26,7 +26,7 @@
           };
         in
         {
-          snmp = lib.map (x: commonParams // x) [
+          snmp = lib.lists.map (x: commonParams // x) [
             # ups
             {
               agents = [ "udp://10.88.0.3:161" ];

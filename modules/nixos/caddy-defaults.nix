@@ -4,7 +4,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.services.caddy.enable {
+  config = lib.modules.mkIf config.services.caddy.enable {
     services = {
       caddy = {
         acmeCA = "https://atpki.snct.rmntn.net/acme/w1/directory";

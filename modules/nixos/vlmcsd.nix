@@ -7,7 +7,7 @@
 {
   options.services.vlmcsd =
     let
-      inherit (lib) mkOption mkEnableOption;
+      inherit (lib.options) mkOption mkEnableOption;
       inherit (lib.types)
         nullOr
         bool
@@ -33,13 +33,15 @@
 
   config.systemd.services.vlmcsd =
     let
+      inherit (lib.strings) concatStringSep;
+      inherit (lib.lists) optional;
       cfg = config.services.vlmcsd;
-      cmdline = lib.concatStringSep " " (
+      cmdline = concatStringSep " " (
         [ "${pkgs.vlmcsd}/bin/vlmcsd -Dev -d -t 5 -K3 -c1 -M1 -N1 -B1 -L ${cfg.listenAddr}" ]
-        ++ lib.optional (cfg.kmsDatabaseFile != null) "-j ${cfg.kmsDatabaseFile}"
+        ++ optional (cfg.kmsDatabaseFile != null) "-j ${cfg.kmsDatabaseFile}"
       );
     in
-    lib.mkIf cfg.enable {
+    lib.modules.mkIf cfg.enable {
       description = "Portable open-source KMS Emulator";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];

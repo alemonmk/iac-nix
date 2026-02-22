@@ -5,7 +5,7 @@
   ...
 }:
 {
-  nixpkgs.config.allowInsecurePredicate = pkg: lib.elem (lib.getName pkg) [ "squid" ];
+  nixpkgs.config.allowInsecurePredicate = pkg: lib.lists.elem (lib.meta.getName pkg) [ "squid" ];
 
   networking.proxy = {
     httpProxy = null;
@@ -19,7 +19,7 @@
     squid = {
       enable = true;
       validateConfig = false;
-      configText = lib.readFile "${flakeRoot}/blobs/squid/config";
+      configText = lib.trivial.readFile "${flakeRoot}/blobs/squid/config";
     };
 
     syslog-ng = {

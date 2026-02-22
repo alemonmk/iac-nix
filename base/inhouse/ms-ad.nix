@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   users.ms-ad = {
-    enable = lib.mkDefault true;
+    enable = lib.modules.mkDefault true;
     domain = "snct.rmntn.net";
     sudoers = [
       {
