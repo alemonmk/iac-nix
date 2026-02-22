@@ -19,11 +19,7 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      ...
-    }@inputs:
+    { ... }@inputs:
     let
       lib = import ./lib inputs;
       nixosModules = import ./modules/nixos inputs;
@@ -37,7 +33,7 @@
       inherit lib formatter nixosModules;
       packages.x86_64-linux = {
         netbootImage = import ./lib/stage1installer inputs;
-        vlmcsd = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/vlmcsd.nix { };
+        vlmcsd = lib.linuxPackageFrom ./pkgs/vlmcsd.nix;
       };
       nixosConfigurations = {
         inherit barebone linodeBarebone;
