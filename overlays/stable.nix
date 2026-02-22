@@ -30,11 +30,5 @@ final: prev: {
 
   squid = prev.squid.override { ipv6 = false; };
 
-  code-server = final.callPackage ../pkgs/code-server.nix { };
-
-  vlmcsd = final.callPackage ../pkgs/vlmcsd.nix { };
-
-  vpn-route-gen = final.callPackage ../pkgs/vpn-route-gen/package.nix { };
-
   zerotierone = prev.zerotierone.override { enableUnfree = true; };
 }
