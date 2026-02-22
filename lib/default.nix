@@ -71,4 +71,5 @@ in
       };
       modules = [ home-manager-darwin.darwinModules.home-manager ] ++ sysDef;
     };
+  linuxPackageFrom = f: nixpkgs.legacyPackages."${linuxSystem}".callPackage f { };
 }
