@@ -8,6 +8,7 @@
     ./networking.nix
     ../debloats.nix
     ./impermenance.nix
+    ../shells.nix
   ];
 
   system.stateVersion = "24.11";

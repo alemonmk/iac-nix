@@ -10,6 +10,7 @@
     ../nix.nix
     ../security.nix
     ../debloats.nix
+    ../shells.nix
   ];
 
   system.stateVersion = "25.05";

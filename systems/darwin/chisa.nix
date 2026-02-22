@@ -169,13 +169,7 @@
     nixpkgs-next.nushell
   ];
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = false;
-    extraSpecialArgs = { inherit nixpkgs-next; };
-  };
   imports = [
-    "${flakeRoot}/home/chisa/alemonmk"
-    "${flakeRoot}/home/chisa/root"
+    "${flakeRoot}/home/chisa"
   ];
 }
