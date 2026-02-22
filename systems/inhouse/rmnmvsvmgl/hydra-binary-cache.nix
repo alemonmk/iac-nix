@@ -13,7 +13,7 @@
   };
 
   nix = {
-    settings.gc-keep-outputs = lib.mkForce false;
+    settings.gc-keep-outputs = lib.modules.mkForce false;
     extraOptions = "allowed-uris = https://github.com/ https://code.rmntn.net github:";
   };
 
@@ -76,8 +76,8 @@
     serviceConfig = {
       User = "hydra-queue-runner";
       Group = "hydra";
-      ExecStart = lib.concatStringsSep " " [
-        (lib.getExe pkgs.findutils)
+      ExecStart = lib.strings.concatStringsSep " " [
+        (lib.meta.getExe pkgs.findutils)
         "/var/lib/hydra/build-logs/"
         "-ignore_readdir_race"
         "-type"

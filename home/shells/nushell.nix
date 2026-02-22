@@ -5,9 +5,10 @@
   ...
 }:
 let
+  inherit (lib.strings) replaceStrings concatMapStringsSep;
   resolvePath =
-    s: lib.replaceStrings [ "$HOME" "$USER" ] [ config.home.homeDirectory config.home.username ] s;
-  toNushellPathAdds = p: lib.concatMapStringsSep "\n" (s: "path add `" + (resolvePath s) + "`") p;
+    s: replaceStrings [ "$HOME" "$USER" ] [ config.home.homeDirectory config.home.username ] s;
+  toNushellPathAdds = p: concatMapStringsSep "\n" (s: "path add `" + (resolvePath s) + "`") p;
 in
 {
   programs.nushell = {

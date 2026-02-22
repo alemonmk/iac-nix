@@ -1,14 +1,14 @@
 inputs:
 let
   inherit (inputs.self.lib) finalSystem finalLinodeSystem finalDarwinSystem;
-  inherit (inputs.nixpkgs.lib)
+  inherit (inputs.nixpkgs.lib.attrsets)
     attrNames
     genAttrs
     mapAttrs
     filterAttrs
-    map
-    removeSuffix
     ;
+  inherit (inputs.nixpkgs.lib.lists) map;
+  inherit (inputs.nixpkgs.lib.strings) removeSuffix;
   inherit (builtins) readDir;
 
   homeManagerGlobalConfig =

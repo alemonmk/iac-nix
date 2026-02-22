@@ -7,7 +7,7 @@
 {
   options.unattendedInstaller =
     let
-      inherit (lib) mkEnableOption mkOption;
+      inherit (lib.options) mkEnableOption mkOption;
       inherit (lib.types) attrs str;
     in
     {
@@ -43,7 +43,7 @@
         default = "";
       };
     };
-  config = lib.mkIf config.unattendedInstaller.enable {
+  config = lib.modules.mkIf config.unattendedInstaller.enable {
     systemd.services = {
       unattended-installer-progress = {
         wantedBy = [ "multi-user.target" ];

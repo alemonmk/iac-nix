@@ -4,6 +4,7 @@
   ...
 }:
 let
+  inherit (lib.lists) map range;
   netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };
   loAddress = netConfig.lo;
   wanAddress = netConfig.wan;
@@ -32,7 +33,7 @@ in
         bind_addr = loAddress;
         server = true;
         bootstrap_expect = 3;
-        retry_join = lib.map (x: "10.85.183.${builtins.toString x}:8301") (lib.lists.range 1 5);
+        retry_join = map (x: "10.85.183.${toString x}:8301") (range 1 5);
         node_meta = {
           wan_address_v4 = wanAddress.v4;
           wan_address_v6 = wanAddress.v6;
@@ -129,11 +130,11 @@ in
         forward-zone = [
           {
             name = "consul";
-            forward-addr = lib.map (x: "10.85.183.${builtins.toString x}@8600") (lib.lists.range 1 5);
+            forward-addr = map (x: "10.85.183.${toString x}@8600") (range 1 5);
           }
         ];
         stub-zone =
-          lib.map
+          map
             (d: {
               name = d;
               stub-addr = [

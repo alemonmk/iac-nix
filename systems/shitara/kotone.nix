@@ -28,8 +28,8 @@
     "10.85.183.0/24"
     "10.91.145.32/28"
   ];
-  services.consul.enable = lib.mkForce false;
-  services.nomad.enable = lib.mkForce false;
+  services.consul.enable = lib.modules.mkForce false;
+  services.nomad.enable = lib.modules.mkForce false;
 
   virtualisation.oci-containers.backend = "docker";
 
@@ -50,7 +50,7 @@
     user = "9999:9999";
     networks = [ "host" ];
     capabilities.all = false;
-    volumes = lib.map (d: "/opt/hath/${d}:/hath/${d}") [
+    volumes = lib.lists.map (d: "/opt/hath/${d}:/hath/${d}") [
       "cache"
       "data"
       "download"

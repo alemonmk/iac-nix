@@ -5,13 +5,15 @@
   ...
 }:
 let
+  inherit (lib.strings) optionalString concatLines;
+  inherit (lib.lists) optional optionals;
   inherit (config.networking) hostName;
   netConfig = import ./netconfigs.nix { inherit hostName; };
   wanAddress = netConfig.wan.v4;
   localTunAddrV4 = netConfig.pdc-tunnel.local.v4;
-  localTunAddrV6 = lib.optionalString (netConfig.pdc-tunnel.local ? v6) netConfig.pdc-tunnel.local.v6;
+  localTunAddrV6 = optionalString (netConfig.pdc-tunnel.local ? v6) netConfig.pdc-tunnel.local.v6;
   peerTunAddrV4 = netConfig.pdc-tunnel.peer.v4;
-  peerTunAddrV6 = lib.optionalString (netConfig.pdc-tunnel.peer ? v6) netConfig.pdc-tunnel.peer.v6;
+  peerTunAddrV6 = optionalString (netConfig.pdc-tunnel.peer ? v6) netConfig.pdc-tunnel.peer.v6;
 in
 {
   systemd.network = {
@@ -20,7 +22,7 @@ in
     networks."10-xfrm0" = {
       matchConfig.Name = "xfrm0";
       linkConfig.MTUBytes = 1400;
-      address = [ "${localTunAddrV4}/31" ] ++ lib.optional (localTunAddrV6 != "") "${localTunAddrV6}/64";
+      address = [ "${localTunAddrV4}/31" ] ++ optional (localTunAddrV6 != "") "${localTunAddrV6}/64";
     };
     netdevs."10-xfrm0" = {
       netdevConfig = {
@@ -60,8 +62,8 @@ in
       if_id_out = builtins.toString netConfig.pdc-tunnel.xfrmId;
       children.default = {
         esp_proposals = [ "aes256gcm16-ecp384" ];
-        local_ts = [ "0.0.0.0/0" ] ++ lib.optional (localTunAddrV6 != "") "::/0";
-        remote_ts = [ "0.0.0.0/0" ] ++ lib.optional (localTunAddrV6 != "") "::/0";
+        local_ts = [ "0.0.0.0/0" ] ++ optional (localTunAddrV6 != "") "::/0";
+        remote_ts = [ "0.0.0.0/0" ] ++ optional (localTunAddrV6 != "") "::/0";
       };
     };
     includes = [ config.sops.secrets.ipsec-psk.path ];
@@ -82,10 +84,10 @@ in
         };
       };
     in
-    lib.mkAfter (
-      lib.concatLines (
+    lib.modules.mkAfter (
+      concatLines (
         [ ''include "${bgpV4Cfg.outPath}";'' ]
-        ++ lib.optional (localTunAddrV6 != "") ''include "${bgpV6Cfg.outPath}";''
+        ++ optional (localTunAddrV6 != "") ''include "${bgpV6Cfg.outPath}";''
       )
     );
 
@@ -99,7 +101,7 @@ in
         iifname "xfrm0" ip saddr ${peerTunAddrV4} ip daddr ${localTunAddrV4} udp dport 3784 counter accept
       }
     ''
-    + lib.optionalString (localTunAddrV6 != "") ''
+    + optionalString (localTunAddrV6 != "") ''
       chain mopdc-input {
         iifname "xfrm0" ip6 saddr ${peerTunAddrV6} ip6 daddr ${localTunAddrV6} tcp dport bgp counter accept
         iifname "xfrm0" ip6 saddr ${peerTunAddrV6} ip6 daddr ${localTunAddrV6} udp dport 3784 counter accept

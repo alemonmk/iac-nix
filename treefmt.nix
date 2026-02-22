@@ -4,7 +4,7 @@
   ...
 }:
 let
-  forEachSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "x86_64-darwin" ] f;
+  forEachSystems = f: nixpkgs.lib.attrsets.genAttrs [ "x86_64-linux" "x86_64-darwin" ] f;
 
   settings = {
     projectRootFile = "flake.nix";

@@ -36,7 +36,7 @@
       };
     };
 
-    caddy.virtualHosts."monitoring.noc.snct.rmntn.net".extraConfig = lib.mkAfter ''
+    caddy.virtualHosts."monitoring.noc.snct.rmntn.net".extraConfig = lib.modules.mkAfter ''
       handle {
           reverse_proxy 127.0.0.1:3000
       }

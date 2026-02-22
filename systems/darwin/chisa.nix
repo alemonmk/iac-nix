@@ -126,7 +126,7 @@
       upgrade = true;
     };
     casks =
-      lib.map
+      lib.lists.map
         (x: {
           name = x;
           greedy = true;

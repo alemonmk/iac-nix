@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 {
-  programs.zsh = lib.mkIf pkgs.stdenv.isDarwin {
+  programs.zsh = lib.modules.mkIf pkgs.stdenv.isDarwin {
     enable = true;
     initContent = ''
       autoload - U promptinit && promptinit && setopt PROMPT_SP && setopt PROMPT_SUBST

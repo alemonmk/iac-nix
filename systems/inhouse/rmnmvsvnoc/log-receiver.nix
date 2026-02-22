@@ -21,7 +21,7 @@
         @version: 4.8
         @include "scl.conf"
       '';
-      extraConfig = lib.readFile "${flakeRoot}/blobs/monitoring/log-forwarder.cfg";
+      extraConfig = lib.trivial.readFile "${flakeRoot}/blobs/monitoring/log-forwarder.cfg";
     };
   };
 

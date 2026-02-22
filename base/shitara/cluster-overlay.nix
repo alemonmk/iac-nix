@@ -5,6 +5,9 @@
   ...
 }:
 let
+  inherit (lib.strings) optionalString concatLines;
+  inherit (lib.lists) optionals;
+  inherit (lib.attrsets) optionalAttrs;
   inherit (config.networking) hostName;
   netConfig = import ./netconfigs.nix { inherit hostName; };
   loAddress = netConfig.lo;
@@ -51,20 +54,20 @@ in
           };
           ospfInClusterCfgFile = ../../blobs/shitara-overlay/ospf-cluster-internal.conf;
           ospfBorderCfgFile = ../../blobs/shitara-overlay/ospf-cluster-border.conf;
-          borderIbgpCfgFile = lib.optionalString (
+          borderIbgpCfgFile = optionalString (
             role == "border"
           ) ../../blobs/shitara-overlay/bgp-border-${hostName}.conf;
         in
-        lib.concatLines (
+        concatLines (
           [
             ''include "${commonFile.outPath}";''
             ''include "${bgpCfgFile.outPath}";''
           ]
-          ++ lib.optionals (role == "border") [
+          ++ optionals (role == "border") [
             ''include "${ospfBorderCfgFile}";''
             ''include "${borderIbgpCfgFile}";''
           ]
-          ++ lib.optionals (role == "internal") [
+          ++ optionals (role == "internal") [
             ''include "${ospfInClusterCfgFile}";''
           ]
         );
@@ -82,7 +85,7 @@ in
   };
 
   systemd.services.bird.after = [ "vpn-route-gen.service" ];
-  systemd.tmpfiles.settings = lib.optionalAttrs (role == "border") {
+  systemd.tmpfiles.settings = optionalAttrs (role == "border") {
     "10-vpn-route-gen"."/etc/bird/reroute-via-vpn.conf".f = {
       mode = "0644";
       user = "root";
@@ -98,7 +101,7 @@ in
       ip saddr 10.85.10.5 tcp dport ${toString config.services.prometheus.exporters.bird.port} counter accept
     }
   ''
-  + lib.optionalString (role == "border") ''
+  + optionalString (role == "border") ''
     chain overlay-input {
       iifname "ztinv*" tcp dport bgp counter accept
     }

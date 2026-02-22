@@ -15,7 +15,7 @@ python313Packages.buildPythonApplication {
 
   postPatch = ''
     substituteInPlace routegen.py \
-      --replace-fail "/usr/bin/bgpq4" "${lib.getExe bgpq4}" \
+      --replace-fail "/usr/bin/bgpq4" "${lib.meta.getExe bgpq4}" \
       --replace-fail "/usr/sbin/birdc" "${bird3}/bin/birdc"
   '';
 
