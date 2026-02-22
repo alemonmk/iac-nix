@@ -33,7 +33,9 @@
       inherit lib formatter nixosModules;
       packages.x86_64-linux = {
         netbootImage = import ./lib/stage1installer inputs;
+        code-server = lib.linuxPackageFrom ./pkgs/code-server.nix;
         vlmcsd = lib.linuxPackageFrom ./pkgs/vlmcsd.nix;
+        vpn-route-gen = lib.linuxPackageFrom ./pkgs/vpn-route-gen/package.nix;
       };
       nixosConfigurations = {
         inherit barebone linodeBarebone;

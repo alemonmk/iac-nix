@@ -1,4 +1,5 @@
 {
+  self,
   config,
   lib,
   pkgs,
@@ -13,7 +14,7 @@
       serviceConfig = {
         Type = "oneshot";
         User = "root";
-        ExecStart = lib.meta.getExe pkgs.vpn-route-gen;
+        ExecStart = lib.meta.getExe self.packages.x86_64-linux.vpn-route-gen;
       };
     };
     timers.vpn-route-gen = {
