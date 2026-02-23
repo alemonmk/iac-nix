@@ -44,14 +44,10 @@ in
         "${nixpkgs-next.nu_scripts}/share/nu_scripts"
       ]
 
-      use std/util "path add"                       # Add paths using std path add (prepends by default)
-      path add "/usr/local/bin"                     # Standard UNIX paths (add first = lower priority)
-      path add "/nix/var/nix/profiles/default/bin"  # Nix paths (add last = higher priority)
-      path add "/run/current-system/sw/bin"
-
       use themes/nu-themes/catppuccin-latte.nu
       $env.config.color_config = (catppuccin-latte)
 
+      use std/util "path add"
       use std/dirs
       use std/dirs shells-aliases *
 
