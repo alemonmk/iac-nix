@@ -1,11 +1,12 @@
 {
   config,
   lib,
+  pkgs,
   nixpkgs-next,
   ...
 }:
 let
-  inherit (lib.strings) replaceStrings concatMapStringsSep;
+  inherit (lib.strings) replaceStrings concatMapStringsSep optionalString;
   resolvePath =
     s: replaceStrings [ "$HOME" "$USER" ] [ config.home.homeDirectory config.home.username ] s;
   toNushellPathAdds = p: concatMapStringsSep "\n" (s: "path add `" + (resolvePath s) + "`") p;
@@ -53,6 +54,39 @@ in
 
       use std/dirs
       use std/dirs shells-aliases *
+
+      def upgrade-diff [] {
+        ls -lDf /nix/var/nix/profiles/system-*-link
+        | sort-by created 
+        | last 2
+        | get name
+        | ${lib.meta.getExe pkgs.nvd} diff ...$in
+      }
+    ''
+    + optionalString pkgs.stdenv.isLinux ''
+      def upgrade-system [
+        --reboot (-r)
+        --local-flake (-l)
+      ] {
+        let $url = hostname | if $local_flake { $".#($in)" } else { $"git+https://code.rmntn.net/iac/nix#($in)" }
+        let $action = match $reboot {
+          true => 'boot',
+          false => 'switch'
+        }
+        sudo nixos-rebuild $action --flake $url
+        upgrade-diff
+        if $reboot {
+          input -n 1 'Press any key when ready to reboot'
+          sudo reboot
+        }
+      }
+    ''
+    + optionalString pkgs.stdenv.isDarwin ''
+      def upgrade-system [--local-flake (-l)] {
+        let $url = hostname | if $local_flake { $".#($in)" } else { $"git+https://code.rmntn.net/iac/nix#($in)" }
+        sudo darwin-rebuild switch --flake $url
+        upgrade-diff
+      }
     '';
     extraLogin = ''
       load-env ${lib.hm.nushell.toNushell { } config.home.sessionVariables}

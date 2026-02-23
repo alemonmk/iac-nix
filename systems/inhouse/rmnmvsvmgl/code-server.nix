@@ -65,6 +65,32 @@
           };
         };
     };
+    programs.nushell.extraLogin = ''
+      $env.NIX_SSHOPTS = $"-F ($env.HOME | path join ".ssh" "config")"
+
+      def upgrade-system-remote [
+        host
+        --reboot (-r)
+      ] {
+        enter ($env.HOME | path join "workspaces" "nix")
+        let $shortname = $host | split words | first
+        let $action = match $reboot {
+          true => 'boot',
+          false => 'switch'
+        }
+        nixos-rebuild $action --target-host $host --flake $".#($shortname)"
+        ssh $host "nu -l -c upgrade-diff"
+        if $reboot { ssh $host "systemctl reboot" }
+      }
+      def install-system-remote [
+        become
+        host = "10.85.20.61"
+      ] {
+        enter ($env.HOME | path join "workspaces" "nix")
+        nixos-rebuild boot --target-host $host --flake $".#($become)"
+        ssh $host "systemctl reboot"
+      }
+    '';
     programs.bash = {
       enable = true;
       bashrcExtra = ''
