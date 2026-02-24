@@ -19,10 +19,10 @@
   };
 
   outputs =
-    { ... }@inputs:
+    inputs:
     let
       lib = import ./lib inputs;
-      nixosModules = import ./modules/nixos inputs;
+      nixosModules = lib.forNixFilesAsModules ./modules/nixos;
       sysDefs = import ./systems inputs;
       ciDefs = import ./ci inputs;
       formatter = import ./treefmt.nix inputs;
@@ -31,16 +31,18 @@
     in
     {
       inherit lib formatter nixosModules;
-      packages.x86_64-linux = {
-        netbootImage = import ./lib/stage1installer inputs;
-        code-server = lib.linuxPackageFrom ./pkgs/code-server.nix;
-        vlmcsd = lib.linuxPackageFrom ./pkgs/vlmcsd.nix;
-        vpn-route-gen = lib.linuxPackageFrom ./pkgs/vpn-route-gen/package.nix;
-      };
-      nixosConfigurations = {
+      packages.x86_64-linux =
+        lib.mkLinuxPackageSet {
+          code-server = ./pkgs/code-server.nix;
+          vlmcsd = ./pkgs/vlmcsd.nix;
+          vpn-route-gen = ./pkgs/vpn-route-gen/package.nix;
+        }
+        // {
+          netbootImage = import ./lib/stage1installer inputs;
+        };
+      nixosConfigurations = sysDefs.nixos // {
         inherit barebone linodeBarebone;
-      }
-      // sysDefs.nixos;
+      };
       darwinConfigurations = sysDefs.darwin;
       hydraJobs = ciDefs;
     };

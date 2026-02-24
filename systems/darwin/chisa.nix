@@ -9,7 +9,11 @@
   system.stateVersion = 5;
 
   nixpkgs.hostPlatform = "x86_64-darwin";
-  nix.settings.experimental-features = "nix-command flakes";
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+    "pipe-operators"
+  ];
   nix.optimise.automatic = true;
   nix.gc.automatic = true;
   nixpkgs.config.allowUnfree = true;
