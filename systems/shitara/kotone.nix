@@ -6,10 +6,7 @@
   ...
 }:
 {
-  imports = [
-    "${flakeRoot}/base/shitara/node.nix"
-    "${flakeRoot}/home/inhouse"
-  ];
+  imports = [ "${flakeRoot}/base/shitara/node.nix" ];
 
   sops.secrets = {
     onedev-dbpw.sopsFile = "${flakeRoot}/secrets/shitara/onedev-dbpw.yaml";
