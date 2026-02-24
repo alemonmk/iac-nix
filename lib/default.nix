@@ -35,14 +35,19 @@ let
     sops-nix.nixosModules.sops
     home-manager-linux.nixosModules.home-manager
     ../base/inhouse/configuration.nix
+    ../home/nixos
   ];
   modulesLinodes = [
     self.nixosModules.vpn-route-gen
     sops-nix.nixosModules.sops
     home-manager-linux.nixosModules.home-manager
     ../base/linode/configuration.nix
+    ../home/nixos
   ];
-  modulesDarwin = [ home-manager-darwin.darwinModules.home-manager ];
+  modulesDarwin = [
+    home-manager-darwin.darwinModules.home-manager
+    ../home/darwin
+  ];
 in
 {
   stage1System = nixpkgs.lib.nixosSystem {

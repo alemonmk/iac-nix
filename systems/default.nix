@@ -11,25 +11,13 @@ let
   inherit (inputs.nixpkgs.lib.strings) removeSuffix;
   inherit (builtins) readDir;
 
-  homeManagerGlobalConfig =
-    { nixpkgs-next, ... }:
-    {
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = false;
-        extraSpecialArgs = { inherit nixpkgs-next; };
-      };
-    };
-
   systemByNameFolders =
     sysFunc: base:
     mapAttrs (
       n: _:
       sysFunc [
-        homeManagerGlobalConfig
         { networking.hostName = n; }
         "${base}/${n}/configuration.nix"
-        ../home/inhouse
       ]
     ) (filterAttrs (k: v: v == "directory") (readDir base));
 
@@ -40,7 +28,6 @@ let
       (
         n:
         sysFunc [
-          homeManagerGlobalConfig
           { networking.hostName = n; }
           "${base}/${n}.nix"
         ]

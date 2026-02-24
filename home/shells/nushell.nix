@@ -7,6 +7,8 @@
 }:
 let
   inherit (lib.strings) replaceStrings concatMapStringsSep optionalString;
+  inherit (lib.attrsets) optionalAttrs;
+  inherit (lib.hm.nushell) mkNushellInline;
   resolvePath =
     s: replaceStrings [ "$HOME" "$USER" ] [ config.home.homeDirectory config.home.username ] s;
   toNushellPathAdds = p: concatMapStringsSep "\n" (s: "path add `" + (resolvePath s) + "`") p;
@@ -15,10 +17,6 @@ in
   programs.nushell = {
     enable = true;
     package = nixpkgs-next.nushell;
-    shellAliases = {
-      nopen = "open";
-      open = "^open";
-    };
     settings = {
       buffer_editor = "nano";
       show_banner = false;
@@ -37,7 +35,7 @@ in
     };
     environmentVariables = {
       SHELL = "nu";
-      LS_COLORS = lib.hm.nushell.mkNushellInline "${config.programs.vivid.package}/bin/vivid generate ${config.programs.vivid.activeTheme}";
+      LS_COLORS = mkNushellInline "${config.programs.vivid.package}/bin/vivid generate ${config.programs.vivid.activeTheme}";
     };
     extraConfig = ''
       const NU_LIB_DIRS = [
@@ -57,31 +55,6 @@ in
         | last 2
         | get name
         | ${lib.meta.getExe pkgs.nvd} diff ...$in
-      }
-    ''
-    + optionalString pkgs.stdenv.isLinux ''
-      def upgrade-system [
-        --reboot (-r)
-        --local-flake (-l)
-      ] {
-        let $url = hostname | if $local_flake { $".#($in)" } else { $"git+https://code.rmntn.net/iac/nix#($in)" }
-        let $action = match $reboot {
-          true => 'boot',
-          false => 'switch'
-        }
-        sudo nixos-rebuild $action --flake $url
-        upgrade-diff
-        if $reboot {
-          input -n 1 'Press any key when ready to reboot'
-          sudo reboot
-        }
-      }
-    ''
-    + optionalString pkgs.stdenv.isDarwin ''
-      def upgrade-system [--local-flake (-l)] {
-        let $url = hostname | if $local_flake { $".#($in)" } else { $"git+https://code.rmntn.net/iac/nix#($in)" }
-        sudo darwin-rebuild switch --flake $url
-        upgrade-diff
       }
     '';
     extraLogin = ''
