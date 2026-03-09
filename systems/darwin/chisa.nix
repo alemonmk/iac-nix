@@ -157,11 +157,6 @@
           "zoom"
           "font-input"
         ];
-    masApps = {
-      "Brother P-touch Editor" = 1453365242;
-      "Bitwarden" = 1352778147;
-      "ICMPUtil" = 866965011;
-    };
   };
   environment.shells = [
     pkgs.bashInteractive
