@@ -5,6 +5,7 @@
     experimental-features = [
       "nix-command"
       "flakes"
+      "pipe-operators"
     ];
     min-free = 512 * 1024 * 1024;
     log-lines = 25;

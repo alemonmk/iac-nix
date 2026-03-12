@@ -82,7 +82,7 @@
             echo Building and installing NixOS
             ${''
               # Flake install
-              ${pkgs.nix}/bin/nix build --extra-experimental-features 'nix-command flakes' -v --show-trace --no-link --log-format internal-json ${flake-uri-for-nix-build}
+              ${pkgs.nix}/bin/nix build --extra-experimental-features 'nix-command flakes pipe-operators' -v --show-trace --no-link --log-format internal-json ${flake-uri-for-nix-build}
               ${pkgs.nixos-install}/bin/nixos-install --no-channel-copy --no-root-password --flake ${config.unattendedInstaller.flake}
             ''}
             ${config.unattendedInstaller.postInstall}
