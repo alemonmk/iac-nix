@@ -1,8 +1,8 @@
 {
-  pkgs,
-  nixpkgs-next,
   flakeRoot,
   lib,
+  pkgs,
+  nixpkgs-next,
   ...
 }:
 {
@@ -68,7 +68,7 @@
   time.timeZone = "Asia/Taipei";
 
   security.pki = {
-    certificateFiles = [ "${flakeRoot}/blobs/pki/root_ca.crt" ];
+    certificateFiles = [ (flakeRoot + /blobs/pki/root_ca.crt) ];
     caCertificateBlacklist = [
       "BJCA Global Root CA1"
       "BJCA Global Root CA2"
@@ -168,6 +168,6 @@
   ];
 
   imports = [
-    "${flakeRoot}/home/chisa"
+    (flakeRoot + /home/chisa)
   ];
 }

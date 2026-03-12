@@ -1,25 +1,29 @@
 {
+  flakeRoot,
   config,
   lib,
-  flakeRoot,
   ...
 }:
 {
   networking.hosts."127.0.0.1" = [ "atpki.snct.rmntn.net" ];
 
-  environment.etc."smallstep/x509template.tpl".text =
-    lib.trivial.readFile "${flakeRoot}/blobs/pki/step-ca/x509template.tpl";
-  environment.etc."smallstep/root_ca.crt".text =
-    lib.trivial.readFile "${flakeRoot}/blobs/pki/root_ca.crt";
-  environment.etc."smallstep/intermediate_ca.crt".text =
-    lib.trivial.readFile "${flakeRoot}/blobs/pki/step-ca/intermediate_ca.crt";
-  environment.etc."smallstep/intermediate_ca_key".text =
-    lib.trivial.readFile "${flakeRoot}/blobs/pki/step-ca/intermediate_ca_key";
+  environment.etc."smallstep/x509template.tpl".text = lib.trivial.readFile (
+    flakeRoot + /blobs/pki/step-ca/x509template.tpl
+  );
+  environment.etc."smallstep/root_ca.crt".text = lib.trivial.readFile (
+    flakeRoot + /blobs/pki/root_ca.crt
+  );
+  environment.etc."smallstep/intermediate_ca.crt".text = lib.trivial.readFile (
+    flakeRoot + /blobs/pki/step-ca/intermediate_ca.crt
+  );
+  environment.etc."smallstep/intermediate_ca_key".text = lib.trivial.readFile (
+    flakeRoot + /blobs/pki/step-ca/intermediate_ca_key
+  );
 
   services = {
     step-ca = {
       enable = true;
-      settings = lib.trivial.importJSON "${flakeRoot}/blobs/pki/step-ca/ca.json";
+      settings = lib.trivial.importJSON (flakeRoot + /blobs/pki/step-ca/ca.json);
       intermediatePasswordFile = config.sops.secrets.w1-pkey-password.path;
       address = "127.0.0.1";
       port = 8443;

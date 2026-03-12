@@ -1,4 +1,8 @@
-{ config, ... }:
+{
+  flakeRoot,
+  config,
+  ...
+}:
 {
   imports = [
     ./firewall.nix
@@ -8,7 +12,7 @@
   ];
 
   sops = {
-    secrets.ipsec-psk.sopsFile = ../../secrets/shitara/ipsec.yaml;
+    secrets.ipsec-psk.sopsFile = flakeRoot + /secrets/shitara/ipsec.yaml;
   };
 
   time.timeZone = "Asia/Tokyo";

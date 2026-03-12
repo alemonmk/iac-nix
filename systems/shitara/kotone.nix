@@ -1,18 +1,18 @@
 {
+  flakeRoot,
   config,
   lib,
   pkgs,
-  flakeRoot,
   ...
 }:
 {
-  imports = [ "${flakeRoot}/base/shitara/node.nix" ];
+  imports = [ (flakeRoot + /base/shitara/node.nix) ];
 
   sops.secrets = {
-    onedev-dbpw.sopsFile = "${flakeRoot}/secrets/shitara/onedev-dbpw.yaml";
+    onedev-dbpw.sopsFile = flakeRoot + /secrets/shitara/onedev-dbpw.yaml;
     dkimkey = {
       owner = config.users.users.dkimsign.name;
-      sopsFile = "${flakeRoot}/secrets/shitara/kotone/dkimkey.yaml";
+      sopsFile = flakeRoot + /secrets/shitara/kotone/dkimkey.yaml;
     };
   };
 
@@ -86,7 +86,7 @@
     extraServerArgs = [ "-P mda" ];
     serverConfiguration =
       let
-        netConfig = import "${flakeRoot}/base/shitara/netconfigs.nix" {
+        netConfig = import (flakeRoot + /base/shitara/netconfigs.nix) {
           inherit (config.networking) hostName;
         };
         dkimsignuser = config.users.users.dkimsign.name;

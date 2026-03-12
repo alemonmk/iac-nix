@@ -1,6 +1,6 @@
 {
-  config,
   flakeRoot,
+  config,
   ...
 }:
 {
@@ -8,7 +8,7 @@
     oxidized = {
       enable = true;
       configFile = config.sops.templates.oxidized-cfg.path;
-      routerDB = "${flakeRoot}/blobs/monitoring/oxidized/routers.db";
+      routerDB = flakeRoot + /blobs/monitoring/oxidized/routers.db;
     };
 
     caddy.virtualHosts."monitoring.noc.snct.rmntn.net".extraConfig = ''

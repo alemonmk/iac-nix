@@ -1,7 +1,7 @@
 {
+  flakeRoot,
   config,
   lib,
-  flakeRoot,
   ...
 }:
 {
@@ -21,7 +21,7 @@
             auth_password = "\${SNMP_AUTH}";
             priv_password = "\${SNMP_PRIV}";
             agent_host_tag = "source";
-            path = [ "${flakeRoot}/blobs/monitoring/snmp/mibs" ];
+            path = [ (flakeRoot + /blobs/monitoring/snmp/mibs) ];
             tagexclude = [ "host" ];
           };
         in

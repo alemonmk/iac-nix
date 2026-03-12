@@ -1,4 +1,5 @@
 {
+  flakeRoot,
   config,
   lib,
   pkgs,
@@ -42,21 +43,21 @@ in
       config =
         let
           commonFile = pkgs.replaceVarsWith {
-            src = ../../blobs/shitara-overlay/common.conf;
+            src = flakeRoot + /blobs/shitara-overlay/common.conf;
             replacements = {
               inherit loAddress;
               inherit (config.networking) fqdn;
             };
           };
           bgpCfgFile = pkgs.replaceVarsWith {
-            src = ../../blobs/shitara-overlay/bgp-cluster-${role}.conf;
+            src = flakeRoot + /blobs/shitara-overlay/bgp-cluster-${role}.conf;
             replacements = { inherit loAddress; };
           };
-          ospfInClusterCfgFile = ../../blobs/shitara-overlay/ospf-cluster-internal.conf;
-          ospfBorderCfgFile = ../../blobs/shitara-overlay/ospf-cluster-border.conf;
-          borderIbgpCfgFile = optionalString (
-            role == "border"
-          ) ../../blobs/shitara-overlay/bgp-border-${hostName}.conf;
+          ospfInClusterCfgFile = flakeRoot + /blobs/shitara-overlay/ospf-cluster-internal.conf;
+          ospfBorderCfgFile = flakeRoot + /blobs/shitara-overlay/ospf-cluster-border.conf;
+          borderIbgpCfgFile = optionalString (role == "border") (
+            flakeRoot + /blobs/shitara-overlay/bgp-border-${hostName}.conf
+          );
         in
         concatLines (
           [

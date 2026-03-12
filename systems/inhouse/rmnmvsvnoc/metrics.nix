@@ -3,8 +3,8 @@
   networking.hosts."10.85.29.2" = [ "vdi.snct.rmntn.net" ];
 
   security.pki.certificateFiles = [
-    "${flakeRoot}/blobs/pki/g1.crt"
-    "${flakeRoot}/blobs/pki/vmvcs.crt"
+    (flakeRoot + /blobs/pki/g1.crt)
+    (flakeRoot + /blobs/pki/vmvcs.crt)
   ];
 
   services = {
@@ -22,8 +22,7 @@
     prometheus.exporters.blackbox = {
       enable = true;
       listenAddress = "127.0.0.1";
-      # has to use string concat due to weird path concat in module
-      configFile = flakeRoot + "/blobs/monitoring/victoriametrics/blackbox.yml";
+      configFile = flakeRoot + /blobs/monitoring/victoriametrics/blackbox.yml;
     };
   };
 

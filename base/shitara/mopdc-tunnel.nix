@@ -72,13 +72,13 @@ in
   services.bird.config =
     let
       bgpV4Cfg = pkgs.replaceVarsWith {
-        src = ../../blobs/shitara-overlay/bgp-peer-mopdc-v4.conf;
+        src = flakeRoot + /blobs/shitara-overlay/bgp-peer-mopdc-v4.conf;
         replacements = {
           inherit localTunAddrV4 peerTunAddrV4;
         };
       };
       bgpV6Cfg = pkgs.replaceVarsWith {
-        src = ../../blobs/shitara-overlay/bgp-peer-mopdc-v6.conf;
+        src = flakeRoot + /blobs/shitara-overlay/bgp-peer-mopdc-v6.conf;
         replacements = {
           inherit localTunAddrV6 peerTunAddrV6;
         };

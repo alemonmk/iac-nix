@@ -1,7 +1,7 @@
 {
+  flakeRoot,
   config,
   lib,
-  flakeRoot,
   ...
 }:
 {
@@ -12,14 +12,14 @@
     httpsProxy = null;
   };
 
-  environment.etc."squid/acl".source = "${flakeRoot}/blobs/squid/acl";
+  environment.etc."squid/acl".source = flakeRoot + /blobs/squid/acl;
   systemd.services.squid.restartTriggers = [ config.environment.etc."squid/acl".source ];
 
   services = {
     squid = {
       enable = true;
       validateConfig = false;
-      configText = lib.trivial.readFile "${flakeRoot}/blobs/squid/config";
+      configText = lib.trivial.readFile (flakeRoot + /blobs/squid/config);
     };
 
     syslog-ng = {
