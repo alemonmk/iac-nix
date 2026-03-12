@@ -25,5 +25,8 @@
 
   users.ms-ad.enable = false;
 
-  imports = [ ./remote-access-vpn.nix ];
+  imports = [
+    ./firewall.nix
+    ./remote-access-vpn.nix
+  ];
 }

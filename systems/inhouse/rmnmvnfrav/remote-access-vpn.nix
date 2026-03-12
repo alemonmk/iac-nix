@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   services = {
     zerotierone = {
@@ -59,6 +60,14 @@
       '';
     };
   };
+
+  networking.nftables.tables.global.content = ''
+    chain service-input {
+      iifname "ens192" udp dport ${toString config.services.zerotierone.port} counter accept
+      iifname "ens192" ip saddr 10.85.29.1 tcp dport bgp counter accept
+      iifname "ens192" ip6 saddr 2400:8902:e002:59e9::1 tcp dport bgp counter accept
+    }
+  '';
 
   environment.persistence."/nix/persist".directories = [ "/var/lib/zerotier-one" ];
 }
