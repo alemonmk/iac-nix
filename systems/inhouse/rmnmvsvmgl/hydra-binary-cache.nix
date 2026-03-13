@@ -27,14 +27,23 @@
       port = 4445;
       useSubstitutes = true;
       notificationSender = "nix-ci@snct.rmntn.net";
-      extraConfig = ''
-        store_uri = file:///nix/bcache?write-nar-listing=true&secret-key=${config.sops.secrets.ci-signing-key.path}&compression=zstd&parallel-compression=true
-        binary_cache_public_uri = https://nix-cache.snct.rmntn.net
-        log_prefix = https://nix-cache.snct.rmntn.net/
-        upload_logs_to_binary_cache = true
-        compress_build_logs = 0
-        allow_import_from_derivation = false
-      '';
+      extraConfig =
+        let
+          storeUriParams = lib.strings.concatStringsSep "&" [
+            "write-nar-listing=true"
+            "secret-key=${config.sops.secrets.ci-signing-key.path}"
+            "compression=zstd"
+            "parallel-compression=true"
+          ];
+        in
+        ''
+          store_uri = file:///nix/bcache?${storeUriParams}
+          binary_cache_public_uri = https://nix-cache.snct.rmntn.net
+          log_prefix = https://nix-cache.snct.rmntn.net/
+          upload_logs_to_binary_cache = true
+          compress_build_logs = 0
+          allow_import_from_derivation = false
+        '';
       extraEnv = {
         http_proxy = "http://10.85.20.10:3128";
         https_proxy = "http://10.85.20.10:3128";
