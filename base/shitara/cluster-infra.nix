@@ -149,4 +149,12 @@ in
       };
     };
   };
+
+  systemd.services = {
+    nomad.after = [ "consul.service" ];
+    consul.after = [
+      "bird.service"
+      "unbound.service"
+    ];
+  };
 }
