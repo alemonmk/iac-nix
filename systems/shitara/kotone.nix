@@ -89,12 +89,21 @@
         netConfig = import (flakeRoot + /base/shitara/netconfigs.nix) {
           inherit (config.networking) hostName;
         };
-        dkimsignuser = config.users.users.dkimsign.name;
+        dkimSignCmd = lib.strings.concatStringsSep " " [
+          "${pkgs.opensmtpd-filter-dkimsign}/libexec/opensmtpd/filter-dkimsign"
+          "-t"
+          "-c relaxed/relaxed"
+          "-a rsa-sha256"
+          "-d rmntn.net"
+          "-s appmsgs"
+          "-k ${config.sops.secrets.dkimkey.path}"
+        ];
+        dkimSignUser = config.users.users.dkimsign.name;
       in
       ''
         table cluster-net { 10.85.183.0/28, 10.91.145.32/28 }
         table outbound-src { ${netConfig.wan.v4} }
-        filter dkim-sign proc-exec "${pkgs.opensmtpd-filter-dkimsign}/libexec/opensmtpd/filter-dkimsign -t -c relaxed/relaxed -a rsa-sha256 -d rmntn.net -s appmsgs -k ${config.sops.secrets.dkimkey.path}" user ${dkimsignuser} group ${dkimsignuser}
+        filter dkim-sign proc-exec "${dkimSignCmd}" user ${dkimSignUser} group ${dkimSignUser}
         listen on socket filter "dkim-sign"
         listen on ${netConfig.lo} port 25 filter "dkim-sign"
         action "outbound" relay src <outbound-src>
