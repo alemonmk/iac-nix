@@ -6,7 +6,7 @@
 let
   forEachSystems = f: nixpkgs.lib.attrsets.genAttrs [ "x86_64-linux" "x86_64-darwin" ] f;
 
-  settings = {
+  config = {
     projectRootFile = "flake.nix";
     settings.verbose = 1;
     settings.excludes = [
@@ -28,6 +28,7 @@ let
       };
     };
   };
-  package = forEachSystems (sys: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${sys} settings);
+
+  package = forEachSystems (sys: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${sys} config);
 in
 forEachSystems (sys: package.${sys}.config.build.wrapper)
