@@ -35,7 +35,9 @@ in
     };
     environmentVariables = {
       SHELL = "nu";
-      LS_COLORS = mkNushellInline "${config.programs.vivid.package}/bin/vivid generate ${config.programs.vivid.activeTheme}";
+      LS_COLORS =
+        with config.programs.vivid;
+        mkNushellInline "${package}/bin/vivid generate ${activeTheme}";
     };
     extraConfig = ''
       const NU_LIB_DIRS = [

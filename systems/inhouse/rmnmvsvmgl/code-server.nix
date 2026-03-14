@@ -65,6 +65,7 @@
           };
         };
     };
+
     programs.nushell.extraLogin = ''
       $env.NIX_SSHOPTS = $"-F ($env.HOME | path join ".ssh" "config")"
 
@@ -91,6 +92,7 @@
         ssh $host "systemctl reboot"
       }
     '';
+    
     programs.bash = {
       enable = true;
       bashrcExtra = ''

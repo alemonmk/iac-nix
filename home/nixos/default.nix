@@ -25,9 +25,5 @@
     }
   ];
 
-  home-manager.users = {
-    emergency = {
-      programs.home-manager.enable = true;
-    };
-  };
+  home-manager.users.emergency.programs.home-manager.enable = true;
 }

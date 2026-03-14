@@ -4,25 +4,11 @@
   ...
 }:
 let
-  inherit (lib.lists) map range;
   netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };
   loAddress = netConfig.lo;
   wanAddress = netConfig.wan;
 in
 {
-  networking.nftables.tables.global.content = ''
-    chain service-input {
-      iifname "eth0" tcp dport https counter accept
-      iifname "eth0" tcp dport 53 counter accept
-      iifname "eth0" udp dport 53 counter accept
-      iifname "ztinv*" ip saddr {10.85.183.0/28, 10.91.145.32/28} ip daddr 10.85.183.0/28 counter accept
-      iifname ne "eth0" ip saddr {10.85.10.1, 10.85.10.2} ip daddr 10.85.183.0/28 udp dport 8600 counter accept # Consul DNS
-      iifname ne "eth0" ip saddr {10.85.10.5, 10.80.100.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 4646 counter accept # Nomad API
-      iifname ne "eth0" ip saddr {10.85.10.5, 10.80.100.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 8500 counter accept # Consul API
-      iifname ne "eth0" ip saddr 10.85.20.66 ip daddr 10.85.183.0/28 tcp dport 5432 counter accept # Postgres cross site replication
-    }
-  '';
-
   services = {
     consul = {
       enable = true;
@@ -33,7 +19,13 @@ in
         bind_addr = loAddress;
         server = true;
         bootstrap_expect = 3;
-        retry_join = map (x: "10.85.183.${toString x}:8301") (range 1 5);
+        retry_join = [
+          "10.85.183.1:8301"
+          "10.85.183.2:8301"
+          "10.85.183.3:8301"
+          "10.85.183.4:8301"
+          "10.85.183.5:8301"
+        ];
         node_meta = {
           wan_address_v4 = wanAddress.v4;
           wan_address_v6 = wanAddress.v6;
@@ -130,22 +122,32 @@ in
         forward-zone = [
           {
             name = "consul";
-            forward-addr = map (x: "10.85.183.${toString x}@8600") (range 1 5);
+            forward-addr = [
+              "10.85.183.1@8600"
+              "10.85.183.2@8600"
+              "10.85.183.3@8600"
+              "10.85.183.4@8600"
+              "10.85.183.5@8600"
+            ];
           }
         ];
         stub-zone =
-          map
-            (d: {
-              name = d;
-              stub-addr = [
-                "10.85.11.1"
-                "10.85.11.2"
-              ];
-            })
-            [
-              "snct.rmntn.net"
-              "10.in-addr.arpa"
+          let
+            ad-dns-servers = [
+              "10.85.11.1"
+              "10.85.11.2"
             ];
+          in
+          [
+            {
+              name = "snct.rmntn.net";
+              stub-addr = ad-dns-servers;
+            }
+            {
+              name = "10.in-addr.arpa";
+              stub-addr = ad-dns-servers;
+            }
+          ];
       };
     };
   };
@@ -157,4 +159,17 @@ in
       "unbound.service"
     ];
   };
+
+  networking.nftables.tables.global.content = ''
+    chain service-input {
+      iifname "eth0" tcp dport https counter accept
+      iifname "eth0" tcp dport 53 counter accept
+      iifname "eth0" udp dport 53 counter accept
+      iifname "ztinv*" ip saddr {10.85.183.0/28, 10.91.145.32/28} ip daddr 10.85.183.0/28 counter accept
+      iifname ne "eth0" ip saddr {10.85.10.1, 10.85.10.2} ip daddr 10.85.183.0/28 udp dport 8600 counter accept # Consul DNS
+      iifname ne "eth0" ip saddr {10.85.10.5, 10.80.100.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 4646 counter accept # Nomad API
+      iifname ne "eth0" ip saddr {10.85.10.5, 10.80.100.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 8500 counter accept # Consul API
+      iifname ne "eth0" ip saddr 10.85.20.66 ip daddr 10.85.183.0/28 tcp dport 5432 counter accept # Postgres cross site replication
+    }
+  '';
 }

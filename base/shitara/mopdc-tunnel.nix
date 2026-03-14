@@ -8,7 +8,6 @@
 let
   inherit (lib.strings) optionalString concatLines;
   inherit (lib.lists) optional optionals;
-  inherit (lib.attrsets) hasAttr;
   inherit (lib.modules) mkIf mkAfter;
   inherit (pkgs) replaceVarsWith;
   netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };

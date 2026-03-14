@@ -51,9 +51,13 @@
       ];
     };
 
-  networking.nftables.tables.global.content = ''
-    chain service-input {
-      ip saddr 10.85.10.5 tcp dport ${toString config.services.prometheus.exporters.node.port} counter accept
-    }
-  '';
+  networking.nftables.tables.global.content =
+    let
+      promNodeExporterPort = toString config.services.prometheus.exporters.node.port;
+    in
+    ''
+      chain service-input {
+        ip saddr 10.85.10.5 tcp dport ${promNodeExporterPort} counter accept
+      }
+    '';
 }

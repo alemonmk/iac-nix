@@ -23,14 +23,17 @@
     automatic = true;
     dates = "weekly";
   };
+
   nixpkgs = {
     config.allowUnfree = true;
     overlays = [ (import ../overlays/stable.nix) ];
   };
+
   environment.systemPackages = [
     pkgs.git
     pkgs.nvd
   ];
+
   environment.shellAliases = {
     upgrade-system = "sudo nixos-rebuild switch --flake git+https://code.rmntn.net/iac/nix#$(hostname); upgrade-diff";
     upgrade-system-reboot = "sudo nixos-rebuild boot --flake git+https://code.rmntn.net/iac/nix#$(hostname); upgrade-diff; read -n 1 -s -p 'Press any key when ready to reboot'; sudo reboot";

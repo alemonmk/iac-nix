@@ -2,10 +2,8 @@
   programs.git = {
     enable = true;
     settings = {
-      user = {
-        name = "Lemon Lam";
-        email = "alemonmk@users.noreply.github.com";
-      };
+      user.name = "Lemon Lam";
+      user.email = "alemonmk@users.noreply.github.com";
       init.defaultBranch = "main";
       diff.submodule = "log";
       submodule.recurse = true;

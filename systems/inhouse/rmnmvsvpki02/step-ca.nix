@@ -29,18 +29,22 @@
       port = 8443;
     };
 
-    caddy = {
-      enable = true;
-      acmeCA = lib.modules.mkForce "https://atpki.snct.rmntn.net:${toString config.services.step-ca.port}/acme/w1/directory";
-      virtualHosts."atpki.snct.rmntn.net".extraConfig = ''
-        reverse_proxy https://localhost:${toString config.services.step-ca.port} {
-            transport http {
-                tls_trust_pool file /etc/smallstep/root_ca.crt
-                tls_server_name atpki.snct.rmntn.net
-            }
-        }
-      '';
-    };
+    caddy =
+      let
+        port = toString config.services.step-ca.port;
+      in
+      {
+        enable = true;
+        acmeCA = lib.modules.mkForce "https://atpki.snct.rmntn.net:${port}/acme/w1/directory";
+        virtualHosts."atpki.snct.rmntn.net".extraConfig = ''
+          reverse_proxy https://localhost:${port}} {
+              transport http {
+                  tls_trust_pool file /etc/smallstep/root_ca.crt
+                  tls_server_name atpki.snct.rmntn.net
+              }
+          }
+        '';
+      };
   };
 
   systemd.services.step-ca.serviceConfig.StateDirectoryMode = "0700";

@@ -1,32 +1,35 @@
 { lib, ... }:
 {
   networking = {
+    useNetworkd = true;
+    useDHCP = false;
+    firewall.enable = false;
+
     domain = "snct.rmntn.net";
     search = [
       "snct.rmntn.net"
       "clients.snct.rmntn.net"
     ];
-    useNetworkd = true;
-    useDHCP = false;
-    timeServers = [ "rmnmvsvntp.snct.rmntn.net" ];
     nameservers = [
       "10.85.10.1"
       "10.85.10.2"
       "2400:8902:e002:59e0::d:1"
       "2400:8902:e002:59e0::d:2"
     ];
-    firewall.enable = false;
+
+    timeServers = [ "rmnmvsvntp.snct.rmntn.net" ];
+
     proxy = lib.modules.mkDefault {
       httpProxy = "http://10.85.20.10:3128";
       httpsProxy = "http://10.85.20.10:3128";
       noProxy = "127.0.0.1,localhost,.snct.rmntn.net";
     };
   };
-  services.resolved.llmnr = "false";
 
   systemd.network.wait-online.enable = false;
   systemd.services.systemd-networkd.stopIfChanged = false;
   systemd.services.systemd-resolved.stopIfChanged = false;
+  services.resolved.llmnr = "false";
 
   boot.kernel.sysctl = {
     "net.core.wmem_max" = 134217728;

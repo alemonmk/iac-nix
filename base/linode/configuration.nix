@@ -12,15 +12,21 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   networking = {
-    domain = "rmntn.net";
-    timeServers = [ "ats1.e-timing.ne.jp" ];
     useNetworkd = true;
     useDHCP = false;
     usePredictableInterfaceNames = false;
     tempAddresses = "disabled";
+
+    domain = "rmntn.net";
+
+    timeServers = [ "ats1.e-timing.ne.jp" ];
   };
 
   systemd.network.config.networkConfig.IPv6PrivacyExtensions = false;
+
+  systemd.network.wait-online.enable = false;
+  systemd.services.systemd-networkd.stopIfChanged = false;
+  systemd.services.systemd-resolved.stopIfChanged = false;
 
   boot.kernel.sysctl = {
     "net.core.wmem_max" = 134217728;
@@ -31,10 +37,6 @@
     "net.ipv4.tcp_no_metrics_save" = 1;
     "net.core.default_qdisc" = "fq";
   };
-
-  systemd.network.wait-online.enable = false;
-  systemd.services.systemd-networkd.stopIfChanged = false;
-  systemd.services.systemd-resolved.stopIfChanged = false;
 
   services.dbus.implementation = "broker";
 

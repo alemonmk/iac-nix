@@ -23,6 +23,7 @@
       "Staat der Nederlanden Root CA - G3"
       "TunTrust Root CA"
     ];
+
     sudo = {
       enable = true;
       extraConfig = "Defaults lecture = never";
