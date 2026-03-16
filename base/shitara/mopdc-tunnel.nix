@@ -10,7 +10,7 @@ let
   inherit (lib.lists) optional optionals;
   inherit (lib.modules) mkIf mkAfter;
   inherit (pkgs) replaceVarsWith;
-  netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };
+  netConfig = import ./netconfigs.nix config.networking.hostName;
 in
 mkIf (netConfig ? pdc-tunnel) (
   let

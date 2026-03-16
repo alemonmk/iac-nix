@@ -94,9 +94,7 @@
     extraServerArgs = [ "-P mda" ];
     serverConfiguration =
       let
-        netConfig = import (flakeRoot + /base/shitara/netconfigs.nix) {
-          inherit (config.networking) hostName;
-        };
+        netConfig = import (flakeRoot + /base/shitara/netconfigs.nix) config.networking.hostName;
         dkimSignCmd = lib.strings.concatStringsSep " " [
           "${pkgs.opensmtpd-filter-dkimsign}/libexec/opensmtpd/filter-dkimsign"
           "-t"

@@ -36,7 +36,7 @@
 
   services.prometheus.exporters.node =
     let
-      netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };
+      netConfig = import ./netconfigs.nix config.networking.hostName;
     in
     {
       enable = true;

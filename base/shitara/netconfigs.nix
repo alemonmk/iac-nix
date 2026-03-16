@@ -57,7 +57,7 @@ let
       wan.v6 = "2400:8902::f03c:91ff:fe70:9cad";
     }
   ];
+
   inherit (builtins) head filter;
 in
-{ hostName }:
-head (filter (e: e.host == hostName) netConfigs)
+hostName: netConfigs |> filter (e: e.host == hostName) |> head

@@ -7,7 +7,7 @@ let
   inherit (lib.modules) mkIf mkDefault;
   inherit (lib.lists) optionals;
   inherit (lib.strings) optionalString;
-  netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };
+  netConfig = import ./netconfigs.nix config.networking.hostName;
   loAddress = netConfig.lo;
   wanAddress = netConfig.wan;
 in

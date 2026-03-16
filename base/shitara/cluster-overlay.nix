@@ -10,7 +10,7 @@ let
   inherit (lib.lists) optionals;
   inherit (lib.attrsets) optionalAttrs;
   inherit (config.networking) hostName;
-  netConfig = import ./netconfigs.nix { inherit hostName; };
+  netConfig = import ./netconfigs.nix hostName;
   loAddress = netConfig.lo;
   role = if config.services.strongswan-swanctl.enable then "border" else "internal";
 in
