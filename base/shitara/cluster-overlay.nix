@@ -103,7 +103,7 @@ in
     ''
       chain overlay-input {
         iifname "eth0" udp dport ${zerotierPort} counter accept
-        iifname "ztinv*" ip protocol 89 counter accept
+        iifname "ztinv*" ip protocol ospfigp counter accept
         iifname "ztinv*" udp dport 3784 counter accept # BFD
         ip saddr 10.85.10.5 tcp dport ${promBirdExporterPort} counter accept
       }
@@ -116,6 +116,11 @@ in
     + ''
       chain input {
         jump overlay-input
+      }
+      chain output {
+        type filter hook output priority filter; policy accept;
+        oifname "eth0" ip saddr 10.0.0.0/8 drop
+        oifname "eth0" ip daddr 10.0.0.0/8 drop
       }
     '';
 }

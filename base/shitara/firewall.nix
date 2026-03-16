@@ -16,11 +16,6 @@
           tcp dport 444 counter accept
           jump service-input
         }
-        chain output {
-        	type filter hook output priority filter; policy accept;
-          oifname "eth0" ip saddr 10.0.0.0/8 drop
-          oifname "eth0" ip daddr 10.0.0.0/8 drop
-        }
       '';
     };
     tables.nat = {
