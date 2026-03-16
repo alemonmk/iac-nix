@@ -9,7 +9,7 @@
   home-manager-linux,
   home-manager-darwin,
   ...
-}:
+}@inputs:
 let
   linuxSystem = "x86_64-linux";
   darwinSystem = "x86_64-darwin";
@@ -68,4 +68,5 @@ in
   linuxPackageFrom = f: nixpkgs.legacyPackages."${linuxSystem}".callPackage f { };
 
   mkLinuxPackageSet = set: set |> mapAttrs (_: v: linuxPackageFrom v);
+  importAndInit = n: import n inputs;
 }

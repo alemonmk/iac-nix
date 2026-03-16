@@ -19,13 +19,13 @@
   };
 
   outputs =
-    { ... }@inputs:
+    inputs:
     let
       lib = import ./lib inputs;
       nixosModules = import ./modules/nixos inputs;
-      sysDefs = import ./systems inputs;
-      ciDefs = import ./ci inputs;
-      formatter = import ./treefmt.nix inputs;
+      sysDefs = lib.importAndInit ./systems;
+      ciDefs = lib.importAndInit ./ci;
+      formatter = lib.importAndInit ./treefmt.nix;
       barebone = lib.stage1System;
       linodeBarebone = lib.stage1LinodeSystem;
     in
@@ -38,12 +38,11 @@
           vpn-route-gen = ./pkgs/vpn-route-gen/package.nix;
         }
         // {
-          netbootImage = import ./lib/stage1installer inputs;
+          netbootImage = lib.importAndInit ./lib/stage1installer;
         };
-      nixosConfigurations = {
+      nixosConfigurations = sysDefs.nixos // {
         inherit barebone linodeBarebone;
-      }
-      // sysDefs.nixos;
+      };
       darwinConfigurations = sysDefs.darwin;
       hydraJobs = ciDefs;
     };
