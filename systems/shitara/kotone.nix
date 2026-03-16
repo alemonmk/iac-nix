@@ -30,6 +30,17 @@
 
   virtualisation.oci-containers.backend = "docker";
 
+  systemd.tmpfiles.settings = {
+    "10-hath"."/opt/hath/download".a = {
+      argument = "d:u:emergency:rwx,u:emergency:rwx";
+    };
+    "10-onedev"."/opt/onedev".d = {
+      mode = "0700";
+      user = "root";
+      group = "root";
+    };
+  };
+
   users.users.hath = {
     uid = 9999;
     group = "hath";
@@ -38,9 +49,6 @@
   };
   users.groups.hath = {
     gid = 9999;
-  };
-  systemd.tmpfiles.settings = {
-    "10-hath"."/opt/hath/download"."a".argument = "d:u:emergency:rwx,u:emergency:rwx";
   };
   virtualisation.oci-containers.containers."hath" = {
     image = "frosty5689/hath:1.6.4";
