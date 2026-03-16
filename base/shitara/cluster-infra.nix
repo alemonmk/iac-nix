@@ -4,14 +4,37 @@
   ...
 }:
 let
+  inherit (lib.modules) mkIf mkDefault;
+  inherit (lib.lists) optionals;
+  inherit (lib.strings) optionalString;
   netConfig = import ./netconfigs.nix { inherit (config.networking) hostName; };
   loAddress = netConfig.lo;
   wanAddress = netConfig.wan;
 in
 {
+  systemd.tmpfiles.settings = mkIf config.services.nomad.enable {
+    "15-nomad-dirs" = {
+      "/opt/nomad/alloc".d = {
+        mode = "0711";
+        user = "root";
+        group = "root";
+      };
+      "/opt/nomad/alloc-mounts".d = {
+        mode = "0711";
+        user = "root";
+        group = "root";
+      };
+    };
+    "15-postgres"."/opt/database/postgres".d = {
+      mode = "0700";
+      user = "999";
+      group = "999";
+    }
+  };
+
   services = {
     consul = {
-      enable = true;
+      enable = mkDefault true;
       webUi = true;
       extraConfig = {
         datacenter = "shitara";
@@ -40,7 +63,7 @@ in
     };
 
     nomad = {
-      enable = true;
+      enable = mkDefault true;
       enableDocker = true;
       dropPrivileges = false;
       settings = {
@@ -153,8 +176,8 @@ in
   };
 
   systemd.services = {
-    nomad.after = [ "consul.service" ];
-    consul.after = [
+    nomad.after = optionals (config.services.consul.enable) [ "consul.service" ];
+    consul.after = optionals (config.services.consul.enable) [
       "bird.service"
       "unbound.service"
     ];
@@ -162,13 +185,21 @@ in
 
   networking.nftables.tables.global.content = ''
     chain service-input {
+      iifname "ztinv*" ip saddr {10.85.183.0/28, 10.91.145.32/28} ip daddr 10.85.183.0/28 counter accept
+    }
+  ''
+  + optionalString (config.services.consul.enable) ''
+    chain service-input {
+      iifname ne "eth0" ip saddr {10.85.10.1, 10.85.10.2} ip daddr 10.85.183.0/28 udp dport 8600 counter accept # Consul DNS
+      iifname ne "eth0" ip saddr {10.85.10.5, 10.80.100.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 8500 counter accept # Consul API
+    }
+  ''
+  + optionalString (config.services.nomad.enable) ''
+    chain service-input {
       iifname "eth0" tcp dport https counter accept
       iifname "eth0" tcp dport 53 counter accept
       iifname "eth0" udp dport 53 counter accept
-      iifname "ztinv*" ip saddr {10.85.183.0/28, 10.91.145.32/28} ip daddr 10.85.183.0/28 counter accept
-      iifname ne "eth0" ip saddr {10.85.10.1, 10.85.10.2} ip daddr 10.85.183.0/28 udp dport 8600 counter accept # Consul DNS
       iifname ne "eth0" ip saddr {10.85.10.5, 10.80.100.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 4646 counter accept # Nomad API
-      iifname ne "eth0" ip saddr {10.85.10.5, 10.80.100.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 8500 counter accept # Consul API
       iifname ne "eth0" ip saddr 10.85.20.66 ip daddr 10.85.183.0/28 tcp dport 5432 counter accept # Postgres cross site replication
     }
   '';
