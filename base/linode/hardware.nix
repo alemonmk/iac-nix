@@ -1,6 +1,4 @@
 {
-  nixpkgs.hostPlatform = "x86_64-linux";
-
   boot.loader.timeout = 10;
   boot.loader.grub.enable = true;
   boot.loader.grub.forceInstall = true;

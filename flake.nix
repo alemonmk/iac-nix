@@ -22,7 +22,7 @@
     inputs:
     let
       lib = import ./lib inputs;
-      nixosModules = import ./modules/nixos inputs;
+      nixosModules = lib.forNixFilesAsModules ./modules/nixos;
       sysDefs = lib.importAndInit ./systems;
       ciDefs = lib.importAndInit ./ci;
       formatter = lib.importAndInit ./treefmt.nix;

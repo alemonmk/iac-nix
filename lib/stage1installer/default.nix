@@ -1,17 +1,17 @@
 {
+  self,
   nixpkgs,
   disko,
   ...
 }:
 let
-  linuxSystem = "x86_64-linux";
-  dummyTarget = nixpkgs.lib.nixosSystem {
-    system = linuxSystem;
-    modules = [
+  inherit (self.lib) newLinuxSystem;
+  dummyTarget =
+    [
       disko.nixosModules.disko
       ../../barebone/diskolayout.nix
-    ];
-  };
+    ]
+    |> newLinuxSystem;
   preInstallMounts = ''
     umount -Rv /mnt
     mount -o subvol=/ /dev/disk/by-partlabel/ROOT /mnt
@@ -23,9 +23,8 @@ let
     mkdir -p /mnt/nix/persist/{etc/ssh,var/{lib/nixos,log}}
     mount -o bind -m /mnt/nix/persist/var/log /mnt/var/log
   '';
-  image = nixpkgs.lib.nixosSystem {
-    system = linuxSystem;
-    modules = [
+  image =
+    [
       "${nixpkgs}/nixos/modules/installer/netboot/netboot-minimal.nix"
       "${nixpkgs}/nixos/modules/profiles/perlless.nix"
       ../../modules/installer
@@ -40,8 +39,8 @@ let
           preInstall = preInstallMounts;
         };
       }
-    ];
-  };
+    ]
+    |> newLinuxSystem;
 in
 with image;
 pkgs.symlinkJoin {
