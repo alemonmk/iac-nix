@@ -48,6 +48,8 @@ let
     home-manager-darwin.darwinModules.home-manager
     ../home/darwin
   ];
+  
+  linuxPackageFrom = def: (def |> nixpkgs.legacyPackages."${linuxSystem}".callPackage) <| { };
 in
 {
   stage1System = nixpkgs.lib.nixosSystem {
@@ -64,4 +66,6 @@ in
   finalLinodeSystem = sysDef: newLinuxSystem (modulesLinodes ++ sysDef);
   finalDarwinSystem = sysDef: newDarwinSystem (modulesDarwin ++ sysDef);
   linuxPackageFrom = f: nixpkgs.legacyPackages."${linuxSystem}".callPackage f { };
+
+  mkLinuxPackageSet = set: set |> mapAttrs (_: v: linuxPackageFrom v);
 }
