@@ -94,7 +94,6 @@ in
     };
   };
 
-
   networking.nftables.tables.global.content =
     let
       zerotierPort = toString config.services.zerotierone.port;

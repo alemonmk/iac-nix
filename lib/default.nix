@@ -63,7 +63,7 @@ let
   listFolders = base: base |> readDir |> filterAttrs (_: v: v == "directory") |> attrNames;
   listFiles = base: base |> readDir |> filterAttrs (_: v: v == "regular") |> attrNames;
   listNixFiles = base: base |> listFiles |> filter (s: hasSuffix ".nix" s);
-  
+
   linuxPackageFrom = def: (def |> nixpkgs.legacyPackages."${linuxSystem}".callPackage) <| { };
 in
 {

@@ -92,7 +92,7 @@
         ssh $host "systemctl reboot"
       }
     '';
-    
+
     programs.bash = {
       enable = true;
       bashrcExtra = ''

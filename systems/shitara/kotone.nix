@@ -118,19 +118,20 @@
   };
 
   networking.nftables.tables = {
-    global.content = 
-    let
-      zerotierPort = toString config.services.zerotierone.port;
-    in ''
-      chain overlay-input {
-        iifname "ztinv*" ip daddr 10.85.183.6 tcp dport ${zerotierPort} counter accept # Zerotier controller
-      }
-      chain service-input {
-        iifname "ztinv*" ip daddr 10.85.183.6 tcp dport 6610 counter accept # OneDev
-        iifname "ztinv*" ip daddr 10.85.183.6 tcp dport 25 counter accept # App mails
-        iifname "eth0" tcp dport 8472 counter accept # HatH
-      }
-    '';
+    global.content =
+      let
+        zerotierPort = toString config.services.zerotierone.port;
+      in
+      ''
+        chain overlay-input {
+          iifname "ztinv*" ip daddr 10.85.183.6 tcp dport ${zerotierPort} counter accept # Zerotier controller
+        }
+        chain service-input {
+          iifname "ztinv*" ip daddr 10.85.183.6 tcp dport 6610 counter accept # OneDev
+          iifname "ztinv*" ip daddr 10.85.183.6 tcp dport 25 counter accept # App mails
+          iifname "eth0" tcp dport 8472 counter accept # HatH
+        }
+      '';
     nat.content = ''
       chain source-nat {
         iifname "docker0" oifname "eth0" ip saddr 172.17.0.0/16 counter masquerade

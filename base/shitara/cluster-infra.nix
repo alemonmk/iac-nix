@@ -29,7 +29,7 @@ in
       mode = "0700";
       user = "999";
       group = "999";
-    }
+    };
   };
 
   services = {
