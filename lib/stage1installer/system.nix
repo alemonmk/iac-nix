@@ -32,6 +32,7 @@
   environment.systemPackages = with pkgs; [
     gitMinimal
     btrfs-progs
+    nix-output-monitor
   ];
   nix.settings = {
     extra-experimental-features = [
