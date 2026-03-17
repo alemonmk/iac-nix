@@ -20,7 +20,12 @@
           open = "^open";
         };
         extraConfig = ''
-          path add -a /run/current-system/sw/bin
+          $env.path = ^/usr/libexec/path_helper -c
+            | into string
+            | collect
+            | str substring 13..-3
+            | split row ":" 
+            | insert 2 /run/current-system/sw/bin
 
           def upgrade-system [--local-flake (-l)] {
             let $url = hostname | if $local_flake { $".#($in)" } else { $"git+https://code.rmntn.net/iac/nix#($in)" }
