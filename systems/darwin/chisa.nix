@@ -166,6 +166,7 @@
     pkgs.zsh
     nixpkgs-next.nushell
   ];
+  environment.enableAllTerminfo = true;
 
   imports = [
     (flakeRoot + /home/chisa)

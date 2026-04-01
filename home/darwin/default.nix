@@ -8,7 +8,6 @@
     {
       home.sessionVariables = {
         EDITOR = "nano";
-        TERM = "xterm-256color";
       };
       home.shellAliases = {
         ll = "eza -aalh -s type --git --git-repos";
