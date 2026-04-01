@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  nixpkgs-next,
   ...
 }:
 {
@@ -91,12 +92,14 @@
   services.opensmtpd = {
     enable = true;
     setSendmail = false;
+    package = nixpkgs-next.opensmtpd;
+    procPackages = [ nixpkgs-next.opensmtpd-filter-dkimsign ];
     extraServerArgs = [ "-P mda" ];
     serverConfiguration =
       let
         netConfig = import (flakeRoot + /base/shitara/netconfigs.nix) config.networking.hostName;
         dkimSignCmd = lib.strings.concatStringsSep " " [
-          "${pkgs.opensmtpd-filter-dkimsign}/libexec/opensmtpd/filter-dkimsign"
+          "filter-dkimsign"
           "-t"
           "-c relaxed/relaxed"
           "-a rsa-sha256"
