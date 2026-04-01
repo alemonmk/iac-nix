@@ -8,7 +8,7 @@
 let
   inherit (lib.strings) replaceStrings concatMapStringsSep optionalString;
   inherit (lib.attrsets) optionalAttrs;
-  inherit (lib.hm.nushell) mkNushellInline;
+  inherit (lib.hm.nushell) mkNushellInline toNushell;
   resolvePath =
     s: replaceStrings [ "$HOME" "$USER" ] [ config.home.homeDirectory config.home.username ] s;
   toNushellPathAdds = p: concatMapStringsSep "\n" (s: "path add `" + (resolvePath s) + "`") p;
@@ -60,7 +60,7 @@ in
       }
     '';
     extraLogin = ''
-      load-env ${lib.hm.nushell.toNushell { } config.home.sessionVariables}
+      load-env ${toNushell { } config.home.sessionVariables}
       path add ($env.HOME | path join ".nix-profile" "bin")
       ${toNushellPathAdds config.home.sessionPath}
     '';
