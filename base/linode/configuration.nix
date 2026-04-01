@@ -47,4 +47,6 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOxdtPfxMfW1xKCbjVjpFZ+lF1XQYQn/a7TeSPSYD0TZ"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA8AWxVE3RSe1WMh5Z3aEko4neJCilG+4/yHzYMJRGBc"
   ];
+
+  environment.enableAllTerminfo = true;
 }
