@@ -37,7 +37,8 @@
         enable = true;
         acmeCA = lib.modules.mkForce "https://atpki.snct.rmntn.net:${port}/acme/w1/directory";
         virtualHosts."atpki.snct.rmntn.net".extraConfig = ''
-          reverse_proxy https://localhost:${port}} {
+          reverse_proxy https://localhost:${port} {
+              header_up Host {host}
               transport http {
                   tls_trust_pool file /etc/smallstep/root_ca.crt
                   tls_server_name atpki.snct.rmntn.net
