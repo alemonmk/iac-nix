@@ -1,0 +1,5 @@
+acl rmntn-container-registry dstdomain code.rmntn.net
+
+acl rmnmvsvpbw src 10.85.20.12
+
+http_access allow safe-methods rmnmvsvpbw rmntn-container-registry
