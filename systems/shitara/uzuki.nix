@@ -1,4 +1,4 @@
 { flakeRoot, ... }:
 {
-  imports = [ (flakeRoot + /base/shitara/node.nix) ];
+  imports = [ ./base/node.nix ];
 }
