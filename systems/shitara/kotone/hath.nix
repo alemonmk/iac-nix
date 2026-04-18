@@ -9,8 +9,9 @@
   };
 
   systemd.tmpfiles.settings = {
-    "10-hath"."/opt/hath/download".a = {
-      argument = "d:u:emergency:rwx,u:emergency:rwx";
+    "10-hath" = {
+      "/opt/hath".a.argument = "d:u:emergency:rx,u:emergency:rx";
+      "/opt/hath/download".a.argument = "d:u:emergency:rwx,u:emergency:rwx";
     };
   };
 
