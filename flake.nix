@@ -36,6 +36,7 @@
           code-server = ./pkgs/code-server.nix;
           vlmcsd = ./pkgs/vlmcsd.nix;
           vpn-route-gen = ./pkgs/vpn-route-gen/package.nix;
+          vault-unseal = ./pkgs/vault-unseal.nix;
         }
         // {
           netbootImage = lib.importAndInit ./lib/stage1installer;
