@@ -15,12 +15,12 @@ in
   systemd.tmpfiles.settings = mkIf config.services.nomad.enable {
     "15-nomad-dirs" = {
       "/opt/nomad/alloc".d = {
-        mode = "0711";
+        mode = "0750";
         user = "root";
         group = "root";
       };
       "/opt/nomad/alloc-mounts".d = {
-        mode = "0711";
+        mode = "0750";
         user = "root";
         group = "root";
       };
@@ -200,6 +200,7 @@ in
       iifname "eth0" tcp dport 53 counter accept
       iifname "eth0" udp dport 53 counter accept
       iifname ne "eth0" ip saddr {10.85.10.5, 10.80.100.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 4646 counter accept # Nomad API
+      iifname ne "eth0" ip saddr {10.80.100.0/23, 10.80.110.0/23, 10.80.105.0/24} ip daddr 10.85.183.0/28 tcp dport 443 counter accept # Private HTTPS endpoint
       iifname ne "eth0" ip saddr 10.85.20.12 ip daddr 10.85.183.0/28 tcp dport 5432 counter accept # Postgres backup appliance
     }
   '';
