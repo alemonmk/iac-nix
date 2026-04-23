@@ -37,6 +37,7 @@
           vlmcsd = ./pkgs/vlmcsd.nix;
           vpn-route-gen = ./pkgs/vpn-route-gen/package.nix;
           vault-unseal = ./pkgs/vault-unseal.nix;
+          seaweedfs-volume-rust = ./pkgs/seaweedfs-volume-rust.nix;
         }
         // {
           netbootImage = lib.importAndInit ./lib/stage1installer;
