@@ -15,12 +15,12 @@ let
   inherit (nixpkgs.lib.attrsets)
     attrNames
     attrValues
-    genAttrs
     mapAttrs
     filterAttrs
     ;
-  inherit (nixpkgs.lib.strings) hasSuffix removeSuffix;
+  inherit (nixpkgs.lib.strings) hasPrefix hasSuffix removeSuffix;
   inherit (builtins) readDir;
+  genAttrs = generator: list: nixpkgs.lib.attrsets.genAttrs list generator;
 
   linuxSystem = "x86_64-linux";
   darwinSystem = "x86_64-darwin";
@@ -62,11 +62,13 @@ let
 
   listFolders = base: base |> readDir |> filterAttrs (_: v: v == "directory") |> attrNames;
   listFiles = base: base |> readDir |> filterAttrs (_: v: v == "regular") |> attrNames;
-  listNixFiles = base: base |> listFiles |> filter (s: hasSuffix ".nix" s);
+  listNixFiles = base: base |> listFiles |> filter (hasSuffix ".nix");
 
-  linuxPackageFrom = def: (def |> nixpkgs.legacyPackages."${linuxSystem}".callPackage) <| { };
+  linuxPackageFrom = def: nixpkgs.legacyPackages."${linuxSystem}".callPackage def { };
+  linuxPackagesFrom = def: nixpkgs.legacyPackages."${linuxSystem}".callPackages def { };
 in
 {
+  inherit genAttrs;
   inherit newLinuxSystem newDarwinSystem;
 
   stage1System =
@@ -107,42 +109,37 @@ in
     |> newDarwinSystem;
 
   forFoldersAsSystems =
-    f: base:
-    base
-    |> listFolders
-    |> (
-      x:
-      genAttrs x (
-        n:
-        f [
-          { networking.hostName = n; }
-          (base + /${n}/configuration.nix)
-        ]
-      )
-    );
+    let
+      sysDef = base: host: [
+        { networking.hostName = host; }
+        (base + /${host}/configuration.nix)
+      ];
+    in
+    builder: base: base |> listFolders |> genAttrs (host: host |> sysDef base |> builder);
   forNixFilesAsModules =
+    let
+      notHasPrefix = p: v: !(hasPrefix p v);
+    in
     base:
     base
     |> listNixFiles
-    |> filter (x: x != "default.nix")
-    |> map (x: removeSuffix ".nix" x)
-    |> (x: genAttrs x (n: base + /${n}.nix));
+    |> filter (notHasPrefix "default")
+    |> map (removeSuffix ".nix")
+    |> genAttrs (n: base + /${n}.nix);
   forNixFilesAsSystems =
-    f: base:
+    let
+      sysDef = base: host: [
+        { networking.hostName = host; }
+        (base + /${host}.nix)
+      ];
+    in
+    builder: base:
     base
     |> listNixFiles
-    |> map (x: x |> removeSuffix ".nix")
-    |> (
-      x:
-      genAttrs x (
-        n:
-        f [
-          { networking.hostName = n; }
-          (base + /${n}.nix)
-        ]
-      )
-    );
+    |> map (removeSuffix ".nix")
+    |> genAttrs (host: host |> sysDef base |> builder);
 
+  inherit linuxPackageFrom linuxPackagesFrom;
   mkLinuxPackageSet = set: set |> mapAttrs (_: v: linuxPackageFrom v);
   importAndInit = n: import n inputs;
 }
