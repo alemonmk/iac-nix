@@ -35,5 +35,6 @@ buildGo126Module (finalAttrs: {
     homepage = "hhttps://github.com/lrstanley/vault-unseal";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ alemonmk ];
+    mainProgram = "vault-unseal";
   };
 })
