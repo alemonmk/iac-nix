@@ -39,6 +39,7 @@
           vault-unseal = ./pkgs/vault-unseal.nix;
           seaweedfs-volume-rust = ./pkgs/seaweedfs-volume-rust.nix;
         }
+        // lib.linuxPackagesFrom ./pkgs/openbao-plugins.nix
         // {
           netbootImage = lib.importAndInit ./lib/stage1installer;
         };
