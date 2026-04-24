@@ -1,0 +1,75 @@
+---
+# named environment that vault-unseal is running in, gets passed in when sending
+# email alerts.
+environment: rmntn-secrets-1
+
+# delay between seal-checks of each vault node.
+check_interval: 15s
+
+# maximum delay between checks of each vault node. when an error occurs, we will
+# add a backoff delay, up to this maximum.
+max_check_interval: 30m
+
+# list of vault nodes to check, must include http/https, and a port (unless 80/443).
+vault_nodes:
+  - https://10.85.101.9:8200
+  - https://10.85.101.10:8200
+  - https://10.85.183.6:8200
+
+# unseal tokens necessary to unseal any of the given vaults in the above node
+# list.
+#
+# WARNING: do not put enough tokens in this list that can be used to unseal a
+# vault instance. I.e. if vault requires 3 of 5 tokens, DO NOT PUT 3 TOKENS HERE.
+# the goal is to put less than the required amount, but have more instances of
+# vault-unseal setup with the other missing tokens from the list. this ensures
+# that if the server was compromised, they don't have all of the needed tokens.
+#
+# i.e. 1 instance of vault-unseal on each of the three nodes, each with two
+# tokens. given A, B, and C tokens required, each instance should have the
+# following tokens:
+#   * 1: AB
+#   * 2: BC
+#   * 3: AC
+unseal_tokens:
+  - @unseal-token-1@
+  - @unseal-token-2@
+
+# tls:
+#   # skip TLS certificate validation. Do not do this.
+#   skip_verify: false
+#   # server name to use for tls certificate validation.
+#   server_name: localhost
+#   # path to the CA certificate file. takes precedence over ca_cert and ca_path.
+#   ca_cert_path: /etc/ssl/certs/ca-certificates.crt
+#   # ca certificate, pem encoded. takes precedence over ca_path.
+#   ca_cert: |
+#     -----BEGIN CERTIFICATE-----
+#     ...
+#     -----END CERTIFICATE-----
+#   # path to the CA certificate directory.
+#   ca_path: /etc/ssl/certs
+#   # client certificate, pem encoded.
+#   client_cert: |
+#     -----BEGIN CERTIFICATE-----
+#     ...
+#     -----END CERTIFICATE-----
+#   # client key, pem encoded.
+#   client_key: |
+#     -----BEGIN PRIVATE KEY-----
+#     ...
+#     -----END PRIVATE KEY-----
+
+# notification settings.
+notify:
+  # notifications in vault-unseal queue up to prevent spam (e.g. 20 alerts
+  # in one notification). this is the max allotted time an event can be queued
+  # before the queue is sent as a notification.
+  max_elapsed: 2m
+  # queue delay is the amount of time vault-unseal waits after the last received
+  # notification, before it sends all of them in bulk.
+  queue_delay: 60s
+  # list of URLs to send notifications to. for more information, see:
+  #   https://shoutrrr.nickfedor.com/latest/services/overview/
+  urls:
+    - "smtp://10.85.183.6/?fromaddress=it-services@rmntn.net&toaddresses=dop@rmntn.net&auth=none&clienthost=auto&fromname=Secret%20Vault%20Auto%20Unsealer"

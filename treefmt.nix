@@ -23,7 +23,10 @@ let
       toml-sort.enable = true;
       yamlfmt = {
         enable = true;
-        excludes = [ "blobs/monitoring/oxidized/config.yml" ];
+        excludes = [
+          "blobs/monitoring/oxidized/config.yml"
+          "blobs/vault/auto-unseal.yaml"
+        ];
         settings.formatter.retain_line_breaks = true;
       };
     };

@@ -71,3 +71,29 @@ creation_rules:
           - *kotone
           - *sumire
           - *uzuki
+  - path_regex: secrets(\\|/)secrets-vault(\\|/)mtls-crt-key\.yaml$
+    key_groups:
+      - age:
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *kotone
+  - path_regex: secrets(\\|/)secrets-vault(\\|/)unseal-tokens-a\.yaml$
+    key_groups:
+      - age:
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+  - path_regex: secrets(\\|/)secrets-vault(\\|/)unseal-tokens-b\.yaml$
+    key_groups:
+      - age:
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+  - path_regex: secrets(\\|/)secrets-vault(\\|/)unseal-tokens-c\.yaml$
+    key_groups:
+      - age:
+          - *nix-mgr
+          - *chisa
+          - *kyouka
+          - *kotone
