@@ -1,7 +1,4 @@
-{
-  lib,
-  ...
-}:
+{ lib, ... }:
 {
   fileSystems."/opt/hath" = {
     device = "/dev/disk/by-id/scsi-0Linode_Volume_hath";

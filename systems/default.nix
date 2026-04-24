@@ -9,7 +9,7 @@ let
     ;
 
   inhouse = ./inhouse |> forFoldersAsSystems finalSystem;
-  shitara = ./shitara |> forNixFilesAsSystems finalLinodeSystem;
+  shitara = ./shitara |> forFoldersAsSystems finalLinodeSystem;
   nixos = inhouse // shitara;
   darwin = ./darwin |> forNixFilesAsSystems finalDarwinSystem;
 in

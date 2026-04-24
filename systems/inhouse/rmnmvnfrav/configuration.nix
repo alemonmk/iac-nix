@@ -24,9 +24,4 @@
   };
 
   users.ms-ad.enable = false;
-
-  imports = [
-    ./firewall.nix
-    ./remote-access-vpn.nix
-  ];
 }

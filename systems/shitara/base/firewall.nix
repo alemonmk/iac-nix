@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   networking.firewall.enable = false;
   networking.nftables = {
@@ -5,7 +6,7 @@
     flushRuleset = true;
     tables.global = {
       family = "inet";
-      content = ''
+      content = lib.modules.mkBefore ''
         chain input {
         	type filter hook input priority filter; policy drop;
           iif "lo" accept
@@ -20,7 +21,7 @@
     };
     tables.nat = {
       family = "ip";
-      content = ''
+      content = lib.modules.mkBefore ''
         chain source-nat {
         }
         chain clamp-mss {

@@ -1,6 +1,7 @@
-{ config, ... }:
+{ self, config, ... }:
 {
   imports = [
+    self.nixosModules.vpn-route-gen
     ./firewall.nix
     ./cluster-overlay.nix
     ./mopdc-tunnel.nix
@@ -28,7 +29,7 @@
 
   services.prometheus.exporters.node =
     let
-      netConfig = import ./netconfigs.nix config.networking.hostName;
+      netConfig = import ../../netconfigs.nix config.networking.hostName;
     in
     {
       enable = true;

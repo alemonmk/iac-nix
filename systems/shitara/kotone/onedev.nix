@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}:
+{ config, ... }:
 {
   systemd.tmpfiles.settings = {
     "10-onedev"."/opt/onedev".d = {

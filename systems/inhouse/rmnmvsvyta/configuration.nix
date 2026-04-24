@@ -19,9 +19,4 @@
   };
 
   services.caddy.enable = true;
-
-  imports = [
-    ./jellyfin.nix
-    ./metube.nix
-  ];
 }

@@ -16,13 +16,4 @@
   };
 
   services.caddy.enable = true;
-
-  imports = [
-    ./secrets.nix
-    ./metrics.nix
-    ./telegraf.nix
-    ./log-receiver.nix
-    ./oxidized.nix
-    ./grafana.nix
-  ];
 }

@@ -19,10 +19,4 @@
   ];
 
   services.caddy.enable = true;
-
-  imports = [
-    ./secrets.nix
-    ./code-server.nix
-    ./hydra-binary-cache.nix
-  ];
 }

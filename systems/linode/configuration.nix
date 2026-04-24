@@ -1,12 +1,4 @@
 {
-  imports = [
-    ./hardware.nix
-    ../nix.nix
-    ../security.nix
-    ../debloats.nix
-    ../shells.nix
-  ];
-
   system.stateVersion = "25.05";
 
   i18n.defaultLocale = "en_US.UTF-8";

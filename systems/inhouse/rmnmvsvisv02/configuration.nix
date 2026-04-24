@@ -11,9 +11,4 @@
     ];
     networkConfig.LLDP = false;
   };
-
-  imports = [
-    ./vault.nix
-    ./secrets.nix
-  ];
 }

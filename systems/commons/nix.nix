@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ flakeRoot, pkgs, ... }:
 {
   nix.channel.enable = false;
   nix.settings = {
@@ -26,7 +26,11 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ (import ../overlays/stable.nix) ];
+    overlays =
+      let
+        over-stable = import (flakeRoot + /overlays/stable.nix);
+      in
+      [ over-stable ];
   };
 
   environment.systemPackages = [

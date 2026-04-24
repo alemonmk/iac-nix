@@ -11,7 +11,12 @@
   ...
 }@inputs:
 let
-  inherit (nixpkgs.lib.lists) map filter flatten;
+  inherit (nixpkgs.lib.lists)
+    elem
+    map
+    filter
+    flatten
+    ;
   inherit (nixpkgs.lib.attrsets)
     attrNames
     attrValues
@@ -40,19 +45,31 @@ let
   newLinuxSystem = modules: modules |> mkConfigFor linuxSystem |> nixpkgs.lib.nixosSystem;
   newDarwinSystem = modules: modules |> mkConfigFor darwinSystem |> nix-darwin.lib.darwinSystem;
 
+  forNixFilesAsModules =
+    let
+      notHasPrefix = p: v: !hasPrefix p v;
+    in
+    base:
+    base
+    |> listNixFiles
+    |> filter (notHasPrefix "default")
+    |> map (removeSuffix ".nix")
+    |> genAttrs (n: base + /${n}.nix);
+  forNixFilesAsModules' = base: base |> self.lib.forNixFilesAsModules |> attrValues;
+
   modulesInhouse = [
-    (attrValues self.nixosModules)
+    (self.nixosModules |> attrValues)
     impermanence.nixosModules.impermanence
     sops-nix.nixosModules.sops
     home-manager-linux.nixosModules.home-manager
-    ../base/inhouse/configuration.nix
+    (../systems/commons |> self.lib.forNixFilesAsModules')
     ../home/nixos
   ];
   modulesLinodes = [
-    self.nixosModules.vpn-route-gen
     sops-nix.nixosModules.sops
     home-manager-linux.nixosModules.home-manager
-    ../base/linode/configuration.nix
+    (../systems/commons |> self.lib.forNixFilesAsModules')
+    (../systems/linode |> self.lib.forNixFilesAsModules')
     ../home/nixos
   ];
   modulesDarwin = [
@@ -69,6 +86,13 @@ let
 in
 {
   inherit genAttrs;
+  importAndInit = n: import n inputs;
+
+  inherit linuxPackageFrom linuxPackagesFrom;
+  mkLinuxPackageSet = set: set |> mapAttrs (_: v: linuxPackageFrom v);
+
+  inherit forNixFilesAsModules forNixFilesAsModules';
+
   inherit newLinuxSystem newDarwinSystem;
 
   stage1System =
@@ -112,20 +136,16 @@ in
     let
       sysDef = base: host: [
         { networking.hostName = host; }
-        (base + /${host}/configuration.nix)
+        (base + /base |> self.lib.forNixFilesAsModules')
+        (base + /${host} |> self.lib.forNixFilesAsModules')
       ];
+      ignores = [ "base" ];
     in
-    builder: base: base |> listFolders |> genAttrs (host: host |> sysDef base |> builder);
-  forNixFilesAsModules =
-    let
-      notHasPrefix = p: v: !(hasPrefix p v);
-    in
-    base:
+    builder: base:
     base
-    |> listNixFiles
-    |> filter (notHasPrefix "default")
-    |> map (removeSuffix ".nix")
-    |> genAttrs (n: base + /${n}.nix);
+    |> listFolders
+    |> filter (n: !elem n ignores)
+    |> genAttrs (host: host |> sysDef base |> builder);
   forNixFilesAsSystems =
     let
       sysDef = base: host: [
@@ -138,8 +158,4 @@ in
     |> listNixFiles
     |> map (removeSuffix ".nix")
     |> genAttrs (host: host |> sysDef base |> builder);
-
-  inherit linuxPackageFrom linuxPackagesFrom;
-  mkLinuxPackageSet = set: set |> mapAttrs (_: v: linuxPackageFrom v);
-  importAndInit = n: import n inputs;
 }

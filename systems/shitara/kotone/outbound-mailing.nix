@@ -19,7 +19,7 @@
     extraServerArgs = [ "-P mda" ];
     serverConfiguration =
       let
-        netConfig = import ../base/netconfigs.nix config.networking.hostName;
+        netConfig = import ../../netconfigs.nix config.networking.hostName;
         dkimSignCmd = lib.strings.concatStringsSep " " [
           "filter-dkimsign"
           "-t"

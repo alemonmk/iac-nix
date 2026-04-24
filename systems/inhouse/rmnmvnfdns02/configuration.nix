@@ -11,6 +11,4 @@
     ];
     networkConfig.LLDP = false;
   };
-
-  imports = [ ./dns-server.nix ];
 }

@@ -11,9 +11,4 @@
     ];
     networkConfig.LLDP = false;
   };
-
-  imports = [
-    ./secrets.nix
-    ./pgbackweb.nix
-  ];
 }
