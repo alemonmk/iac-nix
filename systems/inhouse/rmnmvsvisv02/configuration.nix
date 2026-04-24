@@ -14,5 +14,6 @@
 
   imports = [
     ./vault.nix
+    ./secrets.nix
   ];
 }
