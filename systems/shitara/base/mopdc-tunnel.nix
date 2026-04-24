@@ -38,6 +38,8 @@ mkIf (netConfig ? pdc-tunnel) (
       };
     };
 
+    sops.secrets.ipsec-psk.sopsFile = flakeRoot + /secrets/shitara/ipsec.yaml;
+
     services.strongswan-swanctl = {
       enable = true;
       strongswan.extraConfig = ''
