@@ -203,7 +203,7 @@ in
         s3ConfigFile = mkOption {
           description = ''
             File containing basic S3 IAM configurations, i.e. access keys.
-            if both s3ConfigFile and iamConfigFile are not supplied, the gateway defaults to open access.
+            if both s3ConfigFile and iamConfigFile are not supplied, the gateway defaults to open access. Basic IAM can be configured in admin UI.
             See [S3 Configuration](https://github.com/seaweedfs/seaweedfs/wiki/S3-Configuration) and [S3 Credentials](https://github.com/seaweedfs/seaweedfs/wiki/S3-Credentials).
           '';
           default = null;
@@ -212,6 +212,7 @@ in
         iamConfigFile = mkOption {
           description = ''
             File containing advanced S3 IAM configurations, i.e. OIDC, STS, IAM policies.
+            Advanced IAM cannot be configured in admin UI.
             See [here](https://github.com/seaweedfs/seaweedfs/wiki/OIDC-Integration).
           '';
           default = null;
