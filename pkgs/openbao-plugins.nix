@@ -29,7 +29,7 @@ let
       ldflags = [
         "-s"
         "-w"
-        "-X github.com/openbao/openbao-plugins/${subPackage}.pluginVersion=${version}"
+        "-X github.com/openbao/openbao-plugins/${subPackage}.pluginVersion=v${version}"
       ];
       subPackages = [ "${subPackage}/cmd" ];
 
