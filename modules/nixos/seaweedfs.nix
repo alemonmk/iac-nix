@@ -368,7 +368,17 @@ in
           };
           mastersList =
             if cfg.master.enable then
-              "${cfg.listenAddr}:${toString cfg.master.port},${lib.concatStringsSep "," cfg.master.peers}"
+              lib.concatStringsSep "," (
+                lib.pipe
+                  [
+                    "${cfg.listenAddr}:${toString cfg.master.port}"
+                    cfg.master.peers
+                  ]
+                  [
+                    lib.flatten
+                    lib.uniqueStrings
+                  ]
+              )
             else
               lib.concatStringsSep "," cfg.masters;
         in
