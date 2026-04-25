@@ -68,8 +68,8 @@ notify:
   max_elapsed: 2m
   # queue delay is the amount of time vault-unseal waits after the last received
   # notification, before it sends all of them in bulk.
-  queue_delay: 60s
+  queue_delay: 5m
   # list of URLs to send notifications to. for more information, see:
   #   https://shoutrrr.nickfedor.com/latest/services/overview/
   urls:
-    - "smtp://10.85.183.6/?fromaddress=it-services@rmntn.net&toaddresses=dop@rmntn.net&auth=none&clienthost=auto&fromname=Secret%20Vault%20Auto%20Unsealer"
+    - "smtp://10.85.183.6/?fromaddress=it-services@rmntn.net&toaddresses=dop@rmntn.net&auth=none&clienthost=auto&fromname=Infra%20secrets%20vault%20auto-unsealer"
