@@ -2,19 +2,34 @@
   self,
   flakeRoot,
   config,
+  lib,
   pkgs,
   ...
 }:
+let
+  inherit (builtins) hashFile;
+  plugin-secrets-aws = self.packages.x86_64-linux.openbao-plugins-secrets-aws;
+  plugin-secrets-consul = self.packages.x86_64-linux.openbao-plugins-secrets-consul;
+  plugin-secrets-nomad = self.packages.x86_64-linux.openbao-plugins-secrets-nomad;
+  plugin_dir = pkgs.buildEnv {
+    name = "openbao-plugins";
+    paths = [
+      plugin-secrets-aws
+      plugin-secrets-consul
+      plugin-secrets-nomad
+    ];
+  };
+in
 {
   imports = [ self.nixosModules.vault-unseal ];
 
   services.openbao = {
     enable = true;
-    package = pkgs.vault-bin;
     settings = {
       listener.default = {
         type = "tcp";
-        address = "10.85.183.6:8200";
+        address = "[::]:8200";
+        x_forwarded_for_authorized_addrs = "127.0.0.1,10.85.183.0/28,10.91.145.32/28";
         tls_cert_file =
           (pkgs.writeTextFile {
             name = "vault-mtls-chain.crt";
@@ -27,9 +42,8 @@
         tls_min_version = "tls13";
       };
       api_addr = "https://secrets.snct.rmntn.net";
-      cluster_addr = "10.85.183.6:8201";
+      cluster_addr = "https://10.85.183.6:8201";
       cluster_name = "rmntn-secrets-1";
-      disable_mlock = true;
       max_lease_ttl = "12h";
       default_lease_ttl = "4h";
       user_lockout.all = {
@@ -45,6 +59,35 @@
         ];
         path = "/var/lib/openbao";
       };
+      plugin_directory = "${plugin_dir}/bin";
+      plugin = [
+        {
+          secret.aws = {
+            command = plugin-secrets-aws.meta.mainProgram;
+            version = "v${plugin-secrets-aws.version}";
+            binary_name = plugin-secrets-aws.meta.mainProgram;
+            sha256sum = hashFile "sha256" (lib.meta.getExe plugin-secrets-aws);
+          };
+        }
+        {
+          secret.consul = {
+            command = plugin-secrets-consul.meta.mainProgram;
+            version = "v${plugin-secrets-consul.version}";
+            binary_name = plugin-secrets-consul.meta.mainProgram;
+            sha256sum = hashFile "sha256" (lib.meta.getExe plugin-secrets-consul);
+          };
+        }
+        {
+          secret.nomad = {
+            command = plugin-secrets-nomad.meta.mainProgram;
+            version = "v${plugin-secrets-nomad.version}";
+            binary_name = plugin-secrets-nomad.meta.mainProgram;
+            sha256sum = hashFile "sha256" (lib.meta.getExe plugin-secrets-nomad);
+          };
+        }
+      ];
+      plugin_auto_download = false;
+      plugin_auto_register = true;
       ui = true;
     };
   };
