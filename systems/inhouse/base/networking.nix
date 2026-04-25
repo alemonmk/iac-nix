@@ -22,7 +22,7 @@
     proxy = lib.modules.mkDefault {
       httpProxy = "http://10.85.20.10:3128";
       httpsProxy = "http://10.85.20.10:3128";
-      noProxy = "127.0.0.1,localhost,.snct.rmntn.net";
+      noProxy = "127.0.0.1,localhost,.snct.rmntn.net,10.0.0.0/8";
     };
   };
 
