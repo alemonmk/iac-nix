@@ -27,7 +27,11 @@ in
         port = 5301;
         grpcPort = 5311;
         volumeSizeLimitMB = 4096;
-        defaultReplicationStrategy = mkDefault "110";
+        defaultReplicationStrategy = mkDefault {
+          toOtherDatacenters = 1;
+          toOtherRacks = 1;
+          toOwnRack = 0;
+        };
       };
       filer = {
         enable = mkDefault true;
