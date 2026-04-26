@@ -20,6 +20,7 @@ in
         port
         ints
         enum
+        submodule
         ;
       inherit (lib.options)
         mkOption
@@ -147,8 +148,27 @@ in
         };
         defaultReplicationStrategy = mkOption {
           description = "Default replication strategy. See [here](https://github.com/seaweedfs/seaweedfs/wiki/Replication#the-meaning-of-replication-type).";
-          default = "000";
-          type = str;
+          type = submodule {
+            options = {
+              toOtherDatacenters = mkOption {
+                description = "Amount of replicas to other datacenters.";
+                type = ints.between 0 2;
+              };
+              toOtherRacks = mkOption {
+                description = "Amount of replicas to other racks within node's own datacenter.";
+                type = ints.between 0 5;
+              };
+              toOwnRack = mkOption {
+                description = "Amount of replicas to other servers within node's own rack.";
+                type = ints.between 0 5;
+              };
+            };
+          };
+          default = {
+            toOtherDatacenters = 0;
+            toOtherRacks = 0;
+            toOwnRack = 0;
+          };
         };
         extraArgs = mkOption {
           description = "Extra arguments to be passed to `weed volume`.";
@@ -381,6 +401,11 @@ in
               )
             else
               lib.concatStringsSep "," cfg.masters;
+          drsString =
+            let
+              drs = cfg.volume.defaultReplicationStrategy;
+            in
+            lib.concatMapStrings toString (lib.attrVals (lib.attrNames drs) drs);
         in
         lib.listToAttrs (
           lib.optional cfg.master.enable {
@@ -400,7 +425,7 @@ in
                     "-port.grpc=${toString cfg.master.grpcPort}"
                     "-peers=${lib.concatStringsSep "," cfg.master.peers}"
                     "-volumeSizeLimitMB=${toString cfg.volume.volumeSizeLimitMB}"
-                    "-defaultReplication=${cfg.volume.defaultReplicationStrategy}"
+                    "-defaultReplication=${drsString}"
                   ]
                   ++ cfg.master.extraArgs
                 );
