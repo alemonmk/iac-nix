@@ -9,6 +9,8 @@ let
   cfg = config.services.seaweedfs;
 in
 {
+  # disabledModules = [ "services/network-filesystems/seaweedfs.nix" ];
+
   options.services.seaweedfs =
     let
       inherit (lib.types)
