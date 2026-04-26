@@ -392,6 +392,7 @@ in
               description = "SeaweedFS master server";
               serviceConfig = service-commons // {
                 WorkingDirectory = "${cfg.rootDir}/master";
+                LimitNOFILE = 65535;
                 ExecStart = lib.strings.concatStringsSep " " (
                   [
                     pkgExe
@@ -415,6 +416,7 @@ in
               description = "SeaweedFS volume server";
               serviceConfig = service-commons // {
                 WorkingDirectory = "${cfg.rootDir}/volume";
+                LimitNOFILE = 65535;
                 ExecStart =
                   let
                     cmd = [
@@ -443,6 +445,7 @@ in
             value = unit-commons // {
               description = "SeaweedFS filer";
               serviceConfig = service-commons // {
+                LimitNOFILE = 65535;
                 WorkingDirectory = "${cfg.rootDir}/filer";
                 ExecStart =
                   let
