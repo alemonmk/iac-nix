@@ -5,13 +5,12 @@ let
     finalLinodeSystem
     finalDarwinSystem
     forFoldersAsSystems
-    forNixFilesAsSystems
     ;
 
   inhouse = ./inhouse |> forFoldersAsSystems finalSystem;
   shitara = ./shitara |> forFoldersAsSystems finalLinodeSystem;
   nixos = inhouse // shitara;
-  darwin = ./darwin |> forNixFilesAsSystems finalDarwinSystem;
+  darwin.chisa = finalDarwinSystem ./darwin/chisa.nix;
 in
 {
   inherit nixos darwin;

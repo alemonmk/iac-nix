@@ -91,8 +91,6 @@ in
   inherit linuxPackageFrom linuxPackagesFrom;
   mkLinuxPackageSet = set: set |> mapAttrs (_: v: linuxPackageFrom v);
 
-  inherit forNixFilesAsModules forNixFilesAsModules';
-
   inherit newLinuxSystem newDarwinSystem;
 
   stage1System =
@@ -132,6 +130,8 @@ in
     |> flatten
     |> newDarwinSystem;
 
+  inherit forNixFilesAsModules forNixFilesAsModules';
+
   forFoldersAsSystems =
     let
       sysDef = base: host: [
@@ -145,17 +145,5 @@ in
     base
     |> listFolders
     |> filter (n: !elem n ignores)
-    |> genAttrs (host: host |> sysDef base |> builder);
-  forNixFilesAsSystems =
-    let
-      sysDef = base: host: [
-        { networking.hostName = host; }
-        (base + /${host}.nix)
-      ];
-    in
-    builder: base:
-    base
-    |> listNixFiles
-    |> map (removeSuffix ".nix")
     |> genAttrs (host: host |> sysDef base |> builder);
 }
