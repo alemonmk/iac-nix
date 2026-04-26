@@ -1,5 +1,6 @@
 {
   config,
+  options,
   lib,
   ...
 }:
@@ -33,6 +34,8 @@
       };
     };
 
-    environment.persistence."/nix/persist".directories = [ "/var/lib/caddy/.local" ];
+    environment = lib.attrsets.optionalAttrs (options.environment ? persistence) {
+      persistence."/nix/persist".directories = [ "/var/lib/caddy/.local" ];
+    };
   };
 }
