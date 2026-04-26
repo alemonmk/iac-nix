@@ -33,12 +33,14 @@
       in
       ''
         table cluster-net { 10.85.183.0/28, 10.91.145.32/28 }
+        table secrets-vault { 10.85.101.9, 10.85.101.10 }
         table outbound-src { ${netConfig.wan.v4} }
         filter dkim-sign proc-exec "${dkimSignCmd}" user ${dkimSignUser} group ${dkimSignUser}
         listen on socket filter "dkim-sign"
         listen on ${netConfig.lo} port 25 filter "dkim-sign"
         action "outbound" relay src <outbound-src>
         match from src <cluster-net> for any action "outbound"
+        match from src <secrets-vault> for any action "outbound"
       '';
   };
 
