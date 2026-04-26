@@ -326,10 +326,7 @@ in
         };
       };
 
-      environment.systemPackages = [
-        cfg.package
-      ]
-      ++ lib.optional cfg.volume.useRustServer seaweedfs-volume-rust;
+      environment.systemPackages = [ cfg.package ];
 
       users.users.${cfg.user} = {
         isSystemUser = true;
