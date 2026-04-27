@@ -47,6 +47,7 @@
     systemd.services = {
       unattended-installer = {
         wantedBy = [ "multi-user.target" ];
+        wants = [ "network-online.target" ];
         path = [
           "/run/wrappers"
           "/run/current-system/sw"

@@ -25,6 +25,7 @@
   virtualisation.vmware.guest.enable = true;
   networking.hostName = "nixos-installer";
   networking.useDHCP = true;
+  systemd.network.wait-online.enable = true;
   networking.networkmanager.enable = lib.modules.mkForce false;
   networking.firewall.enable = false;
   fonts.fontconfig.enable = false;
