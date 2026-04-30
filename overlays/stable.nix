@@ -31,8 +31,4 @@ final: prev: {
   squid = prev.squid.override { ipv6 = false; };
 
   zerotierone = prev.zerotierone.override { enableUnfree = true; };
-
-  openbao = prev.openbao.overrideAttrs {
-    patches = prev.openbao.patches ++ [ ./openbao-plugin-path-validation.patch ];
-  };
 }
