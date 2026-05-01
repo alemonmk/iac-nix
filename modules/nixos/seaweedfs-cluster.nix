@@ -8,18 +8,23 @@
 }:
 let
   inherit (lib.modules) mkDefault;
-  enabled = config.services.seaweedfs.dataCenter != null;
+  enabled = config.services.seaweedfs.dataCenter != "DefaultDataCenter";
 in
 {
   config = lib.modules.mkIf enabled {
     services.seaweedfs = {
       rootDir = "/s3";
       package = nixpkgs-next.seaweedfs;
-      # securityFile = config.sops.secrets.seaweedfs-security.path;
+      securityFile = config.sops.secrets.seaweedfs-security.path;
       master = {
         enable = mkDefault true;
         port = 5300;
         grpcPort = 5310;
+        peers = [
+          "10.81.70.19:5300.5310"
+          "10.81.70.20:5300.5310"
+          "10.85.183.6:5300.5310"
+        ];
       };
       volume = {
         enable = mkDefault true;
@@ -51,13 +56,13 @@ in
       };
       S3Gateway = {
         enable = mkDefault true;
-        port = 5304;
-        grpcPort = 5314;
+        port = 5303;
+        grpcPort = 5313;
       };
       adminUI = {
         enable = mkDefault true;
-        port = 5305;
-        grpcPort = 5315;
+        port = 5304;
+        grpcPort = 5314;
         urlPrefix = "/management";
       };
       maintenance = {
