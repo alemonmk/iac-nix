@@ -1,0 +1,3 @@
+acl docker dstdomain download.docker.com hub.docker.com registry-1.docker.io auth.docker.io production.cloudflare.docker.com
+acl ghcr dstdomain ghcr.io pkg-containers.githubusercontent.com
+acl rcr dstdomain code.rmntn.net

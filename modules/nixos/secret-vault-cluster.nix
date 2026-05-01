@@ -9,80 +9,76 @@
 }:
 {
   config = lib.modules.mkIf config.services.openbao.enable {
-    services.openbao =
-      let
-        plugin-secrets-aws = self.packages.x86_64-linux.openbao-plugins-secrets-aws;
-        plugin-secrets-consul = self.packages.x86_64-linux.openbao-plugins-secrets-consul;
-        plugin-secrets-nomad = self.packages.x86_64-linux.openbao-plugins-secrets-nomad;
-        plugin_dir = pkgs.buildEnv {
-          name = "openbao-plugins";
-          paths = [
-            plugin-secrets-aws
-            plugin-secrets-consul
-            plugin-secrets-nomad
-          ];
-        };
-      in
-      {
-        settings = {
-          listener.default = {
-            type = "tcp";
-            address = "[::]:8200";
-            x_forwarded_for_authorized_addrs = "127.0.0.1,10.85.183.0/28,10.91.145.32/28";
-            tls_cert_file =
-              (pkgs.writeTextFile {
-                name = "vault-mtls-chain.crt";
-                text = ''
-                  ${builtins.readFile (flakeRoot + /blobs/secrets-vault/mtls.crt)}
-                  ${builtins.readFile (flakeRoot + /blobs/pki/v1.crt)}
-                '';
-              }).outPath;
-            tls_key_file = "/run/credentials/openbao.service/tls-key";
-            tls_min_version = "tls13";
-          };
-          max_lease_ttl = "12h";
-          default_lease_ttl = "4h";
-          user_lockout.all = {
-            lockout_threshold = "3";
-            lockout_duration = "30m";
-            lockout_counter_reset = "15m";
-          };
-          storage.raft.path = "/var/lib/openbao";
-          plugin_directory = "${plugin_dir}/bin";
-          plugin = [
-            {
-              secret.aws = {
-                command = plugin-secrets-aws.meta.mainProgram;
-                version = "v${plugin-secrets-aws.version}";
-                binary_name = plugin-secrets-aws.meta.mainProgram;
-                sha256sum = "d7ef575a9a2cee1717371832633b0b3ed301cf3e450e50720d0d378f82f57609";
-              };
-            }
-            {
-              secret.consul = {
-                command = plugin-secrets-consul.meta.mainProgram;
-                version = "v${plugin-secrets-consul.version}";
-                binary_name = plugin-secrets-consul.meta.mainProgram;
-                sha256sum = "573e9d73add0e4d861e0547a4be60d0e3b7d07df0e145e2b41b3817328bc516c";
-              };
-            }
-            {
-              secret.nomad = {
-                command = plugin-secrets-nomad.meta.mainProgram;
-                version = "v${plugin-secrets-nomad.version}";
-                binary_name = plugin-secrets-nomad.meta.mainProgram;
-                sha256sum = "adb5bc143a67b03b6e021a9d30de8629b52cd85714753c65a7fc0e24faf4e0ee";
-              };
-            }
-          ];
-          plugin_auto_download = false;
-          plugin_auto_register = true;
-          ui = true;
-        };
+    services.openbao.settings = {
+      listener.default = {
+        type = "tcp";
+        address = "[::]:8200";
+        x_forwarded_for_authorized_addrs = "127.0.0.1,10.85.183.0/28,10.91.145.32/28";
+        tls_cert_file =
+          (pkgs.writeTextFile {
+            name = "vault-mtls-chain.crt";
+            text = ''
+              ${builtins.readFile (flakeRoot + /blobs/secrets-vault/mtls.crt)}
+              ${builtins.readFile (flakeRoot + /blobs/pki/v1.crt)}
+            '';
+          }).outPath;
+        tls_key_file = "/run/credentials/openbao.service/tls-key";
+        tls_min_version = "tls13";
       };
+      max_lease_ttl = "12h";
+      default_lease_ttl = "4h";
+      user_lockout.all = {
+        lockout_threshold = "3";
+        lockout_duration = "30m";
+        lockout_counter_reset = "15m";
+      };
+      storage.raft.path = "/var/lib/openbao";
+      plugin_directory = "/var/lib/private/openbao/plugins";
+      plugin = [
+        {
+          secret.aws = {
+            image = "ghcr.io/openbao/openbao-plugin-secrets-aws";
+            version = "v0.3.0-beta20260326";
+            binary_name = "openbao-plugin-secrets-aws";
+            # obtained with `nix run nixpkgs#crane -- export <image> - | tar Oxf - | sha256sum`
+            sha256sum = "9aaa8f2597f1bfa98a727a6230d9c7f62f096e1d25607fab3a9f9cc8ce48af7a";
+          };
+        }
+        {
+          secret.consul = {
+            image = "ghcr.io/openbao/openbao-plugin-secrets-consul";
+            version = "v0.1.0";
+            binary_name = "openbao-plugin-secrets-consul";
+            sha256sum = "5c5f662a7192aad87de37b82b7479c7b6e19d99ef021e8b80ce4d423a5fc8af1";
+          };
+        }
+        {
+          secret.nomad = {
+            image = "ghcr.io/openbao/openbao-plugin-secrets-nomad";
+            version = "v0.1.5";
+            binary_name = "openbao-plugin-secrets-nomad";
+            sha256sum = "a5df5663520e40bc1d0a6ed5a52e5bb2eab7c2de165f4cc9a0a2fce6604eae09";
+          };
+        }
+      ];
+      plugin_auto_download = true;
+      plugin_auto_register = true;
+      ui = true;
+    };
 
-    systemd.services.openbao.serviceConfig.LoadCredential =
-      "tls-key:${config.sops.secrets.vault-mtls-key.path}";
+    systemd.services.openbao = {
+      environment = lib.optionalAttrs (config.networking.proxy.httpProxy != null) {
+        http_proxy = config.networking.proxy.httpProxy;
+        https_proxy = config.networking.proxy.httpsProxy;
+        no_proxy = config.networking.proxy.noProxy;
+      };
+      serviceConfig = {
+        LoadCredential = "tls-key:${config.sops.secrets.vault-mtls-key.path}";
+        # Needed when running OCI plugins in StateDirectory
+        # https://github.com/NixOS/nixpkgs/issues/513847
+        ExecPaths = [ "/var/lib/openbao" ];
+      };
+    };
 
     services.vault-unseal = {
       enable = true;
