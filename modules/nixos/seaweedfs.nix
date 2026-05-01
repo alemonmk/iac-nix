@@ -136,7 +136,7 @@ in
         indexDb = mkOption {
           description = ''
             Volume index backend.
-            If using Rust volume server, it will be forced to `redb`. See [here](https://github.com/seaweedfs/seaweedfs/wiki/Rust-Volume-Server#index-backend).
+            If using Rust volume server, all `leveldb` variants become `redb` internally. See [here](https://github.com/seaweedfs/seaweedfs/wiki/Rust-Volume-Server#index-backend).
           '';
           default = "leveldb";
           type = enum [
@@ -453,9 +453,8 @@ in
                       "-master ${mastersList}"
                       "-dataCenter ${cfg.dataCenter}"
                       "-rack ${cfg.rack}"
+                      "-index ${cfg.volume.indexDb}"
                     ]
-                    ++ lib.optional cfg.volume.useRustServer "-index redb"
-                    ++ lib.optional (!cfg.volume.useRustServer) "-index ${cfg.volume.indexDb}"
                     ++ cfg.volume.extraArgs;
                   in
                   lib.strings.concatStringsSep " " cmd;

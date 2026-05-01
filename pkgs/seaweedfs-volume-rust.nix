@@ -6,17 +6,17 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "seaweedfs-volume-rust";
-  version = "4.21";
+  version = "4.22-unstable-20260429";
 
   src = fetchFromGitHub {
     owner = "seaweedfs";
     repo = "seaweedfs";
-    tag = finalAttrs.version;
-    hash = "sha256-toOPtQeqoluHZoUd/r0ZT8C/SdPPT7KKgU8Jd/XH5hA=";
+    rev = "e82789ea4bf7a19eb6f40a93d795a12b3e9567ff";
+    hash = "sha256-0j1MGxQZY63QGkonsGwMkRF5DH1mWOhN3Xc5lci6vXM=";
   };
   sourceRoot = "${finalAttrs.src.name}/seaweed-volume";
 
-  cargoHash = "sha256-Vj6krBkyCHjC+iyKtsi7QXrHwR8Hk7nNtfkjq9kHf8w=";
+  cargoHash = "sha256-XPsuJdNsMNEUuYXUDBQwFuyCBbF3zHPwuZKIciBP6o0=";
 
   nativeBuildInputs = [ protobuf ];
 
