@@ -311,7 +311,7 @@ in
       ];
 
       systemd.tmpfiles.settings = {
-        "10-s3-dir".d =
+        "10-s3-dir" =
           let
             dirs = [
               "${cfg.rootDir}"
@@ -321,28 +321,31 @@ in
             ++ lib.optional cfg.filer.enable "${cfg.rootDir}/filer"
             ++ lib.optional cfg.adminUI.enable "${cfg.rootDir}/mgmtpanel";
             generator = _: {
-              mode = "1750";
-              user = cfg.user;
-              group = cfg.user;
+              d = {
+                mode = "1750";
+                user = cfg.user;
+                group = cfg.user;
+              };
             };
           in
           lib.genAttrs dirs generator;
       }
       // lib.optionalAttrs (cfg.securityFile != null) {
-        "15-s3-security"."L?" =
+        "15-s3-security" =
           let
             files = lib.map (c: "${cfg.rootDir}/${c}/security.toml") (
               lib.optional cfg.master.enable "master"
-              ++ lib.optional cfg.volume.enable "volume"
+              ++ lib.optional cfg.volume.enable "volumes"
               ++ lib.optional cfg.filer.enable "filer"
+              ++ lib.optional cfg.adminUI.enable "mgmtpanel"
             );
-            generator = _: { argument = cfg.securityFile; };
+            generator = _: { "L?".argument = cfg.securityFile; };
           in
           lib.genAttrs files generator;
       }
       // lib.optionalAttrs (cfg.filer.enable && cfg.filer.filerStoreConfig != null) {
-        "16-s3-filerstore"."L?" = {
-          "${cfg.rootDir}/filer/filer.toml".argument = cfg.filer.filerStoreConfig;
+        "16-s3-filerstore"."${cfg.rootDir}/filer/filer.toml" = {
+          "L?".argument = cfg.filer.filerStoreConfig;
         };
       };
 
