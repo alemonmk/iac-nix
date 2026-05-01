@@ -21,6 +21,13 @@
     };
   };
 
+  services.caddy = {
+    virtualHosts."secrets.snct.rmntn.net" = {
+      listenAddresses = [ "10.85.183.6" ];
+      extraConfig = "reverse_proxy https://10.85.183.6:8200";
+    };
+  };
+
   networking.nftables.tables.global.content = ''
     chain service-input {
       iifname ne "eth0" ip daddr 10.85.183.6 tcp dport 8200 counter accept
