@@ -371,6 +371,7 @@ in
             Group = cfg.user;
             RestartSec = 10;
             Restart = "on-failure";
+            CapabilityBoundingSet = [ "" ];
             MemoryDenyWriteExecute = true;
             NoNewPrivileges = true;
             LockPersonality = true;
@@ -379,18 +380,23 @@ in
             ProtectSystem = "strict";
             ProtectClock = true;
             ProtectHostname = true;
+            ProtectProc = "invisible";
             PrivateUsers = true;
             PrivateDevices = true;
             ProtectKernelLogs = true;
             ProtectKernelModules = true;
             ProtectKernelTunables = true;
             ProtectControlGroups = true;
+            RemoveIPC = true;
+            RestrictNamespaces = true;
             RestrictRealtime = true;
             RestrictSUIDSGID = true;
             RestrictAddressFamilies = [
+              "AF_NETLINK"
               "AF_INET"
               "AF_INET6"
             ];
+            SystemCallArchitectures = "native";
           };
           mastersList =
             if cfg.master.enable then
@@ -425,6 +431,7 @@ in
               description = "SeaweedFS master server";
               serviceConfig = service-commons // {
                 WorkingDirectory = "${cfg.rootDir}/master";
+                ReadWritePaths = [ "${cfg.rootDir}/master" ];
                 LimitNOFILE = 65535;
                 ExecStart = lib.strings.concatStringsSep " " (
                   [
@@ -432,6 +439,7 @@ in
                     "master"
                     "-mdir=${cfg.rootDir}/master"
                     "-ip=${cfg.listenAddr}"
+                    "-ip.bind=${cfg.listenAddr}"
                     "-port=${toString cfg.master.port}"
                     "-port.grpc=${toString cfg.master.grpcPort}"
                     "-peers=${lib.concatStringsSep "," cfg.master.peers}"
@@ -448,7 +456,8 @@ in
             value = unit-commons // {
               description = "SeaweedFS volume server";
               serviceConfig = service-commons // {
-                WorkingDirectory = "${cfg.rootDir}/volume";
+                WorkingDirectory = "${cfg.rootDir}/volumes";
+                ReadWritePaths = [ "${cfg.rootDir}/volumes" ];
                 LimitNOFILE = 65535;
                 ExecStart =
                   let
@@ -479,6 +488,8 @@ in
               serviceConfig = service-commons // {
                 LimitNOFILE = 65535;
                 WorkingDirectory = "${cfg.rootDir}/filer";
+                ReadWritePaths = [ "${cfg.rootDir}/filer" ];
+                RestrictAddressFamilies = service-commons.RestrictAddressFamilies ++ [ "AF_UNIX" ];
                 ExecStart =
                   let
                     cmd = [
@@ -503,6 +514,8 @@ in
             value = unit-commons // {
               description = "SeaweedFS S3 Gateway";
               serviceConfig = service-commons // {
+                WorkingDirectory = "${cfg.rootDir}/filer";
+                RestrictAddressFamilies = service-commons.RestrictAddressFamilies ++ [ "AF_UNIX" ];
                 ExecStart =
                   let
                     cmd = [
@@ -528,6 +541,7 @@ in
               description = "SeaweedFS admin UI";
               serviceConfig = service-commons // {
                 WorkingDirectory = "${cfg.rootDir}/mgmtpanel";
+                ReadWritePaths = [ "${cfg.rootDir}/mgmtpanel" ];
                 ExecStart =
                   let
                     cmd = [
