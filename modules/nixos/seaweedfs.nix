@@ -218,9 +218,15 @@ in
           type = port;
         };
         filerAddr = mkOption {
-          description = "Filer server to use. Will be ignored when using local filer server.";
-          default = null;
-          type = nullOr str;
+          description = "Filer servers to use. Forced to local filer if using one.";
+          default = [ ];
+          example = literalExpression ''
+            [
+              "192.168.0.1:9333"
+              "192.168.0.2:9399"
+            ]
+          '';
+          type = listOf str;
         };
         s3ConfigFile = mkOption {
           description = ''
@@ -298,10 +304,7 @@ in
           message = "Master server must run locally when there's no masters to join.";
         }
         {
-          assertion =
-            !cfg.filer.enable && cfg.S3Gateway.enable
-            -> cfg.S3Gateway.filerAddr != null
-            -> cfg.S3Gateway.filerAddr != "";
+          assertion = !cfg.filer.enable && cfg.S3Gateway.enable -> cfg.S3Gateway.filerAddr != [ ];
           message = "services.seaweed.S3Gateway.filerAddr must be set when local filer server is not enabled.";
         }
         {
@@ -394,7 +397,7 @@ in
               lib.concatStringsSep "," (
                 lib.pipe
                   [
-                    "${cfg.listenAddr}:${toString cfg.master.port}"
+                    "${cfg.listenAddr}:${toString cfg.master.port}.${toString cfg.master.grpcPort}"
                     cfg.master.peers
                   ]
                   [
@@ -409,6 +412,11 @@ in
               drs = cfg.volume.defaultReplicationStrategy;
             in
             lib.concatMapStrings toString (lib.attrVals (lib.attrNames drs) drs);
+          s3FilerAddr =
+            if cfg.filer.enable then
+              "${cfg.listenAddr}:${toString cfg.filer.port}.${toString cfg.filer.grpcPort}"
+            else
+              lib.concatStringsSep "," cfg.S3Gateway.filerAddr;
         in
         lib.listToAttrs (
           lib.optional cfg.master.enable {
@@ -481,26 +489,16 @@ in
                       "-port=${toString cfg.filer.port}"
                       "-port.grpc=${toString cfg.filer.grpcPort}"
                       "-master=${mastersList}"
+                      "-dataCenter=${cfg.dataCenter}"
+                      "-rack=${cfg.rack}"
                     ]
-                    ++ lib.optionals cfg.S3Gateway.enable (
-                      [
-                        "-s3"
-                        "-s3.port=${toString cfg.S3Gateway.port}"
-                        "-s3.port.grpc=${toString cfg.S3Gateway.grpcPort}"
-                        "-s3.dataCenter=${cfg.dataCenter}"
-                      ]
-                      ++ lib.optional (cfg.S3Gateway.s3ConfigFile != null) "-s3.config=${cfg.S3Gateway.s3ConfigFile}"
-                      ++ lib.optional (
-                        cfg.S3Gateway.iamConfigFile != null
-                      ) "-s3.iam.config=${cfg.S3Gateway.iamConfigFile}"
-                    )
                     ++ cfg.filer.extraArgs;
                   in
                   lib.strings.concatStringsSep " " cmd;
               };
             };
           }
-          ++ lib.optional (!cfg.filer.enable && cfg.S3Gateway.enable) {
+          ++ lib.optional (cfg.S3Gateway.enable) {
             name = "seaweedfs-s3gateway";
             value = unit-commons // {
               description = "SeaweedFS S3 Gateway";
@@ -510,10 +508,11 @@ in
                     cmd = [
                       pkgExe
                       "s3"
+                      "-ip.bind=${cfg.listenAddr}"
                       "-port=${toString cfg.S3Gateway.port}"
                       "-port.grpc=${toString cfg.S3Gateway.grpcPort}"
                       "-dataCenter=${cfg.dataCenter}"
-                      "-filer=${cfg.S3Gateway.filerAddr}"
+                      "-filer=${s3FilerAddr}"
                     ]
                     ++ lib.optional (cfg.S3Gateway.s3ConfigFile != null) "-config=${cfg.S3Gateway.s3ConfigFile}"
                     ++ lib.optional (cfg.S3Gateway.iamConfigFile != null) "-iam.config=${cfg.S3Gateway.iamConfigFile}"
