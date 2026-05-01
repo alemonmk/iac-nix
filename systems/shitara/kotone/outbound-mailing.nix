@@ -26,6 +26,7 @@
           "-c relaxed/relaxed"
           "-a rsa-sha256"
           "-d rmntn.net"
+          "-d rmntn.id"
           "-s appmsgs"
           "-k ${config.sops.secrets.dkimkey.path}"
         ];
