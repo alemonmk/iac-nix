@@ -11,6 +11,10 @@
       owner = config.users.users.dkimsign.name;
       sopsFile = flakeRoot + /secrets/shitara/kotone/dkimkey.yaml;
     };
+    seaweedfs-security = {
+      owner = config.users.users.seaweedfs.name;
+      sopsFile = flakeRoot + /secrets/s3/security.yaml;
+    };
     vault-mtls-key.sopsFile = flakeRoot + /secrets/secrets-vault/mtls-crt-key.yaml;
     unseal-token-1.sopsFile = flakeRoot + /secrets/secrets-vault/unseal-tokens-c.yaml;
     unseal-token-2.sopsFile = flakeRoot + /secrets/secrets-vault/unseal-tokens-c.yaml;
