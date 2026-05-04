@@ -6,13 +6,13 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "seaweedfs-volume-rust";
-  version = "4.22-unstable-20260429";
+  version = "4.23";
 
   src = fetchFromGitHub {
     owner = "seaweedfs";
     repo = "seaweedfs";
-    rev = "e82789ea4bf7a19eb6f40a93d795a12b3e9567ff";
-    hash = "sha256-0j1MGxQZY63QGkonsGwMkRF5DH1mWOhN3Xc5lci6vXM=";
+    tag = finalAttrs.version;
+    hash = "sha256-SJ3H4zryH+pAUABIHEPwsiVZE7Adnwo048Jaqn7z6M8=";
   };
   sourceRoot = "${finalAttrs.src.name}/seaweed-volume";
 
