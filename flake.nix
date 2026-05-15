@@ -33,7 +33,6 @@
       inherit lib formatter nixosModules;
       packages.x86_64-linux =
         lib.mkLinuxPackageSet {
-          code-server = ./pkgs/code-server.nix;
           vlmcsd = ./pkgs/vlmcsd.nix;
           vpn-route-gen = ./pkgs/vpn-route-gen/package.nix;
           vault-unseal = ./pkgs/vault-unseal.nix;

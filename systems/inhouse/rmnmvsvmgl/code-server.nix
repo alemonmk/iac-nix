@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  nixpkgs-next,
   ...
 }:
 {
@@ -11,8 +12,8 @@
       enable = true;
       proxyDomain = "nix-mgr.snct.rmntn.net";
       package = pkgs.vscode-with-extensions.override {
-        vscode = self.packages.x86_64-linux.code-server;
-        vscodeExtensions = with pkgs.vscode-extensions; [
+        vscode = nixpkgs-next.code-server;
+        vscodeExtensions = with nixpkgs-next.vscode-extensions; [
           bbenoist.nix
           jeff-hykin.better-nix-syntax
           brettm12345.nixfmt-vscode
