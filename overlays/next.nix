@@ -1,20 +1,15 @@
 final: prev: {
   seaweedfs = prev.seaweedfs.overrideAttrs {
-    version = "4.23";
+    version = "4.27";
     src = prev.pkgs.fetchFromGitHub {
       owner = "seaweedfs";
       repo = "seaweedfs";
-      tag = "4.23";
+      tag = "4.27";
       leaveDotGit = true;
-      postFetch = ''
-        pushd "$out"
-        git rev-parse --short HEAD 2>/dev/null >$out/COMMIT
-        find "$out" -name .git -print0 | xargs -0 rm -rf
-        popd
-      '';
-      hash = "sha256-ILDnv4ktIvrmmqXO1QSofWf7HHzfycSMn8FJoBlkZzg=";
+      postFetch = prev.seaweedfs.src.postFetch;
+      hash = "sha256-0z1v7bzPPnUYsjAiIqofkYN29t+0IdO9caPqD+VgR5c=";
     };
-    vendorHash = "sha256-s6jGCNUCT3LCSaToPdvJTzCF1EFnY4hX/70OUEszoeY=";
+    vendorHash = "sha256-6/0d7rmZZahRJ9tlrOR84/B+u1311bWjvPKz/sZ86Dc=";
     doCheck = false;
     doInstallCheck = false;
   };
