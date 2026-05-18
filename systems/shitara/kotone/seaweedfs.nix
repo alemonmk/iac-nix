@@ -10,7 +10,7 @@
     listenAddr = "10.85.183.6";
     dataCenter = "shitara";
     rack = "kotone";
-    volume.allVolumesSizeMB = 51200;
+    volume.allVolumesSizeMB = 307200;
   };
 
   services.caddy = {
