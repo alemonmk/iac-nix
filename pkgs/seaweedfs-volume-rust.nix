@@ -7,15 +7,15 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "seaweedfs-volume-rust";
-  version = "4.27";
+  version = "4.29";
 
   src = fetchFromGitHub {
     owner = "seaweedfs";
     repo = "seaweedfs";
-    tag = "4.27";
+    tag = "4.29";
     leaveDotGit = true;
     postFetch = seaweedfs.src.postFetch;
-    hash = "sha256-0z1v7bzPPnUYsjAiIqofkYN29t+0IdO9caPqD+VgR5c=";
+    hash = "sha256-QvKcWIII31NNTKSINJC3wvQCzCHObBLO2c3r6cs2ges=";
   };
   sourceRoot = "${finalAttrs.src.name}/seaweed-volume";
 
