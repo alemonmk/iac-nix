@@ -23,7 +23,6 @@ buildGo126Module (finalAttrs: {
 
   ldflags = [
     "-s"
-    "-w"
     "-extldflags=-static"
     "-X main.version=${finalAttrs.version}"
   ];
@@ -35,10 +34,6 @@ buildGo126Module (finalAttrs: {
     "netgo"
     "osusergo"
     "static_build"
-  ];
-  GOFLAGS = [
-    "-buildvcs=false"
-    "-installsuffix=netgo"
   ];
 
   meta = {
