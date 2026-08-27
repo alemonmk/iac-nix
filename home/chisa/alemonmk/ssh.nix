@@ -1,27 +1,33 @@
+{ lib, ... }:
 {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
-      "newdc.rmntn.net" = {
-        host = "!*.snct.rmntn.net *.shitara.rmntn.net *.rmntn.net";
-        user = "emergency";
-        port = 444;
-        identityFile = "~/.ssh/kotone.key";
-        extraOptions = {
-          PreferredAuthentications = "publickey";
-        };
+    settings = {
+      "!*.snct.rmntn.net *.shitara.rmntn.net *.rmntn.net" = {
+        User = "emergency";
+        Port = 444;
+        IdentityFile = "~/.ssh/kotone.key";
+        PreferredAuthentications = "publickey";
       };
-      "private.rmntn.net" = {
-        host = "*.snct.rmntn.net";
-        user = "dsvcadmin@snct.rmntn.net";
+      "*.snct.rmntn.net" = {
+        User = "dsvcadmin@snct.rmntn.net";
       };
-      "ignore-hostkey" = {
-        host = "10.* 172.16.* 192.168.*";
-        extraOptions = {
-          StrictHostKeyChecking = "no";
-          userKnownHostsFile = "/dev/null";
-        };
+      "10.* 172.16.* 192.168.*" = {
+        StrictHostKeyChecking = "no";
+        UserKnownHostsFile = "/dev/null";
+      };
+      "*" = {
+        ForwardAgent = false;
+        AddKeysToAgent = "no";
+        Compression = false;
+        ServerAliveInterval = 0;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlMaster = "no";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "no";
       };
     };
   };

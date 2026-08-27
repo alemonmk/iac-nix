@@ -99,10 +99,12 @@
     hostName = "chisa";
   };
 
-  environment.systemPackages =
-    (with pkgs; [
+  environment.systemPackages = (
+    with pkgs;
+    [
       coreutils
       alacritty
+      nushell
       screen
       iproute2mac
       curl
@@ -114,17 +116,15 @@
       terraform
       consul
       nomad
-      nixfmt-rfc-style
+      nixfmt
       sops
       age
       ruff
       nmap
       unar
       uv
-    ])
-    ++ (with nixpkgs-next; [
-      nushell
-    ]);
+    ]
+  );
   homebrew = {
     enable = true;
     onActivation = {
@@ -144,7 +144,6 @@
           "drawio"
           "librewolf"
           "visual-studio-code"
-          "sqlitestudio"
           "coconutbattery"
           "keyboardcleantool"
           "linearmouse"
