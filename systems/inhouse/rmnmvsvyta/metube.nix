@@ -6,7 +6,7 @@
   };
 
   virtualisation.oci-containers.containers."metube" = {
-    image = "ghcr.io/alexta69/metube:2026.05.30";
+    image = "ghcr.io/alexta69/metube:2026.08.28";
     networks = [ "host" ];
     capabilities.all = false;
     user = "2500:2500";
