@@ -7,23 +7,16 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "seaweedfs-volume-rust";
-  version = "4.29";
+  version = seaweedfs.version;
 
-  src = fetchFromGitHub {
-    owner = "seaweedfs";
-    repo = "seaweedfs";
-    tag = "4.29";
-    leaveDotGit = true;
-    postFetch = seaweedfs.src.postFetch;
-    hash = "sha256-QvKcWIII31NNTKSINJC3wvQCzCHObBLO2c3r6cs2ges=";
-  };
+  src = seaweedfs.src;
   sourceRoot = "${finalAttrs.src.name}/seaweed-volume";
 
-  cargoHash = "sha256-XPsuJdNsMNEUuYXUDBQwFuyCBbF3zHPwuZKIciBP6o0=";
+  cargoHash = "sha256-Yvv/Nj0F7u6RFFXebTW1qI9vK+zrEEUgFJsVkoBLLbg=";
+
+  env.PROTOC = lib.getExe protobuf;
 
   nativeBuildInputs = [ protobuf ];
-
-  checkFlags = [ "--skip=metrics::tests::test_push_metrics_once" ];
 
   meta = {
     description = "The Rust volume server (weed-volume) is a drop-in replacement for the Go SeaweedFS volume server";
