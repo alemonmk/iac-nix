@@ -1,16 +1,16 @@
 {
   lib,
   fetchFromGitHub,
-  buildGo126Module,
+  buildGoModule,
 }:
-buildGo126Module (finalAttrs: {
+buildGoModule (finalAttrs: {
   pname = "vault-unseal";
-  version = "1.0.0";
+  version = "1.0.1";
   src = fetchFromGitHub {
     owner = "lrstanley";
     repo = "vault-unseal";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-ifCmojhePUwzgrMDen5tfLX6s9FyN1KmmuPJIb/WoxY=";
+    hash = "sha256-9cPFzo1L1rc+QMW6rFZYaFQVN3vuqUK1ezrHKa/qjio=";
     leaveDotGit = true;
     postFetch = ''
       cd "$out"
@@ -19,7 +19,7 @@ buildGo126Module (finalAttrs: {
       find "$out" -name .git -exec rm -rf '{}' '+'
     '';
   };
-  vendorHash = "sha256-ma3xbnWH87b1X5fdOjigzsj5gEfhbjyTLoIDyp9eY80=";
+  vendorHash = "sha256-/ov2rvVZJgRsALgBMTaQE4CXplBJDhBrlIq2rHblO4k=";
 
   ldflags = [
     "-s"
@@ -39,7 +39,7 @@ buildGo126Module (finalAttrs: {
   meta = {
     changelog = "https://github.com/lrstanley/vault-unseal/releases/tag/v${finalAttrs.version}";
     description = "Auto-unseal utility for Hashicorp Vault";
-    homepage = "hhttps://github.com/lrstanley/vault-unseal";
+    homepage = "https://github.com/lrstanley/vault-unseal";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ alemonmk ];
     mainProgram = "vault-unseal";
