@@ -37,6 +37,8 @@
           vpn-route-gen = ./pkgs/vpn-route-gen/package.nix;
           vault-unseal = ./pkgs/vault-unseal.nix;
           seaweedfs-volume-rust = ./pkgs/seaweedfs-volume-rust.nix;
+          # pending https://github.com/NixOS/nixpkgs/pull/524570
+          # seaweedfs-worker = ./pkgs/seaweedfs-worker.nix;
         }
         // {
           netbootImage = lib.importAndInit ./lib/stage1installer;
