@@ -16,6 +16,28 @@
   ];
   nix.gc.automatic = true;
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [
+    (final: prev: {
+      alacritty =
+        let
+          src = prev.fetchFromGitHub {
+            owner = "alacritty";
+            repo = "alacritty";
+            rev = "29dc55375da817d53540f4caefbe708703c57b07";
+            hash = "sha256-UBICChiLWr2IzYYVrMndeqvfAsXXetggn69UwSJThxc=";
+          };
+          cargoDeps = prev.rustPlatform.fetchCargoVendor {
+            inherit src;
+            hash = "sha256-HDin7Zq+PrcjHTwZfk26C8Uwq8FQWkeaXUoFonoHWR0=";
+          };
+        in
+        prev.alacritty.overrideAttrs {
+          version = "0.17.0-unstable-2026-10-06";
+          inherit src cargoDeps;
+          dontVersionCheck = true;
+        };
+    })
+  ];
 
   system.primaryUser = "alemonmk";
   system.defaults = {
