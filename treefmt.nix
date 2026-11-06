@@ -25,7 +25,7 @@ let
         enable = true;
         excludes = [
           "blobs/monitoring/oxidized/config.yml"
-          "blobs/vault/auto-unseal.yaml"
+          "blobs/secrets-vault/auto-unseal.yaml"
         ];
         settings.formatter.retain_line_breaks = true;
       };
