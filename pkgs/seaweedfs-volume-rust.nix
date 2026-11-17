@@ -12,7 +12,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
   src = seaweedfs.src;
   sourceRoot = "${finalAttrs.src.name}/seaweed-volume";
 
-  cargoHash = "sha256-Yvv/Nj0F7u6RFFXebTW1qI9vK+zrEEUgFJsVkoBLLbg=";
+  cargoHash = "sha256-lWwoUHgbcg/rZyNYNS5NyNqA8pjsixhCtsUJhkTk+cA=";
 
   env.PROTOC = lib.getExe protobuf;
 
