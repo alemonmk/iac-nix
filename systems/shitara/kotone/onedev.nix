@@ -9,7 +9,7 @@
   };
 
   virtualisation.oci-containers.containers."onedev" = {
-    image = "1dev/server:13.1.7";
+    image = "1dev/server:17.2.1";
     networks = [ "host" ];
     capabilities.all = false;
     environment = {
