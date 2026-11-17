@@ -117,11 +117,13 @@ in
 
     resolved = {
       enable = true;
-      llmnr = "false";
-      fallbackDns = [
-        "127.0.0.1"
-        "::1"
-      ];
+      settings.Resolve = {
+        LLMNR = false;
+        FallbackDns = [
+          "127.0.0.1"
+          "::1"
+        ];
+      };
     };
 
     unbound = {
