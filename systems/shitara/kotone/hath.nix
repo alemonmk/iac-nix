@@ -23,7 +23,7 @@
   };
 
   virtualisation.oci-containers.containers."hath" = {
-    image = "frosty5689/hath:1.6.4";
+    image = "frosty5689/hath:1.6.6";
     user = "9999:9999";
     networks = [ "host" ];
     capabilities.all = false;
