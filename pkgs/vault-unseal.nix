@@ -5,12 +5,12 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "vault-unseal";
-  version = "1.0.1";
+  version = "1.0.3";
   src = fetchFromGitHub {
     owner = "lrstanley";
     repo = "vault-unseal";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-9cPFzo1L1rc+QMW6rFZYaFQVN3vuqUK1ezrHKa/qjio=";
+    hash = "sha256-D6smbyMNCMehuzcBg/Nj/kcfHfzOrf5Hcmoe/rciSuw=";
     leaveDotGit = true;
     postFetch = ''
       cd "$out"
@@ -19,7 +19,7 @@ buildGoModule (finalAttrs: {
       find "$out" -name .git -exec rm -rf '{}' '+'
     '';
   };
-  vendorHash = "sha256-/ov2rvVZJgRsALgBMTaQE4CXplBJDhBrlIq2rHblO4k=";
+  vendorHash = "sha256-8b98JeDSfK2cDGnPo0isglO/fCZpYU73uxSYldq6lbc=";
 
   ldflags = [
     "-s"
