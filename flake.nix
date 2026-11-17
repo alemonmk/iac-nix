@@ -1,8 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
     nixpkgs-next.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
-    home-manager-linux.url = "github:nix-community/home-manager?ref=release-25.11";
+    home-manager-linux.url = "github:nix-community/home-manager?ref=release-26.05";
     home-manager-linux.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-darwin.url = "github:nixos/nixpkgs?ref=nixpkgs-26.05-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin?ref=nix-darwin-26.05";
@@ -12,7 +12,7 @@
     impermanence.url = "github:nix-community/impermanence";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs-next";
-    disko.url = "github:nix-community/disko?ref=v1.12.0";
+    disko.url = "github:nix-community/disko?ref=v1.13.0";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs-next";
@@ -37,8 +37,7 @@
           vpn-route-gen = ./pkgs/vpn-route-gen/package.nix;
           vault-unseal = ./pkgs/vault-unseal.nix;
           seaweedfs-volume-rust = ./pkgs/seaweedfs-volume-rust.nix;
-          # pending https://github.com/NixOS/nixpkgs/pull/524570
-          # seaweedfs-worker = ./pkgs/seaweedfs-worker.nix;
+          seaweedfs-worker = ./pkgs/seaweedfs-worker.nix;
         }
         // {
           netbootImage = lib.importAndInit ./lib/stage1installer;
