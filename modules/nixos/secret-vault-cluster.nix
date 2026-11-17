@@ -5,10 +5,15 @@
   options,
   lib,
   pkgs,
+  nixpkgs-next,
   ...
 }:
 {
+  disabledModules = [ "services/security/openbao.nix" ];
+  imports = [ "${self.inputs.nixpkgs-next}/nixos/modules/services/security/openbao.nix" ];
+
   config = lib.modules.mkIf config.services.openbao.enable {
+    services.openbao.package = nixpkgs-next.openbao;
     services.openbao.settings = {
       listener.default = {
         type = "tcp";
@@ -33,35 +38,11 @@
         lockout_counter_reset = "15m";
       };
       storage.raft.path = "/var/lib/openbao";
-      plugin_directory = "/var/lib/private/openbao/plugins";
-      plugin = [
-        {
-          secret.aws = {
-            image = "ghcr.io/openbao/openbao-plugin-secrets-aws";
-            version = "v0.3.0-beta20260326";
-            binary_name = "openbao-plugin-secrets-aws";
-            # obtained with `nix run nixpkgs#crane -- export <image> - | tar Oxf - | sha256sum`
-            sha256sum = "9aaa8f2597f1bfa98a727a6230d9c7f62f096e1d25607fab3a9f9cc8ce48af7a";
-          };
-        }
-        {
-          secret.consul = {
-            image = "ghcr.io/openbao/openbao-plugin-secrets-consul";
-            version = "v0.1.0";
-            binary_name = "openbao-plugin-secrets-consul";
-            sha256sum = "5c5f662a7192aad87de37b82b7479c7b6e19d99ef021e8b80ce4d423a5fc8af1";
-          };
-        }
-        {
-          secret.nomad = {
-            image = "ghcr.io/openbao/openbao-plugin-secrets-nomad";
-            version = "v0.1.5";
-            binary_name = "openbao-plugin-secrets-nomad";
-            sha256sum = "a5df5663520e40bc1d0a6ed5a52e5bb2eab7c2de165f4cc9a0a2fce6604eae09";
-          };
-        }
+      plugins = [
+        nixpkgs-next.openbaoPlugins.secrets-aws
+        nixpkgs-next.openbaoPlugins.secrets-consul
+        nixpkgs-next.openbaoPlugins.secrets-nomad
       ];
-      plugin_auto_download = true;
       plugin_auto_register = true;
       ui = true;
     };
@@ -74,9 +55,6 @@
       };
       serviceConfig = {
         LoadCredential = "tls-key:${config.sops.secrets.vault-mtls-key.path}";
-        # Needed when running OCI plugins in StateDirectory
-        # https://github.com/NixOS/nixpkgs/issues/513847
-        ExecPaths = [ "/var/lib/openbao" ];
       };
     };
 
